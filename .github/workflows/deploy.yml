@@ -11,10 +11,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: yarn
-      - run: yarn install --frozen-lockfile
+          cache: npm
+      - run: npm install
       - name: Build
-        run: yarn docs:build
+        run: npm docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
