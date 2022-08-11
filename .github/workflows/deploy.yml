@@ -7,14 +7,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7.5.0
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: npm
-      - run: npm install
+          cache: pnpm
+      - run: pnpm install
       - name: Build
-        run: npm docs:build
+        run: pnpm docs:build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
