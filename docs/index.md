@@ -44,4 +44,3 @@ features:
     # icon: ⚡️
     details: Lorem ipsum...
 ---
-

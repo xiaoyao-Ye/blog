@@ -5,28 +5,28 @@
 ```javascript
 const globalCompoes = require.context(
   // 其组件目录的相对路径
-  "./components/global",
+  './components/global',
   // 是否查询其子目录
   false,
   // 匹配基础组件文件名的正则表达式
-  /[a-zA-Z]+\-[a-zA-Z]+\.vue$/
-);
+  /[a-zA-Z]+\-[a-zA-Z]+\.vue$/,
+)
 //遍历并注册全局组件
 globalCompoes.keys().forEach((fileName) => {
   // 获取组件配置
   // ./article-button.vue
-  const componentConfig = requireComponent(fileName);
+  const componentConfig = requireComponent(fileName)
   //去除文件名中的 './'和'.vue'字符
-  const componentName = fileName.replace(/\.\/|\.vue/g, "");
+  const componentName = fileName.replace(/\.\/|\.vue/g, '')
   // 全局注册组件
   Vue.component(
     componentName,
     // 如果这个组件选项是通过 `export default` 导出的，
     // 那么就会优先使用 `.default`，
     // 否则回退到使用模块的根。
-    componentConfig.default || componentConfig
-  );
-});
+    componentConfig.default || componentConfig,
+  )
+})
 ```
 
 ## vue-自定义图片懒加载指令
@@ -34,41 +34,41 @@ globalCompoes.keys().forEach((fileName) => {
 - imgLazy.js
 
 ```javascript
-import baseImg from "@/assets/logo.png"; // 默认加载图片
+import baseImg from '@/assets/logo.png' // 默认加载图片
 // 创建一个监听器
 let observer = new IntersectionObserver((entries) => {
   // entries是所有被监听对象的集合
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       // 当被监听元素到临界值且未加载图片时触发。
-      !entry.target.isLoaded && showImage(entry.target, entry.target.data_src);
+      !entry.target.isLoaded && showImage(entry.target, entry.target.data_src)
     }
-  });
-});
+  })
+})
 
 function showImage(el, imgSrc) {
-  const img = new Image();
-  img.src = imgSrc;
+  const img = new Image()
+  img.src = imgSrc
   img.onload = () => {
-    el.src = imgSrc;
-    el.isLoaded = true;
-  };
+    el.src = imgSrc
+    el.isLoaded = true
+  }
 }
 export default {
   // 这里用inserted和bind都行，因为IntersectionObserver时异步的，以防意外还是用inserted好一点
   // inserted和bind的区别在于inserted时元素已经插入页面，能够直接获取到dom元素的位置信息。
   inserted(el, binding) {
     // 初始化时展示默认图片
-    el.src = baseImg;
+    el.src = baseImg
     // 将需要加载的图片地址绑定在dom上
-    el.data_src = binding.value;
-    observer.observe(el);
+    el.data_src = binding.value
+    observer.observe(el)
   },
   unbind() {
     // 停止监听
-    observer.disconnect();
+    observer.disconnect()
   },
-};
+}
 ```
 
 - 使用
@@ -85,42 +85,42 @@ export default {
 </template>
 
 <script>
-import imgLazy from "@/directives/imgLazy.js";
+import imgLazy from '@/directives/imgLazy.js'
 export default {
   data() {
     return {
       imgSrc: [
-        require("../../assets/img/000846-15763397267e73.jpg"),
-        require("../../assets/img/004348-1587314628f09b.jpg"),
-        require("../../assets/img/01.jpg"),
-        require("../../assets/img/1751409cw4v2lk7xlypbsn.jpg"),
-        require("../../assets/img/175141wpllyfapb7ni1t74.jpeg"),
-        require("../../assets/img/183634-1568716594f366.jpg"),
-        require("../../assets/img/20180302213716_PFimT.png"),
-        require("../../assets/img/204554-1560516354e91c.jpg"),
-        require("../../assets/img/205524-1566651324f88b.jpg"),
-        require("../../assets/img/213207-156665352785d3.jpg"),
-        require("../../assets/img/213246-1586525566c099.jpg"),
-        require("../../assets/img/223248-1587393168c0ea.jpg"),
-        require("../../assets/img/224324-15888626046f80.jpg"),
-        require("../../assets/img/230431-15854078717b4e.jpg"),
-        require("../../assets/img/230543-15651903432d35.jpg"),
-        require("../../assets/img/231118-1586704278f13e.jpg"),
-        require("../../assets/img/233900-1579621140c81d.jpg"),
-        require("../../assets/img/234703-1584114423c3de.jpg"),
-        require("../../assets/img/235000-1584114600db79.jpg"),
-        require("../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png"),
-        require("../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg"),
-        require("../../assets/img/5d68d603daf16.jpg"),
-        require("../../assets/img/5ddb867c4250c.jpg"),
+        require('../../assets/img/000846-15763397267e73.jpg'),
+        require('../../assets/img/004348-1587314628f09b.jpg'),
+        require('../../assets/img/01.jpg'),
+        require('../../assets/img/1751409cw4v2lk7xlypbsn.jpg'),
+        require('../../assets/img/175141wpllyfapb7ni1t74.jpeg'),
+        require('../../assets/img/183634-1568716594f366.jpg'),
+        require('../../assets/img/20180302213716_PFimT.png'),
+        require('../../assets/img/204554-1560516354e91c.jpg'),
+        require('../../assets/img/205524-1566651324f88b.jpg'),
+        require('../../assets/img/213207-156665352785d3.jpg'),
+        require('../../assets/img/213246-1586525566c099.jpg'),
+        require('../../assets/img/223248-1587393168c0ea.jpg'),
+        require('../../assets/img/224324-15888626046f80.jpg'),
+        require('../../assets/img/230431-15854078717b4e.jpg'),
+        require('../../assets/img/230543-15651903432d35.jpg'),
+        require('../../assets/img/231118-1586704278f13e.jpg'),
+        require('../../assets/img/233900-1579621140c81d.jpg'),
+        require('../../assets/img/234703-1584114423c3de.jpg'),
+        require('../../assets/img/235000-1584114600db79.jpg'),
+        require('../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png'),
+        require('../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg'),
+        require('../../assets/img/5d68d603daf16.jpg'),
+        require('../../assets/img/5ddb867c4250c.jpg'),
       ],
-    };
+    }
   },
   // 组件内注册指令
   directives: {
     imgLazy: imgLazy,
   },
-};
+}
 </script>
 
 <style></style>
@@ -133,35 +133,35 @@ export default {
 - vant.config.js(按需导入 element-ui 和 ant-design-vue 也是这样)
 
 ```javascript
-import { Toast, Button } from "vant";
+import { Toast, Button } from 'vant'
 
 const components = {
   Toast,
   Button,
-};
+}
 
 const componentsHandler = {
   install(Vue) {
-    Object.keys(components).forEach((key) => Vue.use(components[key]));
+    Object.keys(components).forEach((key) => Vue.use(components[key]))
   },
-};
+}
 
-export default componentsHandler;
+export default componentsHandler
 ```
 
 - main.js
 
 ```javascript
-import Vue from "vue";
-import vantCompoents from "@/config/vant.config";
+import Vue from 'vue'
+import vantCompoents from '@/config/vant.config'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
-Vue.use(vantCompoents);
+Vue.use(vantCompoents)
 
 new Vue({
   render: (h) => h(App),
-}).$mount("#app");
+}).$mount('#app')
 ```
 
 ## 自动注册全局组件
@@ -187,14 +187,14 @@ new Vue({
 export default {
   data() {
     return {
-      text: "hello",
-    };
+      text: 'hello',
+    }
   },
   filters: {
     capitalize: function (value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.charAt(0).toUpperCase() + value.slice(1);
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
     },
   },
   methods: {
@@ -205,12 +205,12 @@ export default {
         })
         .then((res) => {
           // this.$options.filters可以找到实例中过滤器钩子里面的函数.
-          let capitalize = this.$options.filters.capitalize;
-          this.title = capitalize(res.data.title);
-        });
+          let capitalize = this.$options.filters.capitalize
+          this.title = capitalize(res.data.title)
+        })
     },
   },
-};
+}
 ```
 
 ## $attrs && $listeners
@@ -232,13 +232,10 @@ export default {
 ## .sync
 
 ```html
-// children  更新方式
-this.$emit('update:data', newVal);
-
-// parent    使用方式
-<Component :data.sync="data"></component>
-// 等同于↓:  父组件节省了一个函数声明↑
-<Component :data="data" @update:data="e => data = e"></component>
+// children 更新方式 this.$emit('update:data', newVal); // parent 使用方式
+<Component :data.sync="data"></Component>
+// 等同于↓: 父组件节省了一个函数声明↑
+<Component :data="data" @update:data="e => data = e"></Component>
 ```
 
 ## computed
@@ -333,21 +330,21 @@ Vue.prototype.$log = window.console.log;
 </template>
 
 <script>
-import One from "../components/One.vue";
+import One from '../components/One.vue'
 import Two from '../components/Two.vue'
 export default {
   data() {
     return {
       isToggle: false,
-      one: "One",
-      two: "Two",
-    };
+      one: 'One',
+      two: 'Two',
+    }
   },
   components: {
     One,
     Two,
   },
-};
+}
 </script>
 ```
 
@@ -357,49 +354,49 @@ export default {
 export class Drag {
   //构造函数
   constructor(el) {
-    this.el = el;
+    this.el = el
     //鼠标摁下时的元素位置
-    this.startOffset = {};
+    this.startOffset = {}
     //鼠标摁下时的鼠标位置
-    this.startPoint = {};
+    this.startPoint = {}
     let move = (e) => {
-      this.move(e);
-    };
+      this.move(e)
+    }
     let end = (e) => {
-      document.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseup", end);
-    };
-    el.addEventListener("mousedown", (e) => {
-      this.start(e);
-      document.addEventListener("mousemove", move);
-      document.addEventListener("mouseup", end);
-    });
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', end)
+    }
+    el.addEventListener('mousedown', (e) => {
+      this.start(e)
+      document.addEventListener('mousemove', move)
+      document.addEventListener('mouseup', end)
+    })
   }
   //摁下时的处理函数
   start(e) {
-    let { el } = this;
+    let { el } = this
     this.startOffset = {
       x: el.offsetLeft,
       y: el.offsetTop,
-    };
+    }
     this.startPoint = {
       x: e.clientX,
       y: e.clientY,
-    };
+    }
   }
   //鼠标移动时的处理函数
   move(e) {
-    let { el, startOffset, startPoint } = this;
+    let { el, startOffset, startPoint } = this
     let newPoint = {
       x: e.clientX,
       y: e.clientY,
-    };
+    }
     let dis = {
       x: newPoint.x - startPoint.x,
       y: newPoint.y - startPoint.y,
-    };
-    el.style.left = dis.x + startOffset.x + "px";
-    el.style.top = dis.y + startOffset.y + "px";
+    }
+    el.style.left = dis.x + startOffset.x + 'px'
+    el.style.top = dis.y + startOffset.y + 'px'
   }
 }
 

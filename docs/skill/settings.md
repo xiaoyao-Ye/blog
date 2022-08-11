@@ -4,7 +4,7 @@
 
 - .gitignore
 
-``` bash
+```bash
 .DS_Store
 node_modules/
 /dist/

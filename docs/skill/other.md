@@ -5,7 +5,7 @@
 - 在 `</head>` 前输入以下代码可以获得白屏时间
 
 ```javascript
-console.log(new Date() - performance.timing.navigationStart);
+console.log(new Date() - performance.timing.navigationStart)
 ```
 
 ## rem 适配大屏展示
@@ -14,19 +14,19 @@ console.log(new Date() - performance.timing.navigationStart);
 
 ```javascript
 function resize() {
-  let designSize = 1920; // 设计图尺寸
-  let html = document.documentElement;
-  let wW = html.clientWidth; // 窗口宽度
+  let designSize = 1920 // 设计图尺寸
+  let html = document.documentElement
+  let wW = html.clientWidth // 窗口宽度
   if (wW < 1440) {
-    wW = 1440;
+    wW = 1440
   }
-  let rem = (wW * 100) / designSize;
+  let rem = (wW * 100) / designSize
   // console.log(rem)
-  document.documentElement.style.fontSize = rem + "px";
+  document.documentElement.style.fontSize = rem + 'px'
   // document.documentElement.style.height = 100 + '%';
 }
-resize();
-window.onresize = resize;
+resize()
+window.onresize = resize
 ```
 
 - main.js 导入即可(使用)
@@ -225,9 +225,9 @@ GoTop() {
 
 ```javascript
 // 大写的
-[...Array(26)].map((e, i) => String.fromCharCode(i + 65));
+;[...Array(26)].map((e, i) => String.fromCharCode(i + 65))
 // 小写的
-[...Array(26)].map((e, i) => String.fromCharCode(i + 97));
+;[...Array(26)].map((e, i) => String.fromCharCode(i + 97))
 ```
 
 ## 获取屏幕像素比 window.devicePixelRatio

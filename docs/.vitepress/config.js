@@ -20,13 +20,12 @@ export default defineConfig({
     logo: '../assets/img/jp.png',
     siteTitle: 'panacea',
     lastUpdatedText: 'Updated Date',
-    nav: [
-      { text: 'skill', link: '/skill/codeing-specification' },
-    ],
+    nav: [{ text: 'skill', link: '/skill/codeing-specification' }],
     sidebar: {
       '/skill/': [
         {
-          text: '小技巧', items: [
+          text: '小技巧',
+          items: [
             { text: '代码规范', link: '/skill/codeing-specification' },
             { text: 'settings', link: '/skill/settings' },
             { text: 'webpack', link: '/skill/webpack' },
@@ -36,26 +35,23 @@ export default defineConfig({
             { text: 'css', link: '/skill/CSS' },
             { text: 'JavaScript', link: '/skill/JavaScript' },
             { text: 'other', link: '/skill/other' },
-          ]
+          ],
         },
-
-      ]
+      ],
     },
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
     // footer: {
     //   message: 'Released under the MIT License.',
     //   copyright: 'Copyright © 2019-present _Ghosteye'
     // },
     editLink: {
       pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
-      text: 'Edit this page on GitHub'
+      text: 'Edit this page on GitHub',
     },
     // 广告
     carbonAds: {
       code: 'your-carbon-code',
-      placement: 'your-carbon-placement'
-    }
-  }
+      placement: 'your-carbon-placement',
+    },
+  },
 })

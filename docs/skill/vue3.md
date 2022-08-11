@@ -18,25 +18,25 @@ yarn add -D unplugin-vue-components
 
 ```javascript
 // vite.config.ts
-import AutoImport from "unplugin-auto-import/vite";
-import Components from "unplugin-vue-components/vite";
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
 export default defineConfig({
   plugins: [
     AutoImport({
-      imports: ["vue", "vue-router", "@vueuse/core", "@vueuse/head"],
+      imports: ['vue', 'vue-router', '@vueuse/core', '@vueuse/head'],
     }),
 
     Components({
-      extensions: ["vue", "md"],
+      extensions: ['vue', 'md'],
       dts: true,
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       resolvers: [
         IconsResolver({
-          componentPrefix: "",
+          componentPrefix: '',
         }),
       ],
     }),
   ],
-});
+})
 ```
