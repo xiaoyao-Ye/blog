@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  base: '/blog/',
   title: '_Ghosteye',
   titleTemplate: '不要让时代的悲哀成为你的悲哀!',
   description: '当灾难来临时, 精神意志是人类的第一序列武器.',
