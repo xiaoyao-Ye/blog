@@ -26,8 +26,8 @@
     "pre-commit": "npm run lint-staged"
   },
   "lint-staged": {
-    "*.{js,ts,json,md,vue}": [
-      "prettier --write"
+    "*": [
+      "prettier --write --ignore-unknown"
     ]
   }
 }
