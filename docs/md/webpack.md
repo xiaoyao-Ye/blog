@@ -9,7 +9,7 @@ yarn add       会在  `dependencies`    中安装一个包
 yarn add -D/-dev  会在  `devDependencies`  中安装一个包
 ```
 
-### dependencies 和 devdependencies 区别
+### dependencies 和 devDependencies 区别
 
 - dependencies： 里面的插件代表开发打包后也会要用
 

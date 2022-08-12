@@ -167,7 +167,7 @@ new Vue({
 ## 自动注册全局组件
 
 - 全局需要用到的,并且轻量的组件才适合注册为全局组件.表单,文本编辑器这种最好还是懒加载
-- 全局组件应该有一个单独的命名规范,阅读代码就知道这是个全局组件例如: globel-user-select
+- 全局组件应该有一个单独的命名规范,阅读代码就知道这是个全局组件例如: global-user-select
 
 ```javascript
 // 通过webpack的require.context导入.Object.keys()循环注册.

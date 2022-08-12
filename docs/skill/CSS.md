@@ -1194,11 +1194,11 @@ try {
 ## placeholder 样式
 
 ```html
-<input type="text" class="placehoder-custom" placeholder="请输入用户名搜索" />
+<input type="text" class="placeholder-custom" placeholder="请输入用户名搜索" />
 ```
 
 ```css
-.placehoder-custom::-webkit-input-placeholder {
+.placeholder-custom::-webkit-input-placeholder {
   color: #babbc1;
   font-size: 12px;
 }
