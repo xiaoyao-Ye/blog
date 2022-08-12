@@ -5,8 +5,8 @@
 --save-dev 会把你下载的第三方包保存到 `devDependencies`
 npm i 插件名 默认相当于  npm i --save 插件名
 // ---------------------------------------------
-yarn add 			会在	`dependencies`		中安装一个包
-yarn add -D/-dev	会在	`devDependencies`	中安装一个包
+yarn add       会在  `dependencies`    中安装一个包
+yarn add -D/-dev  会在  `devDependencies`  中安装一个包
 ```
 
 ### dependencies 和 devdependencies 区别

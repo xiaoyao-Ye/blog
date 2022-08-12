@@ -7,7 +7,7 @@
 ### 注释
 
 ```python
-#!/usr/bin/env python3			# python`#`后面是注释
+#!/usr/bin/env python3      # python`#`后面是注释
 # -*- coding: utf-8 -*-
 
 第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；
@@ -42,11 +42,11 @@
 
 如果你不太确定应该用什么，%s永远起作用，它会把任何数据类型转换为字符串
 
-# 占位符		替换内容
-# %d			整数
-# %f			浮点数
-# %s			字符串
-# %x			十六进制整数
+# 占位符    替换内容
+# %d      整数
+# %f      浮点数
+# %s      字符串
+# %x      十六进制整数
 
 如果字符串内有%字符,需要连续用两个%%来转义
 ```
@@ -110,9 +110,9 @@
 # print absolute value of an integer:
 a = 100
 if a>=0:
-	print(a)
+  print(a)
 else:
-	print(-a)
+  print(-a)
 ```
 
 ### 循环
@@ -122,7 +122,7 @@ else:
 ```python
 list = [1,2,3,4,5]
 for item in list:
-    print(item)			#item是遍历出来的子项
+    print(item)      #item是遍历出来的子项
 
 # python的迭代可以用于列表,元祖,字典,等等.
 ```
@@ -250,6 +250,6 @@ import xxx
 
 # 可以用来处理列表的值
 L = ['Hello', 'World', 'IBM', 'Apple']
-[s.lower() for s in L]			# lower()把所有的字符串变成小写
+[s.lower() for s in L]      # lower()把所有的字符串变成小写
 # ['hello', 'world', 'ibm', 'apple']
 ```

@@ -2,7 +2,7 @@
 
 如果是第一次使用 git，需要配置提交者信息，推荐和 github 的账号邮箱一致
 
-```Bash
+```bash
 # git config  user.name 你的目标用户名
 # git config  user.email 你的目标邮箱名
 

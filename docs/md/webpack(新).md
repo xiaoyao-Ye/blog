@@ -146,15 +146,15 @@ module.exports = {
     rules: [
       // 官方更建议的做法是在项目根目录下新建一个`.babelrc`的babel配置文件
       //{
-      //	test: /\.js$/,
-      //	use: {
-      //		loader: 'babel-loader',
-      //		options: {
-      //			presets: ['@babel/env'],
-      //			plugins: ['@babel/plugin-proposal-class-properties']
-      //		}
-      //	},
-      //	exclude: /node_modules/
+      //  test: /\.js$/,
+      //  use: {
+      //    loader: 'babel-loader',
+      //    options: {
+      //      presets: ['@babel/env'],
+      //      plugins: ['@babel/plugin-proposal-class-properties']
+      //    }
+      //  },
+      //  exclude: /node_modules/
       //}
     ],
   },
@@ -167,7 +167,7 @@ module.exports = {
   "presets": ["@babel/env"],
   "plugins": [
       "@babel/plugin-proposal-class-properties"
-      "@babel/plugin-transform-runtime"	// 使用`generator`,需要
+      "@babel/plugin-transform-runtime"  // 使用`generator`,需要
   ]
 }
 ```
