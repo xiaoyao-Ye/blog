@@ -9,6 +9,7 @@
     "docs:serve": "vitepress serve docs",
     "commit": "git-cz",
     "commit:origin": "git pull && git add . && git-cz && git push",
+    "lint-staged": "lint-staged",
     "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\""
   },
   "keywords": [],
