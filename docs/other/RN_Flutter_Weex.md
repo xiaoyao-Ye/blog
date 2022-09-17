@@ -1,4 +1,4 @@
-### 原生应用开发
+# 原生应用开发
 
 - react native
 - weex(官方文档并不完善,坑多,百度都找不到解决方案)
@@ -13,9 +13,11 @@
 | 生态             | 成熟         | 一般           | 趋于成熟 |
 | 是否推荐         | 推荐         | 不推荐(很多坑) | 可以尝试 |
 
-### 环境搭建
+## 环境搭建
 
-#### 公共部分
+### 公共部分
+
+#### 下载安装
 
 ```js
 1.安装Node(官网左边稳定版)
@@ -42,7 +44,7 @@
   推荐夜神模拟器, 轻量级并且使用方便, 下载地址: https://www.yeshen.com/
 ```
 
-##### 安装 JDK8.x 需要注意的问题:
+#### 安装 JDK8.x 需要注意的问题
 
 - 下载时会提示登录 oracle.
 
@@ -64,7 +66,7 @@
   配置好后怎么验证是否配置好了呢? --> 在小黑窗里输入javac,如果有反应则可以了
   ```
 
-##### 安装 Android sdk 需要注意的问题:
+#### 安装 Android sdk 需要注意的问题
 
 - 最好直接从已经准备好的云盘下载.
 
@@ -80,11 +82,11 @@
   配置好后怎么验证是否配置好了呢? --> 在小黑窗里输入adb,如果有反应则可以了
   ```
 
-#### 独立部分
+### 独立部分
 
-##### React-Native
+#### React-Native
 
-参考地址:[https://facebook.github.io/react-native/docs/getting-started.html]()
+参考地址: [https://facebook.github.io/react-native/docs/getting-started.html](https://facebook.github.io/react-native/docs/getting-started.html)
 
 ```js
 1.安装python2.x
@@ -92,22 +94,20 @@
     https://www.python.org/downloads/
 ```
 
-##### Weex
+#### Weex
+
+> 常见问题: [https://www.jianshu.com/p/8cd872a618d4](https://www.jianshu.com/p/8cd872a618d4)
+
+安装一个 Android 5.1.1 的模拟器, 不要使用它默认的 4.4 的模拟器
+
+#### Flutter
+
+参考地址: [https://flutterchina.club/setup-windows](https://flutterchina.club/setup-windows)
 
 ```js
-常见问题:
-  https://www.jianshu.com/p/8cd872a618d4
-  安装一个Android 5.1.1 的模拟器, 不要使用它默认的4.4的模拟器
-```
-
-##### Flutter
-
-参考地址:[https://flutterchina.club/setup-windows]()
-
-```js
-1.安装 Flutter SDK
-  下载地址:【建议通过git clone】
-      https://flutter.io/sdk-archive/#windows
+// 1.安装 Flutter SDK
+// 下载地址:【建议通过git clone】
+// https://flutter.io/sdk-archive/#windows
 
 2.配置环境变量
 把Flutter\bin这个目录的路径配置到Path里.怎么验证是否配置好了呢? 小黑窗里输入flutter --version

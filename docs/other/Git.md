@@ -1,3 +1,5 @@
+# git 命令
+
 ## 配置 git 邮箱与账号
 
 如果是第一次使用 git，需要配置提交者信息，推荐和 github 的账号邮箱一致
@@ -13,8 +15,6 @@ git config  --global user.email 517729329@qq.com
 # 查看配置信息
 git config --list
 ```
-
-# git 命令
 
 ### git init
 
@@ -37,6 +37,8 @@ git init
 
 ### git add
 
+> 注意点：空的文件夹是会被忽略掉的，如果想要提交这个文件夹，一般会在该目录下创建一个.gitkeep 文件
+
 - 作用：将文件由 `工作区` 添加到 `暂存区`，在 git 中，文件无法直接从工作区直接添加到仓库区，必须先从工作区添加到暂存区，再从暂存区添加到仓库区。
 - 命令：`git add 文件名/目录名`
 
@@ -55,8 +57,6 @@ git add .
 git add -A
 git add --all
 ```
-
-**注意点：空的文件夹是会被忽略掉的，如果想要提交这个文件夹，一般会在该目录下创建一个.gitkeep 文件**
 
 ### git commit
 
@@ -176,14 +176,14 @@ css
 - `git merge 分支名称` 将其他分支的内容合并到当前分支。
 - 在`master`分支中执行`git merge dev` 将`dev`分支中的代码合并到`master`分支
 
-## git 合并冲突
+### git 合并冲突
 
 - 对于同一个文件，如果有多个分支需要合并时，容易出现冲突。
 - 合并分支时，如果出现冲突，只能手动处理，再次提交，一般的作法，把自己的代码放到冲突代码的后面即可。
 
-# git 远程仓库
+## git 远程仓库
 
-## github 与 git
+### github 与 git
 
 git 与 github 没有直接的关系。
 
@@ -196,20 +196,20 @@ git 与 github 没有直接的关系。
 //3. 创建git项目时，不能有中文。
 ```
 
-## git clone
+### git clone
 
 - 作用：克隆远程仓库的代码到本地
 - git clone [远程仓库地址]
 - `git clone git://github.com/autumnFish/test.git`会在本地新建一个`test`文件夹，在 test 中包含了一个`.git`目录，用于保存所有的版本记录，同时 test 文件中还有最新的代码，你可以直接进行后续的开发和使用。
 - git 克隆默认会使用远程仓库的项目名字，也可以自己指定。需要是使用以下命令：`git clone [远程仓库地址] [本地项目名]`
 
-## git push
+### git push
 
 - 作用：将本地仓库中代码提交到远程仓库
 - `git push 仓库地址 master` 在代码提交到远程仓库，注意 master 分支必须写，不能省略
 - 例子：`git push git@github.com:autumnFish/test.git master` 如果第一次使用，需要填写 github 的用户名和密码
 
-## git pull
+### git pull
 
 - 作用：将远程的代码下载到本地
 
@@ -220,7 +220,7 @@ git 与 github 没有直接的关系。
 git pull
 ```
 
-## git remote
+### git remote
 
 每次 push 操作都需要带上远程仓库的地址，非常的麻烦，我们可以给仓库地址设置一个别名
 
@@ -235,7 +235,7 @@ git remote remove autumnFish
 # git clone的仓库默认有一个origin的别名
 ```
 
-## SSH 免密码登陆
+### SSH 免密码登陆
 
 git 支持多种数据传输协议：
 
@@ -247,7 +247,7 @@ git 支持多种数据传输协议：
 - github 为了账户的安全，需要对每一次 push 请求都要验证用户的身份，只有合法的用户才可以 push
 - 使用 ssh 协议，配置 ssh 免密码，可以做到免密码往 github 推送代码
 
-## SSH 免密码登录配置
+### SSH 免密码登录配置
 
 注意：这些命令需要在 bash 中敲
 

@@ -1,4 +1,4 @@
-### Python 基础
+# Python 基础
 
 - 命令行敲 python 进入 python 交互模式.`exit()`回车退出.
 - python`大小写敏感`
