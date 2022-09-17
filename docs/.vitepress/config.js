@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   base: '/blog/',
-  title: '_Ghosteye',
+  title: 'xiaoyao-Ye',
   titleTemplate: '不要让时代的悲哀成为你的悲哀!',
   description: '当灾难来临时, 精神意志是人类的第一序列武器.',
   // 暗黑模式
@@ -12,55 +12,78 @@ export default defineConfig({
   // 使用 git commit 获取时间戳。此选项启用默认主题以显示页面的最后更新时间。
   lastUpdated: true,
   // 配置 Markdown 解析器选项。VitePress 使用Markdown-it作为解析器，使用Shiki来突出语言语法。在此选项中，您可以传递各种 Markdown 相关选项以满足您的需求。
-  // markdown: {
-  //   theme: 'material-palenight',
-  //   lineNumbers: true
-  // },
+  markdown: {
+    // headers: {
+    //   level: [0, 0]
+    // }
+    // theme: 'material-palenight',
+    // lineNumbers: true
+  },
   themeConfig: {
-    logo: '../assets/img/jp.png',
-    siteTitle: 'panacea',
-    lastUpdatedText: 'Updated Date',
-    nav: [{ text: 'skill', link: '/skill/codeing-specification' }],
-    sidebar: {
-      '/skill/': [
-        {
-          text: '小技巧',
-          items: [
-            { text: '代码规范', link: '/skill/codeing-specification' },
-            { text: 'settings', link: '/skill/settings' },
-            { text: 'webpack', link: '/skill/webpack' },
-            { text: 'npm', link: '/skill/npm' },
-            { text: 'vue', link: '/skill/vue' },
-            { text: 'vue3', link: '/skill/vue3' },
-            { text: 'css', link: '/skill/CSS' },
-            { text: 'JavaScript', link: '/skill/JavaScript' },
-            { text: 'other', link: '/skill/other' },
-            // { text: '坑坑坑', link: '/md/坑坑坑' },
-            // { text: '面经', link: '/md/面经' },
-            // { text: '目标', link: '/md/目标' },
-            // { text: '小程序', link: '/md/小程序' },
-            // { text: 'Git完整笔记', link: '/md/Git完整笔记' },
-            // { text: 'Python', link: '/md/Python' },
-            // { text: 'RN_Flutter_Weex', link: '/md/RN_Flutter_Weex' },
-            // { text: 'webpack', link: '/md/webpack' },
-            // { text: 'webpack(新)', link: '/md/webpack(新)' },
-          ],
-        },
-      ],
-    },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
-    // footer: {
-    //   message: 'Released under the MIT License.',
-    //   copyright: 'Copyright © 2019-present _Ghosteye'
-    // },
+    logo: '/assets/img/book.png',
+    siteTitle: 'xiaoyao-Ye',
+    outlineTitle: '在本页面',
+    outline: [2, 6],
+    lastUpdatedText: '最近更新时间',
     editLink: {
-      pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
-      text: 'Edit this page on GitHub',
+      pattern: 'https://github.com/xiaoyao-Ye/blog/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页面',
+    },
+    nav: nav(),
+    sidebar: {
+      '/skill/': sidebarSkill(),
+      '/other/': sidebarOther(),
+    },
+    socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2019-present xiaoyao-Ye',
     },
     // 广告
-    carbonAds: {
-      code: 'your-carbon-code',
-      placement: 'your-carbon-placement',
-    },
+    // carbonAds: {
+    //   code: 'your-carbon-code',
+    //   placement: 'your-carbon-placement',
+    // },
   },
 })
+
+function nav() {
+  return [
+    { text: '小技巧', link: '/skill/coding-specification', activeMatch: '/skill/' },
+    { text: '其他', link: '/other/Python', activeMatch: '/other/' },
+  ]
+}
+function sidebarSkill() {
+  return [
+    {
+      text: '小技巧',
+      items: [
+        { text: '代码规范', link: '/skill/coding-specification' },
+        { text: 'settings', link: '/skill/settings' },
+        { text: 'npm', link: '/skill/npm' },
+        { text: 'vue', link: '/skill/vue' },
+        { text: 'vue3', link: '/skill/vue3' },
+        { text: 'css', link: '/skill/CSS' },
+        { text: 'JavaScript', link: '/skill/JavaScript' },
+        { text: 'other', link: '/skill/other' },
+      ],
+    },
+    {
+      text: '工程化',
+      items: [{ text: 'webpack', link: '/skill/webpack' }],
+    },
+  ]
+}
+function sidebarOther() {
+  return [
+    {
+      text: '其他',
+      items: [
+        { text: '书籍', link: '/other/books' },
+        { text: 'Python', link: '/other/Python' },
+        { text: '原生应用', link: '/other/RN_Flutter_Weex' },
+        { text: 'Git', link: '/other/Git' },
+      ],
+    },
+  ]
+}

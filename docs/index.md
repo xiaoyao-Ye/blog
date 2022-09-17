@@ -16,19 +16,22 @@ head:
       content: 梳理个人知识, 尽量形成体系, 便于查阅和记忆
 
 hero:
-  name: _Ghosteye
-  text: 天堂有路你不走, 学海无涯苦作舟.
-  tagline: 梳理个人知识, 尽量形成体系, 便于查阅和记忆
+  name: Hello
+  # text: 天堂有路你不走, 学海无涯苦作舟.
+  # tagline: 梳理个人知识, 尽量形成体系, 便于查阅和记忆
+  text: welcome
+  tagline: 建议右上角切换暗模式访问, 体验更佳.
   image:
-    src: ./assets/img/jp.png
+    # src: ./assets/img/book.png
+    src: https://api.iconify.design/eos-icons:atom-electron.svg
     alt: keyboard
   actions:
     - theme: brand
       text: Get Started
-      link: /skill/codeing-specification
+      link: /skill/coding-specification
     - theme: alt
       text: View on GitHub
-      link: https://github.com/xiaoyao-Ye
+      link: https://github.com/xiaoyao-Ye/blog
 
 features:
   - title: css, html, javascript

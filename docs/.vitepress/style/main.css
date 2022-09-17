@@ -1,0 +1,8 @@
+.image-container .VPImage {
+  width: 140px;
+}
+@media (min-width: 960px) {
+  .image-container .VPImage {
+    width: 180px;
+  }
+}
