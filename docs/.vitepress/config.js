@@ -20,7 +20,7 @@ export default defineConfig({
     // lineNumbers: true
   },
   themeConfig: {
-    logo: '/assets/img/book.png',
+    logo: '/img/book.png',
     siteTitle: 'xiaoyao-Ye',
     outlineTitle: '在本页面',
     outline: [2, 6],
@@ -31,7 +31,9 @@ export default defineConfig({
     },
     nav: nav(),
     sidebar: {
-      '/skill/': sidebarSkill(),
+      '/quickQuery/': sidebarQuickQuery(),
+      '/basics/': sidebarBasics(),
+      '/interview/': sidebarInterview(),
       '/other/': sidebarOther(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
@@ -49,28 +51,48 @@ export default defineConfig({
 
 function nav() {
   return [
-    { text: '小技巧', link: '/skill/coding-specification', activeMatch: '/skill/' },
-    { text: '其他', link: '/other/Python', activeMatch: '/other/' },
+    { text: '速查手册', link: '/quickQuery/', activeMatch: '/quickQuery/' },
+    { text: '基础', link: '/basics/', activeMatch: '/basics/' },
+    { text: '八股文', link: '/interview/', activeMatch: '/interview/' },
+    { text: '其他', link: '/other/', activeMatch: '/other/' },
   ]
 }
-function sidebarSkill() {
+function sidebarQuickQuery() {
   return [
     {
-      text: '小技巧',
+      text: '速查手册',
       items: [
-        { text: '代码规范', link: '/skill/coding-specification' },
-        { text: 'settings', link: '/skill/settings' },
-        { text: 'npm', link: '/skill/npm' },
-        { text: 'vue', link: '/skill/vue' },
-        { text: 'vue3', link: '/skill/vue3' },
-        { text: 'css', link: '/skill/CSS' },
-        { text: 'JavaScript', link: '/skill/JavaScript' },
-        { text: 'other', link: '/skill/other' },
+        { text: '代码规范', link: '/quickQuery/coding-specification' },
+        { text: 'settings', link: '/quickQuery/settings' },
+        { text: 'vue', link: '/quickQuery/vue' },
+        { text: 'css', link: '/quickQuery/css' },
+        { text: 'JavaScript', link: '/quickQuery/JavaScript' },
+        { text: 'other', link: '/quickQuery/other' },
       ],
     },
     {
       text: '工程化',
-      items: [{ text: 'webpack', link: '/skill/webpack' }],
+      items: [
+        { text: 'Git', link: '/quickQuery/Git' },
+        { text: 'npm', link: '/quickQuery/npm' },
+        { text: 'webpack', link: '/quickQuery/webpack' },
+      ],
+    },
+  ]
+}
+function sidebarBasics() {
+  return [
+    {
+      text: '基础',
+      items: [{ text: 'mpvue', link: '/basics/mpvue' }],
+    },
+  ]
+}
+function sidebarInterview() {
+  return [
+    {
+      text: '八股文',
+      items: [{ text: 'prepare', link: '/interview/prepare' }],
     },
   ]
 }
@@ -80,9 +102,9 @@ function sidebarOther() {
       text: '其他',
       items: [
         { text: '书籍', link: '/other/books' },
-        { text: 'Python', link: '/other/Python' },
         { text: '原生应用', link: '/other/RN_Flutter_Weex' },
-        { text: 'Git', link: '/other/Git' },
+        { text: 'Python', link: '/other/Python' },
+        { text: 'error', link: '/other/error' },
       ],
     },
   ]

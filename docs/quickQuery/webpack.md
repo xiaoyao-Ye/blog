@@ -1,4 +1,6 @@
-### 安装
+# webpack
+
+## 安装
 
 - **全局安装 webpack**
 
@@ -36,7 +38,7 @@
 
 `npm i clean-webpack-plugin -D`
 
-### 运行
+## 运行
 
 运行的两种方式
 
@@ -47,16 +49,16 @@
 - `npx webpack-dev-server`
 - `npx webpack-dev-server --hot --open --port 8888`
 
-### webpack 配置
+## webpack 配置
 
-##### 四大核心概念:
+### 四大核心概念
 
 - 入口(entry): 程序的入口 js
 - 输出(output): 打包后存放的位置
 - loader: 用于对模块的源代码进行转换
 - 插件(plugins): 插件目的在于解决 loader 无法实现的**其他事**
 
-##### 基础配置
+### 基础配置
 
 ```js
 const path = require('path')
@@ -75,7 +77,7 @@ module.exports = {
 }
 ```
 
-##### html 配置项
+### html 配置项
 
 ```js
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -90,7 +92,7 @@ module.exports = {
 }
 ```
 
-##### css 配置项
+### css 配置项
 
 ```js
 module.exports = {
@@ -111,7 +113,7 @@ module.exports = {
 }
 ```
 
-##### 图片和字体配置项
+### 图片和字体配置项
 
 ```js
 module.exports = {
@@ -138,7 +140,7 @@ module.exports = {
 }
 ```
 
-##### babel 配置项
+### babel 配置项
 
 ```js
 module.exports = {
@@ -189,7 +191,7 @@ module.exports = {
 
 ​ `import '@babel/polyfill'`
 
-##### 自动编译配置项
+### 自动编译配置项
 
 ```js
 module.exports = {
@@ -201,7 +203,7 @@ module.exports = {
 }
 ```
 
-##### build 前自动清除 dist 目录
+### build 前自动清除 dist 目录
 
 ```js
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -214,12 +216,94 @@ module.exports = {
 }
 ```
 
+### vue-loader
+
+- 打包 vue 本质是跟打包 css 是一样的，都是要先下载一个 loader, 然后改配置文件
+
+```js
+npm install -D vue-loader vue-template-compiler
+yarn add -D vue-loader vue-template-compiler
+```
+
+### 模拟出 vue-cli
+
+- 创建一个项目文件夹，进来输入 npm init -y
+- 创建 src 文件夹，里面放 main.js
+- 创建 public 文件夹，里面放 index.html
+- 下载 webpack 和 webpack-cli
+- 写 webpack.config.js
+  - 配置入口 （./src/main.js）
+  - 配置出口
+  - 配置使用自己的 html
+    - 下载 html 插件
+    - 改配置，配置的 template 里面写./public/index.html
+- 下载 css-loader
+- 下载 vue-loader
+- main.js 里写以前那些 vue 的初始化代码
+
+### -dev-server(热更新)
+
+安装:
+
+```js
+npm install --save-dev webpack-dev-server
+yarn add -D webpack-dev-server
+```
+
+webpack.config.js
+
+```js
+devServer: {
+   contentBase: './dist'
+ },
+```
+
+运行
+
+```js
+npx webpack-dev-server --open
+```
+
+- 每次这么运行非常麻烦，所以这个命令写在 package.json 的`scripts`里面
+- 我们就用 npm run xxx 运行
+
 ### 完整配置项
 
 ```js
+// TODO
 // package.json
 ```
 
 ```js
+// TODO
 // webpack.config.js
 ```
+
+## 自动化引入模块
+
+- 需要注意 `require.context` 并不是天生的而是由 `webpack` 提供。在构建时，`webpack` 在代码中解析它。
+
+```javascript
+// 这个示例是导入api文件夹里的所有js文件
+let importAll = require.context('./modules', false, /\.js$/)
+
+class Api extends Request {
+  constructor() {
+    super()
+    //importAll.keys()为模块路径数组
+    importAll.keys().map((path) => {
+      //兼容处理：.default获取ES6规范暴露的内容; 后者获取commonJS规范暴露的内容
+      let api = importAll(path).default || importAll(path)
+      Object.keys(api).forEach((key) => (this[key] = api[key]))
+    })
+  }
+}
+
+export default new Api()
+```
+
+- `require.context` 参数
+  - 文件夹路径
+  - 是否递归查找子文件夹下的模块
+  - 模块匹配规则，一般匹配文件后缀名
+- 只要是需要批量引入的场景，都可以使用这种方法。包括一些公用的全局组件，只需往文件夹内新增组件即可使用，不需要再去注册。如果还没用上的小伙伴，一定要了解下，简单实用又能提高效率。

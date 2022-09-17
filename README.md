@@ -1,31 +1,28 @@
-css
-js
-ts
-html
+# TODO List
 
-工程化
-git
-vite
-webpack
-npm 包
-规范
-技巧
+- [ ] 全文搜索功能(参考 vue3 文档)
 
-面试题
-nodejs
-框架
-vue
-react
-uniapp
-WeChat
-跨端
-flutter
-reactNative
-小程序
-移动端
-pc
-桌面端
+# 前端
 
-notes
-
-编辑器
+- 工程化
+  - git
+  - vite
+  - webpack
+  - npm
+  - 规范
+- 面试题
+- nodejs
+- 框架
+  - vue
+  - react
+  - uniapp
+  - WeChat
+- 多端
+  - flutter
+  - reactNative
+  - 小程序
+  - 移动端
+  - pc
+  - 桌面端
+- notes
+- 编辑器
