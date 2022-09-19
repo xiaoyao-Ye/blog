@@ -41,6 +41,11 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2019-present xiaoyao-Ye',
     },
+    // algolia: {
+    //   appId: '8J64VVRP8K',
+    //   apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
+    //   indexName: 'vitepress'
+    // },
     // 广告
     // carbonAds: {
     //   code: 'your-carbon-code',
@@ -101,7 +106,7 @@ function sidebarOther() {
     {
       text: '其他',
       items: [
-        { text: '书籍', link: '/other/books' },
+        // { text: '书籍', link: '/other/books' },
         { text: '原生应用', link: '/other/RN_Flutter_Weex' },
         { text: 'Python', link: '/other/Python' },
         { text: 'error', link: '/other/error' },
