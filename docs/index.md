@@ -48,3 +48,9 @@ features:
     # icon: ⚡️
     details: Lorem ipsum...
 ---
+
+<script setup>
+import Dark from './components/Dark.vue'
+</script>
+
+<Dark />
