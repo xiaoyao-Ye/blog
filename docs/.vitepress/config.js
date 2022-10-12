@@ -41,11 +41,11 @@ export default defineConfig({
       message: 'Released under the MIT License.',
       copyright: 'Copyright © 2019-present xiaoyao-Ye',
     },
-    // algolia: {
-    //   appId: '8J64VVRP8K',
-    //   apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
-    //   indexName: 'vitepress'
-    // },
+    algolia: {
+      appId: 'IW5HVGHWB1',
+      apiKey: 'd8359d2012af4f23b1f9364c2c50d789',
+      indexName: 'xiaoyao-Ye'
+    },
     // 广告
     // carbonAds: {
     //   code: 'your-carbon-code',
