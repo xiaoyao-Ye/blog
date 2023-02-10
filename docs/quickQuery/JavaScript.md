@@ -98,6 +98,21 @@ reverse('hello world')
 deadDay.replace(/-/g, '') //"-"全部去掉
 ```
 
+## 解析 url 地址参数
+
+```javascript
+let url = 'https://www.baidu.com/s?name=joker&age=18'
+function queryURLParameter(url) {
+  let reg = /([^&?=]+)=([^&?=]+)/g
+  let obj = {}
+  url.replace(reg, (...args) => {
+    obj[args[1]] = args[2]
+  })
+  return obj
+}
+console.log(queryURLParameter(url))
+```
+
 ## 随机生成 16 进制 color
 
 ```javascript
