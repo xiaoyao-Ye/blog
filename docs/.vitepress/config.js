@@ -153,6 +153,8 @@ function sidebarOther() {
         { text: '原生应用', link: '/other/RN_Flutter_Weex' },
         { text: 'Python', link: '/other/Python' },
         { text: 'error', link: '/other/error' },
+        { text: 'docker', link: '/other/docker' },
+        { text: 'vscode', link: '/other/vscode' },
       ],
     },
   ]
