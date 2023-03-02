@@ -140,8 +140,10 @@ function sidebarInterview() {
   return [
     {
       text: '八股文',
-      items: [{ text: 'prepare', link: '/interview/prepare' }],
-      items: [{ text: '工程化', link: '/interview/engineering' }],
+      items: [
+        { text: 'prepare', link: '/interview/prepare' },
+        { text: '工程化', link: '/interview/engineering' },
+      ],
     },
   ]
 }
