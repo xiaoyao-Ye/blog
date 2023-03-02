@@ -141,6 +141,7 @@ function sidebarInterview() {
     {
       text: '八股文',
       items: [{ text: 'prepare', link: '/interview/prepare' }],
+      items: [{ text: '工程化', link: '/interview/engineering' }],
     },
   ]
 }
