@@ -1,5 +1,20 @@
 # vscode
 
+## 快捷键
+
+| 快捷键           | 作用                                |
+| ---------------- | ----------------------------------- |
+| Ctrl + Shift + N | (new window) 新建 vscode 窗口       |
+| Ctrl + Shift + W | (close window) 关闭窗口             |
+| Ctrl + P         | (quick open) 快速打开               |
+| Ctrl + Shift + P | (show command palette) 显示命令面板 |
+| Ctrl + Shift + [ | 折叠区域                            |
+| Ctrl + Shift + ] | 展开区域                            |
+| Ctrl + K + [     | 折叠所有子区域                      |
+| Ctrl + K + ]     | 展开所有子区域                      |
+| Ctrl + K + 0     | 折叠所有区域                        |
+| Ctrl + K + J     | 展开所有区域                        |
+
 ## vscode 调试代码
 
 1. 调试 nest.js 项目

@@ -212,12 +212,6 @@ GoTop() {
 }
 ```
 
-## vscode 快捷键补充
-
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2442689/1646127881810-cc4e4bca-6299-4af1-8908-cd2ffc0dccc5.png#clientId=u1c903304-ebb6-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=74&id=u09e065b9&margin=%5Bobject%20Object%5D&name=image.png&originHeight=74&originWidth=471&originalType=binary&ratio=1&rotation=0&showTitle=false&size=6700&status=done&style=none&taskId=u8513ff32-d678-4e26-9f0c-cecc95ae341&title=&width=471)
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2442689/1646127886928-308cb7f5-60a1-4862-bbf2-0fa4e10d6b13.png#clientId=u1c903304-ebb6-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=79&id=ua30c0499&margin=%5Bobject%20Object%5D&name=image.png&originHeight=79&originWidth=512&originalType=binary&ratio=1&rotation=0&showTitle=false&size=5179&status=done&style=none&taskId=u42659c3e-ae28-44b9-91a5-6ad2747ebbf&title=&width=512)
-![image.png](https://cdn.nlark.com/yuque/0/2022/png/2442689/1646127894166-0a858a5c-98d0-4a46-bb18-6449a2ee7ce4.png#clientId=u1c903304-ebb6-4&crop=0&crop=0&crop=1&crop=1&from=paste&height=251&id=uf8c47a1f&margin=%5Bobject%20Object%5D&name=image.png&originHeight=251&originWidth=630&originalType=binary&ratio=1&rotation=0&showTitle=false&size=21823&status=done&style=none&taskId=u2068d2e7-3516-492a-b80d-dc2262544f2&title=&width=630)
-
 ## js 写个方法生成 a-z 的数组
 
 - String.fromCharCode('65') // A
