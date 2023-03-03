@@ -43,7 +43,8 @@ module.exports = {
 | markdown-loader         | 将 Markdown 编译为 HTML                                                  |
 | ts-loader               | 像加载 JavaScript 一样加载 [TypeScript](https://www.typescriptlang.org/) |
 | babel-loader            | 将 ES2015+ 代码并将其转换为 ES5                                          |
-| css-loader              | 加载 CSS 文件并解析 import 的 CSS 文件，最终返回 CSS 代码                |
+| css-loader              | 处理 css 文件, 输出 JavaScript 模块                                      |
+| style-loader            | 将 css-loader 处理完的 JavaScript 模块转为 style 标签插入 html 中        |
 | less-loader/scss-loader | 加载并编译 LESS / SASS/SCSS 文件                                         |
 | vue-loader              | 加载并编译 [Vue 组件](https://vuejs.org/v2/guide/components.html)        |
 
