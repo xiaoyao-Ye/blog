@@ -26,6 +26,8 @@
 
 2. 调试 TypeScript 项目
 
+   > `package.json` 中 `type="module"` 需要去掉
+
    - 根目录下创建 .vscode/launch.json 文件
    - F5 进入调试模式, 需要调试的代码打断点就好了
 
