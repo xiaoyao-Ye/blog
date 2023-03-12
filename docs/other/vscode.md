@@ -39,14 +39,18 @@
          "name": "Launch Program",
          "type": "node",
          "request": "launch",
+         // 跳过调试
          "skipFiles": ["<node_internals>/**"],
          // 入口文件
          "program": "${workspaceFolder}\\src\\main.ts",
          // 运行时参数
          "args": ["cross-env NODE_ENV=development"],
          // "cwd": "${workspaceFolder}",
+         // 使用terminal调试
          "console": "integratedTerminal",
-         "runtimeArgs": ["-r", "ts-node/register"]
+         "runtimeArgs": ["-r", "ts-node/register"],
+         // 设置环境
+         "env": {}
        }
      ]
    }
