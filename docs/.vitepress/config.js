@@ -35,6 +35,7 @@ export default defineConfig({
       '/basics/': sidebarBasics(),
       '/interview/': sidebarInterview(),
       '/other/': sidebarOther(),
+      // '/Ghosteye/': sidebarGhosteye(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
     footer: {
@@ -103,6 +104,7 @@ function nav() {
     { text: '基础', link: '/basics/', activeMatch: '/basics/' },
     { text: '八股文', link: '/interview/', activeMatch: '/interview/' },
     { text: '其他', link: '/other/', activeMatch: '/other/' },
+    // { text: 'Ghosteye', link: '/Ghosteye/create-xm', activeMatch: '/Ghosteye/' },
   ]
 }
 function sidebarQuickQuery() {
@@ -159,6 +161,15 @@ function sidebarOther() {
         { text: 'docker', link: '/other/docker' },
         { text: 'vscode', link: '/other/vscode' },
       ],
+    },
+  ]
+}
+
+function sidebarGhosteye() {
+  return [
+    {
+      text: '个人项目使用介绍',
+      items: [{ text: 'create-xm', link: '/Ghosteye/create-xm' }],
     },
   ]
 }

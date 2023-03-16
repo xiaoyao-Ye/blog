@@ -103,3 +103,83 @@ export default defineConfig({
   ],
 })
 ```
+
+## pnpm
+
+### monorepo
+
+> pnpm 的 monorepo 是将多个项目或包文件放到一个 git 仓库中进行管理，多个项目中会有共享的代码，可以分包引用，而整个项目由根目录管理的 dependencies 加上多个 packages 组成，每个 package 也可以在自己的作用域引入自己的 dependencies 。
+
+使用场景:
+
+- 多个项目中有共享的代码，可以分包引用，减少代码冗余
+- 可以把原本一个项目的多个模块拆分成多个 packages ，在 packages 之间相互引用，也可以单独发布成包，极大地解决了项目之间代码无法重用的痛点
+- 在项目打包或者编译操作时也可重用一套配置，通吃所有 packages
+
+使用方式:
+
+1. 在项目根目录下，创建一个 pnpm-workspace.yaml 文件，并设置 packages 属性，指定需要管理的 packages 文件夹
+
+   ```yaml
+   packages:
+     - 'packages/**'
+     - 'docs'
+   ```
+
+2. 安装依赖
+   安装公共依赖：在根目录下安装公共依赖，例如 TypeScript，供所有 packages 使用，命令如下:
+
+   > -w or --workspace-root
+
+   ```bash
+   pnpm install typescript -D -w
+   ```
+
+   安装特定 packages 的依赖：例如安装 vue，命令如下：
+
+   ```bash
+   pnpm install vue -r --filter 需要安装该包的子包
+   ```
+
+   安装多个 packages 的依赖：例如安装 /tools，/server，/web 的依赖，命令如下：
+
+   ```bash
+   pnpm i vue -r --filter tools server web
+   ```
+
+3. 在 packages 文件夹下创建各自的 package, 例如 server，tools，web
+
+   ```yaml
+   ├── packages
+   │   ├── server
+   │   ├── tools
+   │   └── web
+   ```
+
+   在各自的 package 中引用公共依赖，例如在 web 中引用 TypeScript：
+
+   ```yaml
+   ├── node_modules
+   │   ├── @types
+   │   └── typescript -> .pnpm/typescript@4.4.4/node_modules/typescript
+   ├── package.json
+   ├── packages
+   │   ├── server
+   │   ├── tools
+   │   └── web
+   ├── pnpm-lock.yaml
+   └── pnpm-workspace.yaml
+   ```
+
+   在 package 中引用其他 package 的依赖，例如在 server 中引用 web 中的 vue：
+
+   ```vue
+   import Vue from '../web/node_modules/vue'
+   ```
+
+4. 打包编译
+   打包编译公共依赖：例如编译 TypeScript，命令如下：
+
+   ```bash
+   pnpm tsc
+   ```
