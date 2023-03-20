@@ -32,7 +32,7 @@ export default defineConfig({
     nav: nav(),
     sidebar: {
       '/quickQuery/': sidebarQuickQuery(),
-      '/basics/': sidebarBasics(),
+      '/leetCode/': sidebarLeetCode(),
       '/interview/': sidebarInterview(),
       '/other/': sidebarOther(),
       // '/Ghosteye/': sidebarGhosteye(),
@@ -100,11 +100,11 @@ export default defineConfig({
 
 function nav() {
   return [
-    { text: '速查手册', link: '/quickQuery/', activeMatch: '/quickQuery/' },
-    { text: '基础', link: '/basics/', activeMatch: '/basics/' },
-    { text: '八股文', link: '/interview/', activeMatch: '/interview/' },
-    { text: '其他', link: '/other/', activeMatch: '/other/' },
-    // { text: 'Ghosteye', link: '/Ghosteye/create-xm', activeMatch: '/Ghosteye/' },
+    { text: '速查手册', activeMatch: '/quickQuery/', link: '/quickQuery/' },
+    { text: 'LeetCode', activeMatch: '/leetCode/', link: '/leetCode/01.md' },
+    { text: '八股文', activeMatch: '/interview/', link: '/interview/' },
+    { text: '其他', activeMatch: '/other/', link: '/other/' },
+    // { text: 'Ghosteye', activeMatch: '/Ghosteye/', link: '/Ghosteye/create-xm', },
   ]
 }
 function sidebarQuickQuery() {
@@ -117,6 +117,7 @@ function sidebarQuickQuery() {
         { text: 'vue', link: '/quickQuery/vue' },
         { text: 'css', link: '/quickQuery/css' },
         { text: 'JavaScript', link: '/quickQuery/JavaScript' },
+        { text: 'mpvue', link: '/quickQuery/mpvue' },
         { text: 'other', link: '/quickQuery/other' },
       ],
     },
@@ -130,11 +131,14 @@ function sidebarQuickQuery() {
     },
   ]
 }
-function sidebarBasics() {
+function sidebarLeetCode() {
   return [
     {
-      text: '基础',
-      items: [{ text: 'mpvue', link: '/basics/mpvue' }],
+      text: 'LeetCode',
+      items: [
+        { text: '两数之和', link: '/leetCode/01.md' },
+        { text: '回文数', link: '/leetCode/09.md' },
+      ],
     },
   ]
 }
