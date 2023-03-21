@@ -7,7 +7,7 @@ layout: page
 
 <div style="max-width: 1000px;margin:50px auto;">
   <a href="./solar" target="_blank" >
-  <div align="center" style="display: inline-block;width: 300px; height: 200px;background: url('/case/solar.png') center; background-size: cover;box-shadow: 0px 0px 10px 5px #333;border-radius: 16px;">
+  <div align="center" style="display: inline-block;width: 300px; height: 200px;background: url('/blog/case/solar.png') center; background-size: cover;box-shadow: 0px 0px 10px 5px #333;border-radius: 16px;">
   </div>
   </a>
 </div>
