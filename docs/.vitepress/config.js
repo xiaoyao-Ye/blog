@@ -1,8 +1,9 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
+  // srcDir: './src',
   base: '/blog/',
-  title: 'xiaoyao-Ye',
+  title: 'Ghosteye',
   titleTemplate: '不要让时代的悲哀成为你的悲哀!',
   description: '当灾难来临时, 精神意志是人类的第一序列武器.',
   // 暗黑模式
@@ -31,7 +32,7 @@ export default defineConfig({
     },
     nav: nav(),
     sidebar: {
-      '/quickQuery/': sidebarQuickQuery(),
+      '/handbook/': sidebarHandbook(),
       '/leetCode/': sidebarLeetCode(),
       '/interview/': sidebarInterview(),
       '/other/': sidebarOther(),
@@ -100,33 +101,34 @@ export default defineConfig({
 
 function nav() {
   return [
-    { text: '速查手册', activeMatch: '/quickQuery/', link: '/quickQuery/' },
+    { text: 'handbook', activeMatch: '/handbook/', link: '/handbook/' },
     { text: 'LeetCode', activeMatch: '/leetCode/', link: '/leetCode/01.md' },
-    { text: '八股文', activeMatch: '/interview/', link: '/interview/' },
-    { text: '其他', activeMatch: '/other/', link: '/other/' },
+    { text: 'interview', activeMatch: '/interview/', link: '/interview/' },
+    { text: 'other', activeMatch: '/other/', link: '/other/' },
+    { text: 'case', activeMatch: '/case/', link: '/case/' },
     // { text: 'Ghosteye', activeMatch: '/Ghosteye/', link: '/Ghosteye/create-xm', },
   ]
 }
-function sidebarQuickQuery() {
+function sidebarHandbook() {
   return [
     {
       text: '速查手册',
       items: [
-        { text: '代码规范', link: '/quickQuery/coding-specification' },
-        { text: 'settings', link: '/quickQuery/settings' },
-        { text: 'vue', link: '/quickQuery/vue' },
-        { text: 'css', link: '/quickQuery/css' },
-        { text: 'JavaScript', link: '/quickQuery/JavaScript' },
-        { text: 'mpvue', link: '/quickQuery/mpvue' },
-        { text: 'other', link: '/quickQuery/other' },
+        { text: '代码规范', link: '/handbook/coding-specification' },
+        { text: 'settings', link: '/handbook/settings' },
+        { text: 'vue', link: '/handbook/vue' },
+        { text: 'css', link: '/handbook/css' },
+        { text: 'JavaScript', link: '/handbook/JavaScript' },
+        { text: 'mpvue', link: '/handbook/mpvue' },
+        { text: 'other', link: '/handbook/other' },
       ],
     },
     {
       text: '工程化',
       items: [
-        { text: 'Git', link: '/quickQuery/Git' },
-        { text: 'npm', link: '/quickQuery/npm' },
-        { text: 'webpack', link: '/quickQuery/webpack' },
+        { text: 'Git', link: '/handbook/Git' },
+        { text: 'npm', link: '/handbook/npm' },
+        { text: 'webpack', link: '/handbook/webpack' },
       ],
     },
   ]
