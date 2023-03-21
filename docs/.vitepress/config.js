@@ -138,6 +138,7 @@ function sidebarLeetCode() {
       items: [
         { text: '两数之和', link: '/leetCode/01.md' },
         { text: '回文数', link: '/leetCode/09.md' },
+        { text: '爬楼梯', link: '/leetCode/70.md' },
       ],
     },
   ]
