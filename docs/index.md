@@ -29,7 +29,7 @@ hero:
   actions:
     - theme: brand
       text: 查看文档
-      link: /quickQuery/
+      link: /handbook/
     - theme: alt
       text: 前往GitHub
       link: https://github.com/xiaoyao-Ye/blog
@@ -51,6 +51,8 @@ features:
 
 <script setup>
 import Dark from './components/Dark.vue'
+import Solar from './components/Solar.vue'
 </script>
 
 <Dark />
+<!-- <Solar /> -->
