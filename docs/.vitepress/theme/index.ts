@@ -11,6 +11,6 @@ onMounted(() => {
 export default {
   ...Theme,
   enhanceApp({ app }) {
-    console.log({ app })
+    // console.log({ app })
   },
 }
