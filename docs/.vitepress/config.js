@@ -142,6 +142,7 @@ function sidebarLeetCode() {
         { text: '[简单] 09.回文数', link: '/leetCode/09.md' },
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
+        { text: '[简单] 242.有效的字母异位词', link: '/leetCode/242.md' },
       ],
     },
   ]
