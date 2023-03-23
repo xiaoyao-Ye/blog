@@ -21,6 +21,7 @@
     "git-cz": "^4.9.0",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
+    "sass": "^1.59.3",
     "simple-git-hooks": "^2.8.0",
     "vitepress": "^1.0.0-alpha.15",
     "vue": "^3.2.37"
