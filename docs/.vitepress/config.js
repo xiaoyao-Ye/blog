@@ -139,6 +139,7 @@ function sidebarLeetCode() {
       text: 'LeetCode',
       items: [
         { text: '[简单] 01.两数之和', link: '/leetCode/01.md' },
+        { text: '[中等] 07.整数反转', link: '/leetCode/07.md' },
         { text: '[简单] 09.回文数', link: '/leetCode/09.md' },
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
