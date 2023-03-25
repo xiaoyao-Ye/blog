@@ -144,6 +144,7 @@ function sidebarLeetCode() {
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
         { text: '[简单] 242.有效的字母异位词', link: '/leetCode/242.md' },
+        { text: '[简单] 387.字符串中的第一个唯一字符', link: '/leetCode/387.md' },
       ],
     },
   ]
