@@ -36,7 +36,10 @@ export default defineComponent({
     // })
 
     const totalHeight = computed(() => {
-      return items.reduce((acc, cur) => acc + cur.height, 0)
+      const start = Math.floor(scrollTop.value / itemHeight)
+      const end = Math.min(start + visibleCount + overscanCount * 2, items.length)
+      const visibleItems = items.slice(start, end)
+      return visibleItems.reduce((acc, cur) => acc + cur.height, 0)
     })
     const offsetY = computed(() => {
       return scrollTop.value - overscanCount * itemHeight
