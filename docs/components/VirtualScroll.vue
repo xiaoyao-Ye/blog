@@ -29,20 +29,11 @@ export default defineComponent({
       const end = Math.min(start + visibleCount + overscanCount, items.length)
       return items.slice(start, end)
     })
-    // const visibleItems = computed(() => {
-    //   const start = Math.floor(scrollTop.value / itemHeight)
-    //   const end = Math.min(start + visibleCount + overscanCount, items.length) - overscanCount // 在这里减去 overscanCount
-    //   return items.slice(start, end)
-    // })
-
     const totalHeight = computed(() => {
-      const start = Math.floor(scrollTop.value / itemHeight)
-      const end = Math.min(start + visibleCount + overscanCount * 2, items.length)
-      const visibleItems = items.slice(start, end)
-      return visibleItems.reduce((acc, cur) => acc + cur.height, 0)
+      return visibleItems.value.reduce((acc, cur) => acc + cur.height, 0)
     })
     const offsetY = computed(() => {
-      return scrollTop.value - overscanCount * itemHeight
+      return scrollTop.value ? scrollTop.value - overscanCount * itemHeight : 0
     })
 
     const itemHeight = 30
@@ -83,7 +74,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .wrapper {
   position: relative;
   overflow: auto;
