@@ -143,6 +143,7 @@ function sidebarLeetCode() {
         { text: '[简单] 09.回文数', link: '/leetCode/09.md' },
         { text: '[简单] 20.有效的括号', link: '/leetCode/20.md' },
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
+        { text: '[简单] 59.最后一个单词的长度', link: '/leetCode/59.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
         { text: '[简单] 125.验证回文串', link: '/leetCode/125.md' },
         { text: '[简单] 242.有效的字母异位词', link: '/leetCode/242.md' },
