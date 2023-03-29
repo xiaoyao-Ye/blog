@@ -141,6 +141,7 @@ function sidebarLeetCode() {
         { text: '[简单] 01.两数之和', link: '/leetCode/01.md' },
         { text: '[中等] 07.整数反转', link: '/leetCode/07.md' },
         { text: '[简单] 09.回文数', link: '/leetCode/09.md' },
+        { text: '[简单] 14.最长公共前缀', link: '/leetCode/14.md' },
         { text: '[简单] 20.有效的括号', link: '/leetCode/20.md' },
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
         { text: '[简单] 59.最后一个单词的长度', link: '/leetCode/59.md' },
