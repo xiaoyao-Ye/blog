@@ -146,6 +146,7 @@ function sidebarLeetCode() {
         { text: '[简单] 20.有效的括号', link: '/leetCode/20.md' },
         { text: '[简单] 27.移除元素', link: '/leetCode/27.md' },
         { text: '[中等] 36.有效的数独', link: '/leetCode/36.md' },
+        { text: '[中等] 45.跳跃游戏 II', link: '/leetCode/45.md' },
         { text: '[简单] 59.最后一个单词的长度', link: '/leetCode/59.md' },
         { text: '[简单] 66.加一', link: '/leetCode/66.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
