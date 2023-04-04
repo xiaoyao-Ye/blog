@@ -150,6 +150,7 @@ function sidebarLeetCode() {
         { text: '[简单] 59.最后一个单词的长度', link: '/leetCode/59.md' },
         { text: '[简单] 66.加一', link: '/leetCode/66.md' },
         { text: '[简单] 70.爬楼梯', link: '/leetCode/70.md' },
+        { text: '[简单] 121.买卖股票的最佳时机', link: '/leetCode/121.md' },
         { text: '[简单] 125.验证回文串', link: '/leetCode/125.md' },
         { text: '[简单] 219.存在重复元素 II', link: '/leetCode/219.md' },
         { text: '[简单] 242.有效的字母异位词', link: '/leetCode/242.md' },
