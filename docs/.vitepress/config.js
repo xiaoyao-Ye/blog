@@ -182,6 +182,7 @@ function sidebarOther() {
         { text: 'docker', link: '/other/docker' },
         { text: 'vscode', link: '/other/vscode' },
         { text: 'quotations', link: '/other/quotations' },
+        { text: 'test', link: '/other/test' },
       ],
     },
   ]
