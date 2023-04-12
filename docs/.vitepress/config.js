@@ -116,9 +116,10 @@ function sidebarHandbook() {
       items: [
         { text: '代码规范', link: '/handbook/coding-specification' },
         { text: 'settings', link: '/handbook/settings' },
-        { text: 'vue', link: '/handbook/vue' },
-        { text: 'css', link: '/handbook/css' },
+        { text: 'Vue', link: '/handbook/vue' },
+        { text: 'Css', link: '/handbook/css' },
         { text: 'JavaScript', link: '/handbook/JavaScript' },
+        { text: 'NodeJS', link: '/handbook/node' },
         { text: 'mpvue', link: '/handbook/mpvue' },
         { text: 'other', link: '/handbook/other' },
       ],
