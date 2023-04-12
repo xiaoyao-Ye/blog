@@ -184,6 +184,7 @@ function sidebarOther() {
         { text: 'vscode', link: '/other/vscode' },
         { text: 'quotations', link: '/other/quotations' },
         { text: 'test', link: '/other/test' },
+        { text: 'mini', link: '/other/mini' },
       ],
     },
   ]
