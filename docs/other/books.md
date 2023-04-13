@@ -8,11 +8,11 @@ title: books
 
 head:
   - - meta
-    - name: xiaoyao-Ye 的笔记
-      content: xiaoyao-Ye 笔记整理, 汇总所有知识点
+    - name: Ghosteye 的笔记
+      content: Ghosteye 笔记整理, 汇总所有知识点
   - - meta
-    - name: xiaoyao-Ye 的知识体系
-      content: xiaoyao-Ye 梳理个人知识, 尽量形成体系, 便于查阅和记忆
+    - name: Ghosteye 的知识体系
+      content: Ghosteye 梳理个人知识, 尽量形成体系, 便于查阅和记忆
 
 prefix: https://xiaoyao-ye.github.io/blog/books/
 ---

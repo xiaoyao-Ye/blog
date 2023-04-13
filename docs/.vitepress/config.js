@@ -22,7 +22,7 @@ export default defineConfig({
   },
   themeConfig: {
     logo: '/img/book.png',
-    siteTitle: 'xiaoyao-Ye',
+    siteTitle: 'Ghosteye',
     outlineTitle: '在本页面',
     outline: [2, 6],
     lastUpdatedText: '最近更新时间',
@@ -41,7 +41,7 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2019-present xiaoyao-Ye',
+      copyright: 'Copyright © 2019-present Ghosteye',
     },
     algolia: {
       appId: 'IW5HVGHWB1',

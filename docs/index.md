@@ -51,7 +51,7 @@ features:
 
 <script setup>
 import Dark from './components/Dark.vue'
-import Solar from './components/Solar.vue'
+// import Solar from './components/Solar.vue'
 </script>
 
 <Dark />
