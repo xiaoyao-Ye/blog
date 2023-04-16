@@ -1,5 +1,13 @@
 # node
 
+## global
+
+一些全局的环境变量, 或者全局变量可以挂载到全剧对象上面. 就好像浏览器挂载到 `window` 一样
+
+```Typescript
+Object.assign(global, { $ })
+```
+
 ## common API
 
 ### constant
@@ -58,6 +66,10 @@
   // 则返回 'wwwroot/static_files/gif/image.gif'
   ```
 
+### child_process
+
+- `spawn` 执行命令. 主要用于异步地衍生子进程，不会阻塞 Node.js 事件循环
+
 ## shebang
 
 Shebang 是一种在 Unix 和 Linux 系统中使用的特殊注释，通常用于指定脚本文件的解释器。在文件的第一行添加一个井号（#）和一个惊叹号（!），紧接着是解释器的完整路径或可执行文件名。例如，`#!/usr/bin/python` `#!/usr/bin/env node`。当直接调用脚本文件时，调用者会利用 Shebang 提供的信息调用相应的解释器，从而使得脚本文件的调用方式与普通的可执行文件类似。
@@ -76,9 +88,9 @@ Shebang 的作用是指定脚本文件的解释器。
   // or
   // 可配置为对象形式
   "bin": {
-    // test xx
+    // xx
     "xx": "./xx.js",
-    // test zz
+    // zz
     "zz": "./zz.js"
   }
 }
