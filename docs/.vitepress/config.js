@@ -185,6 +185,7 @@ function sidebarOther() {
         { text: 'quotations', link: '/other/quotations' },
         { text: 'test', link: '/other/test' },
         { text: 'mini', link: '/other/mini' },
+        { text: 'install', link: '/other/install' },
       ],
     },
   ]
