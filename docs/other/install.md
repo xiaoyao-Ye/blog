@@ -74,9 +74,11 @@
 - [Everything](https://www.voidtools.com/zh-cn/downloads/)
 - [7z](https://www.7-zip.org/)
 - [UTools](https://u.tools/)
+- [Snipaste](https://www.snipaste.com/)
 - Typora
 - Postman
 - 搜狗输入法(全拼/双拼)
+- 向日葵
 - Plane(自行解决)
 - `*` [Docker](https://www.docker.com/)
 - `*` 网易有道词典
