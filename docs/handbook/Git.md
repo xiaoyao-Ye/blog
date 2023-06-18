@@ -8,7 +8,7 @@
 # git config  user.name 你的目标用户名
 # git config  user.email 你的目标邮箱名
 
-# 使用--global参数，配置全局的用户名和邮箱，只需要配置一次即可。推荐配置github的用户名和密码
+# 使用--global参数，配置全局的用户名和邮箱，只需要配置一次即可。推荐配置github的用户名和邮箱
 git config  --global user.name autumnFish
 git config  --global user.email 517729329@qq.com
 
