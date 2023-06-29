@@ -1,0 +1,10 @@
+.git
+node_modules
+README.md
+nginx.conf
+.github
+.vscode
+.gitignore
+.prettierignore
+.prettierrc
+
