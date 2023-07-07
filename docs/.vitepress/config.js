@@ -36,7 +36,7 @@ export default defineConfig({
       '/leetCode/': sidebarLeetCode(),
       '/interview/': sidebarInterview(),
       '/other/': sidebarOther(),
-      // '/Ghosteye/': sidebarGhosteye(),
+      '/Ghosteye/': sidebarGhosteye(),
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
     footer: {
@@ -106,7 +106,7 @@ function nav() {
     { text: 'interview', activeMatch: '/interview/', link: '/interview/' },
     { text: 'other', activeMatch: '/other/', link: '/other/' },
     { text: 'case', activeMatch: '/case/', link: '/case/' },
-    // { text: 'Ghosteye', activeMatch: '/Ghosteye/', link: '/Ghosteye/create-xm', },
+    { text: 'Ghosteye', activeMatch: '/Ghosteye/', link: '/Ghosteye/initapi' },
   ]
 }
 function sidebarHandbook() {
@@ -195,7 +195,10 @@ function sidebarGhosteye() {
   return [
     {
       text: '个人项目使用介绍',
-      items: [{ text: 'create-xm', link: '/Ghosteye/create-xm' }],
+      items: [
+        // { text: 'create-xm', link: '/Ghosteye/create-xm' },
+        { text: 'initapi', link: '/Ghosteye/initapi' },
+      ],
     },
   ]
 }
