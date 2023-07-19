@@ -26,7 +26,7 @@ hero:
   tagline: But if you don't change your direction, and if you keep looking, you may end up where you are heading.
   image:
     # src: /img/book.png
-    src: https://api.iconify.design/eos-icons:atom-electron.svg
+    src: /logo.svg
     alt: keyboard
   actions:
     - theme: brand

@@ -5,24 +5,18 @@ import './rainbow.css'
 import './vars.css'
 import './overrides.css'
 
-import { watch } from 'vue'
-
-// export default {
-//   ...Theme,
-//   enhanceApp({ app }) {
-//     // console.log({ app })
-//   },
-// }
+import { h, watch } from 'vue'
+import BG from '../../components/BG.vue'
 
 let homePageStyle: HTMLStyleElement | undefined
 
 export default {
   ...Theme,
-  // Layout: () => {
-  //   return h(Theme.Layout, null, {
-  //     'home-features-after': () => h(HomePage),
-  //   })
-  // },
+  Layout: () => {
+    return h(Theme.Layout, null, {
+      'home-features-after': () => h(BG),
+    })
+  },
   enhanceApp({ router }) {
     if (typeof window === 'undefined') return
 
