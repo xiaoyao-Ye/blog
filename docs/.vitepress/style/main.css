@@ -6,3 +6,9 @@
     width: 180px;
   }
 }
+
+@media (min-width: 768px) {
+  .VPContent .VPHome {
+    padding-bottom: 60px;
+  }
+}
