@@ -1,5 +1,96 @@
 # JavaScript
 
+## 函数柯里化
+
+```javascript
+function currying(fn) {
+  let func = (...args) => {
+    // console.log(fn.length,`打印输出fn的形参个数`)
+    if (args.length == fn.length) return fn(...args)
+    return (...arg) => func(...args, ...arg)
+  }
+  return func
+}
+
+function add(a, b, c) {
+  return a + b + c
+}
+console.log(add(1, 2, 3))
+add = currying(add)
+console.log(add(1)(2)(3))
+```
+
+## 节流
+
+```javascript
+function throttle(fn, interval = 500) {
+  let flag = true
+  return function (...args) {
+    let context = this
+    if (!flag) return
+    flag = false
+    setTimeout(() => {
+      fn.apply(context, args)
+      flag = true
+    }, interval)
+  }
+}
+
+// 写成下面的方式也是一样的意思
+const throttle = function (fn, interval = 500) {
+  let last = 0
+  return function (...args) {
+    let context = this
+    let now = +new Date()
+    // 还没到时间
+    if (now - last < interval) return
+    last = now
+    fn.apply(this, args)
+  }
+}
+```
+
+## 防抖
+
+```javascript
+function debounce(fn, delay) {
+  let timer = null
+  return function (...args) {
+    let context = this
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(function () {
+      fn.apply(context, args)
+    }, delay)
+  }
+}
+```
+
+## 加强版节流
+
+> 防抖 + 节流
+
+```javascript
+function throttle(fn, delay = 500) {
+  let last = 0,
+    timer = null
+  return function (...args) {
+    let context = this
+    let now = new Date()
+    if (now - last < delay) {
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        last = now
+        fn.apply(context, args)
+      }, delay)
+    } else {
+      // 时间到了必须给响应
+      last = now
+      fn.apply(context, args)
+    }
+  }
+}
+```
+
 ## 判断请求超时
 
 ```javascript
