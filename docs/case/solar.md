@@ -14,4 +14,6 @@ description: 一个等比例缩放的太阳系运行图
 import Solar from '../components/Solar.vue'
 </script>
 
-<Solar />
+<ClientOnly>
+  <Solar />
+</ClientOnly>
