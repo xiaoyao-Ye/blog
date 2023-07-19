@@ -1,0 +1,28 @@
+{
+  "name": "development",
+  "image": "node:16-alpine",
+  "customizations": {
+    "vscode": {
+      // "extensions": ["dbaeumer.vscode-eslint"],
+      "settings": {
+        // "editor.tabSize": 2,
+        // "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "xabikos.JavaScriptSnippets",
+        "techer.open-in-browser",
+        "hollowtree.vue-snippets"
+      ]
+    }
+  },
+  "mounts": ["source=${localWorkspaceFolder}/.,target=/workspace,type=bind,consistency=cached"],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "${env:SSH_AUTH_SOCK}"
+  },
+  // "runArgs": ["--env-file", ".env"],
+  // "appPort": [3000],
+  // "postCreateCommand": "npm install",
+  "workspaceFolder": "/workspace"
+}

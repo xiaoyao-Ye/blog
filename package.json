@@ -11,7 +11,6 @@
     "docs:serve": "vitepress serve docs",
     "commit": "git-cz",
     "commit:origin": "git pull && git add . && git-cz && git push",
-    "lint-staged": "lint-staged",
     "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\""
   },
   "keywords": [],
@@ -23,11 +22,11 @@
     "prettier": "^2.8.8",
     "sass": "^1.63.6",
     "simple-git-hooks": "^2.8.1",
-    "vitepress": "^1.0.0-beta.5",
+    "vitepress": "1.0.0-beta.5",
     "vue": "^3.3.4"
   },
   "simple-git-hooks": {
-    "pre-commit": "npm run lint-staged"
+    "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
     "*": [
