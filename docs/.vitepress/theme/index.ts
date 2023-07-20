@@ -16,10 +16,16 @@ export default {
   Layout: () => {
     return h(Theme.Layout, null, {
       'home-features-after': () => h(BG),
+      'doc-before': () => h(BG),
       'doc-after': () => h(Comment),
+      // 文章右边 sidebar 内容之后
+      // 'aside-outline-after': () => h(BG)
     })
   },
   enhanceApp({ router }) {
+    // 可以用来判断是否在浏览器环境下
+    // import { inBrowser } from 'vitepress'
+    // if (inBrowser) {}
     if (typeof window === 'undefined') return
 
     window.localStorage.setItem('vitepress-theme-appearance', 'dark')

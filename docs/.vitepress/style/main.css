@@ -12,3 +12,39 @@
     padding-bottom: 60px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+  background-color: #eee;
+}
+
+::-webkit-scrollbar-thumb {
+  /* background-color: #0093ff; */
+  /* background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, .4) 75%, transparent 75%, transparent); */
+  background-color: #ddd;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
+}
+
+/* ::-webkit-scrollbar-track {
+  background-color: transparent;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em
+} */
+
+.dark ::-webkit-scrollbar {
+  background-color: #222;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #333;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
