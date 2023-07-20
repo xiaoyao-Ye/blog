@@ -7,6 +7,7 @@ import './overrides.css'
 
 import { h, watch } from 'vue'
 import BG from '../../components/BG.vue'
+import Comment from '../../components/Comment.vue'
 
 let homePageStyle: HTMLStyleElement | undefined
 
@@ -15,6 +16,7 @@ export default {
   Layout: () => {
     return h(Theme.Layout, null, {
       'home-features-after': () => h(BG),
+      'doc-after': () => h(Comment),
     })
   },
   enhanceApp({ router }) {

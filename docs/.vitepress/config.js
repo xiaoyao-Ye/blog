@@ -4,8 +4,9 @@ export default defineConfig({
   // srcDir: './src',
   base: '/blog/',
   title: 'Ghosteye',
-  titleTemplate: '不要让时代的悲哀成为你的悲哀!',
-  description: '当灾难来临时, 精神意志是人类的第一序列武器.',
+  // titleTemplate: '不要让时代的悲哀成为你的悲哀!',
+  // description: '当灾难来临时, 精神意志是人类的第一序列武器.',
+  description: 'Do you have any output? Do it now!',
   // 暗黑模式
   appearance: true,
   // 当设置为 时true，VitePress 不会因为死链接而导致构建失败。
