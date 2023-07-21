@@ -28,7 +28,11 @@ export default {
     // if (inBrowser) {}
     if (typeof window === 'undefined') return
 
-    window.localStorage.setItem('vitepress-theme-appearance', 'dark')
+    const theme = window.localStorage.getItem('vitepress-theme-appearance')
+    if (theme === null) {
+      window.localStorage.setItem('vitepress-theme-appearance', 'dark')
+      window.location.reload()
+    }
 
     watch(
       () => router.route.data.relativePath,
