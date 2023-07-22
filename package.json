@@ -1,14 +1,12 @@
 {
-  "name": "panacea",
-  "version": "1.0.0",
-  "description": "",
+  "description": "anything is possible.",
   "main": "index.js",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:serve": "vitepress serve docs",
+    "docs:preview": "vitepress preview docs",
     "commit": "git-cz",
     "commit:origin": "git pull && git add . && git-cz && git push",
     "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\""
