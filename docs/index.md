@@ -22,7 +22,9 @@ hero:
   # text: Burn one's boats
   # tagline: Do you have any output? Do it now!
   name: Burn one's boats
-  text: Do you have any output? Do it now!
+  # name: anything is possible.
+  # text: Do you have any output? Do it now!
+  text: Anything is possible. Do it now!
   tagline: But if you don't change your direction, and if you keep looking, you may end up where you are heading.
   image:
     # src: /img/book.png
@@ -31,7 +33,7 @@ hero:
   actions:
     - theme: brand
       text: Document
-      link: /handbook/
+      link: /handbook/coding-specification
     - theme: alt
       text: View on GitHub
       link: https://github.com/xiaoyao-Ye/blog
@@ -53,11 +55,9 @@ features:
 ---
 
 <script setup>
-// import Dark from './components/Dark.vue'
 // import Solar from './components/Solar.vue'
 </script>
 
 <ClientOnly>
-  <!-- <Dark /> -->
   <!-- <Solar /> -->
 </ClientOnly>
