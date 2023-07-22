@@ -3,41 +3,43 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-const boxShadow = ref('')
-const RandomStars = (num) => {
-  let windowHeight = document.body.clientHeight
-  let windowWidth = document.body.clientWidth
-  let stars = ''
+import { ref, onMounted } from "vue";
+const boxShadow = ref("");
+const RandomStars = num => {
+  let windowHeight = document.body.clientHeight;
+  let windowWidth = document.body.clientWidth;
+  let stars = "";
   const colors = [
-    '--vp-c-brand',
-    '--vp-c-brand-light',
-    '--vp-c-brand-lighter',
-    '--vp-c-brand-dark',
-    '--vp-c-brand-darker',
-    '--vp-c-brand-next',
-  ]
+    "--vp-c-brand",
+    "--vp-c-brand-light",
+    "--vp-c-brand-lighter",
+    "--vp-c-brand-dark",
+    "--vp-c-brand-darker",
+    "--vp-c-brand-next",
+  ];
   for (let i = num; i >= 0; i--) {
     /*X轴坐标*/
-    let x = Math.round(Math.random() * windowWidth)
+    let x = Math.round(Math.random() * windowWidth);
     /*Y轴坐标*/
-    let y = Math.round(Math.random() * windowHeight)
+    let y = Math.round(Math.random() * windowHeight);
     /*阴影大小*/
-    let size = Math.round(Math.random() * 0.52)
+    let size = Math.round(Math.random() * 0.52);
     /*随机透明度*/
     // let o = Math.random() * 0.5
     /*添加阴影*/
-    const index = Math.floor(Math.random() * 6)
+    const index = Math.floor(Math.random() * 6);
 
-    stars += `${x}px ${y}px 0 ${size}px var(${colors[index]}),`
-    stars += `${x}px ${windowHeight + y}px 0 ${size}px var(${colors[index]}),`
+    stars += `${x}px ${y}px 0 ${size}px var(${colors[index]}),`;
+    stars += `${x}px ${windowHeight + y}px 0 ${size}px var(${colors[index]}),`;
   }
   /*截掉最后多余的逗号*/
-  stars = stars.slice(0, stars.length - 1)
+  stars = stars.slice(0, stars.length - 1);
   /*添加到页面*/
-  boxShadow.value = stars
-}
-RandomStars(240)
+  boxShadow.value = stars;
+};
+onMounted(() => {
+  RandomStars(240);
+});
 </script>
 
 <style lang="scss" scoped>
