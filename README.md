@@ -1,10 +1,3 @@
-# TODO List
-
-- [ ] 全文搜索功能(参考 vue3 文档)
-- [ ] 图片转换为 svg
-
-# 前端
-
 - 工程化
   - git
   - vite
@@ -27,3 +20,6 @@
   - 桌面端
 - notes
 - 编辑器
+- Linux
+- Go
+- Docker

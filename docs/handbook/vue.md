@@ -1,23 +1,78 @@
 # Vue
 
+## vue 的生命周期
+
+- before create data 和 methods 中的数据还没有初始化,不能使用 data 中的数据和 methods 中的方法
+- created data 和 methods 已经初始化完毕了,可以使用 data 中的数据和 methods 中的方法
+- before mount template 模板已经编译好了,但是还没有挂载到页面上
+- mounted DOM 挂载完毕了,可以操作 dom 元素了.
+- before update data 中的数据已经更新了.但是还没有同步到页面上
+- updated data 中的数据和页面都已经更新完成了.
+- before destroy vue 实例进入销毁阶段,这个阶段 data,methods,指令,过滤器等都是可以用的.
+- destroyed 此时组件已经销毁了.data.methods 都不可用.
+
+## vue 常用指令
+
+- v-cloak 配合 css 的[v-cloak] {display: none} 来隐藏未编译的 Mustache(胡子)标签
+- v-bind 用于响应式的更新 HTML 属性(绑定属性)
+- v-on 用户监听 DOM 事件(绑定事件)
+- v-model 双向绑定
+- v-if 根据表达式的值是 true 还是 false 来决定 创建/移除元素
+- v-show 根据表达式的值是 true 还是 false 来决定 显示/隐藏元素
+- v-for 循环
+- v-html 插入 html 内容
+- v-text 插入文本内容
+
+## vue 常用修饰符
+
+- .sync 实现双向绑定
+- .stop 阻止冒泡事件
+- .self 事件绑定的元素本身触发时才调用
+- .prevent 阻止默认事件
+- .once 事件只能触发一次
+- .native 触发组件的原生标签事件
+
+表单修饰符
+
+- .lazy 在输入框输入完内容，光标离开时才更新视图
+- .trim 过滤首尾空格
+- .number 如果先输入数字，那它就会限制你输入的只能是数字;如果先输入字符串，那就相当于没有加.number
+
+## .sync
+
+```html
+// children 更新方式 this.$emit('update:data', newVal); // parent 使用方式
+<Component :data.sync="data"></Component>
+// 等同于↓: 父组件节省了一个函数声明↑
+<Component :data="data" @update:data="e => data = e"></Component>
+```
+
+## vue 组件间的通信
+
+- bus 模式,既通过发布订阅的方式
+- vuex 集中式储存管理所有组件的状态.
+- 父子组件传值
+  - 父传子: 父组件绑定一个自定义的变量=需要传的数据 -> 子组件 props: ['父组件绑定的变量']
+  - 子传父: 子组件通过$emit('自定义一个变量', 提交给父组件的数据) -> 父组件给子组件定义的变量绑定一个事件=接受传递过来的值
+
 ## 注册全局组件更好的方法
 
 ```javascript
 const globalCompoes = require.context(
   // 其组件目录的相对路径
-  './components/global',
+  "./components/global",
   // 是否查询其子目录
   false,
   // 匹配基础组件文件名的正则表达式
   /[a-zA-Z]+\-[a-zA-Z]+\.vue$/,
-)
+);
 //遍历并注册全局组件
-globalCompoes.keys().forEach((fileName) => {
+globalCompoes.keys().forEach(fileName => {
   // 获取组件配置
   // ./article-button.vue
-  const componentConfig = requireComponent(fileName)
+  const componentConfig = requireComponent(fileName);
   //去除文件名中的 './'和'.vue'字符
-  const componentName = fileName.replace(/\.\/|\.vue/g, '')
+  const componentName = fileName.replace(/\.\/|\.vue/g, "");
   // 全局注册组件
   Vue.component(
     componentName,
@@ -25,8 +80,8 @@ globalCompoes.keys().forEach((fileName) => {
     // 那么就会优先使用 `.default`，
     // 否则回退到使用模块的根。
     componentConfig.default || componentConfig,
-  )
-})
+  );
+});
 ```
 
 ## vue-自定义图片懒加载指令
@@ -34,41 +89,41 @@ globalCompoes.keys().forEach((fileName) => {
 - imgLazy.js
 
 ```javascript
-import baseImg from '@/assets/logo.png' // 默认加载图片
+import baseImg from "@/assets/logo.png"; // 默认加载图片
 // 创建一个监听器
-let observer = new IntersectionObserver((entries) => {
+let observer = new IntersectionObserver(entries => {
   // entries是所有被监听对象的集合
-  entries.forEach((entry) => {
+  entries.forEach(entry => {
     if (entry.isIntersecting) {
       // 当被监听元素到临界值且未加载图片时触发。
-      !entry.target.isLoaded && showImage(entry.target, entry.target.data_src)
+      !entry.target.isLoaded && showImage(entry.target, entry.target.data_src);
     }
-  })
-})
+  });
+});
 
 function showImage(el, imgSrc) {
-  const img = new Image()
-  img.src = imgSrc
+  const img = new Image();
+  img.src = imgSrc;
   img.onload = () => {
-    el.src = imgSrc
-    el.isLoaded = true
-  }
+    el.src = imgSrc;
+    el.isLoaded = true;
+  };
 }
 export default {
   // 这里用inserted和bind都行，因为IntersectionObserver时异步的，以防意外还是用inserted好一点
   // inserted和bind的区别在于inserted时元素已经插入页面，能够直接获取到dom元素的位置信息。
   inserted(el, binding) {
     // 初始化时展示默认图片
-    el.src = baseImg
+    el.src = baseImg;
     // 将需要加载的图片地址绑定在dom上
-    el.data_src = binding.value
-    observer.observe(el)
+    el.data_src = binding.value;
+    observer.observe(el);
   },
   unbind() {
     // 停止监听
-    observer.disconnect()
+    observer.disconnect();
   },
-}
+};
 ```
 
 - 使用
@@ -85,42 +140,42 @@ export default {
 </template>
 
 <script>
-import imgLazy from '@/directives/imgLazy.js'
+import imgLazy from "@/directives/imgLazy.js";
 export default {
   data() {
     return {
       imgSrc: [
-        require('../../assets/img/000846-15763397267e73.jpg'),
-        require('../../assets/img/004348-1587314628f09b.jpg'),
-        require('../../assets/img/01.jpg'),
-        require('../../assets/img/1751409cw4v2lk7xlypbsn.jpg'),
-        require('../../assets/img/175141wpllyfapb7ni1t74.jpeg'),
-        require('../../assets/img/183634-1568716594f366.jpg'),
-        require('../../assets/img/20180302213716_PFimT.png'),
-        require('../../assets/img/204554-1560516354e91c.jpg'),
-        require('../../assets/img/205524-1566651324f88b.jpg'),
-        require('../../assets/img/213207-156665352785d3.jpg'),
-        require('../../assets/img/213246-1586525566c099.jpg'),
-        require('../../assets/img/223248-1587393168c0ea.jpg'),
-        require('../../assets/img/224324-15888626046f80.jpg'),
-        require('../../assets/img/230431-15854078717b4e.jpg'),
-        require('../../assets/img/230543-15651903432d35.jpg'),
-        require('../../assets/img/231118-1586704278f13e.jpg'),
-        require('../../assets/img/233900-1579621140c81d.jpg'),
-        require('../../assets/img/234703-1584114423c3de.jpg'),
-        require('../../assets/img/235000-1584114600db79.jpg'),
-        require('../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png'),
-        require('../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg'),
-        require('../../assets/img/5d68d603daf16.jpg'),
-        require('../../assets/img/5ddb867c4250c.jpg'),
+        require("../../assets/img/000846-15763397267e73.jpg"),
+        require("../../assets/img/004348-1587314628f09b.jpg"),
+        require("../../assets/img/01.jpg"),
+        require("../../assets/img/1751409cw4v2lk7xlypbsn.jpg"),
+        require("../../assets/img/175141wpllyfapb7ni1t74.jpeg"),
+        require("../../assets/img/183634-1568716594f366.jpg"),
+        require("../../assets/img/20180302213716_PFimT.png"),
+        require("../../assets/img/204554-1560516354e91c.jpg"),
+        require("../../assets/img/205524-1566651324f88b.jpg"),
+        require("../../assets/img/213207-156665352785d3.jpg"),
+        require("../../assets/img/213246-1586525566c099.jpg"),
+        require("../../assets/img/223248-1587393168c0ea.jpg"),
+        require("../../assets/img/224324-15888626046f80.jpg"),
+        require("../../assets/img/230431-15854078717b4e.jpg"),
+        require("../../assets/img/230543-15651903432d35.jpg"),
+        require("../../assets/img/231118-1586704278f13e.jpg"),
+        require("../../assets/img/233900-1579621140c81d.jpg"),
+        require("../../assets/img/234703-1584114423c3de.jpg"),
+        require("../../assets/img/235000-1584114600db79.jpg"),
+        require("../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png"),
+        require("../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg"),
+        require("../../assets/img/5d68d603daf16.jpg"),
+        require("../../assets/img/5ddb867c4250c.jpg"),
       ],
-    }
+    };
   },
   // 组件内注册指令
   directives: {
     imgLazy: imgLazy,
   },
-}
+};
 </script>
 
 <style></style>
@@ -133,35 +188,35 @@ export default {
 - vant.config.js(按需导入 element-ui 和 ant-design-vue 也是这样)
 
 ```javascript
-import { Toast, Button } from 'vant'
+import { Toast, Button } from "vant";
 
 const components = {
   Toast,
   Button,
-}
+};
 
 const componentsHandler = {
   install(Vue) {
-    Object.keys(components).forEach((key) => Vue.use(components[key]))
+    Object.keys(components).forEach(key => Vue.use(components[key]));
   },
-}
+};
 
-export default componentsHandler
+export default componentsHandler;
 ```
 
 - main.js
 
 ```javascript
-import Vue from 'vue'
-import vantCompoents from '@/config/vant.config'
+import Vue from "vue";
+import vantCompoents from "@/config/vant.config";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.use(vantCompoents)
+Vue.use(vantCompoents);
 
 new Vue({
-  render: (h) => h(App),
-}).$mount('#app')
+  render: h => h(App),
+}).$mount("#app");
 ```
 
 ## 自动注册全局组件
@@ -187,14 +242,14 @@ new Vue({
 export default {
   data() {
     return {
-      text: 'hello',
-    }
+      text: "hello",
+    };
   },
   filters: {
     capitalize: function (value) {
-      if (!value) return ''
-      value = value.toString()
-      return value.charAt(0).toUpperCase() + value.slice(1)
+      if (!value) return "";
+      value = value.toString();
+      return value.charAt(0).toUpperCase() + value.slice(1);
     },
   },
   methods: {
@@ -203,14 +258,14 @@ export default {
         .getDetail({
           id: this.id,
         })
-        .then((res) => {
+        .then(res => {
           // this.$options.filters可以找到实例中过滤器钩子里面的函数.
-          let capitalize = this.$options.filters.capitalize
-          this.title = capitalize(res.data.title)
-        })
+          let capitalize = this.$options.filters.capitalize;
+          this.title = capitalize(res.data.title);
+        });
     },
   },
-}
+};
 ```
 
 ## $attrs && $listeners
@@ -227,15 +282,6 @@ export default {
 <Children type="textarea" placeholder="请输入内容"></Children>
 // 上面两个属性和下面方法都能触发element-ui input组件的属性和方法
 <Children @change="xxx"></Children>
-```
-
-## .sync
-
-```html
-// children 更新方式 this.$emit('update:data', newVal); // parent 使用方式
-<Component :data.sync="data"></Component>
-// 等同于↓: 父组件节省了一个函数声明↑
-<Component :data="data" @update:data="e => data = e"></Component>
 ```
 
 ## computed
@@ -330,21 +376,21 @@ Vue.prototype.$log = window.console.log;
 </template>
 
 <script>
-import One from '../components/One.vue'
-import Two from '../components/Two.vue'
+import One from "../components/One.vue";
+import Two from "../components/Two.vue";
 export default {
   data() {
     return {
       isToggle: false,
-      one: 'One',
-      two: 'Two',
-    }
+      one: "One",
+      two: "Two",
+    };
   },
   components: {
     One,
     Two,
   },
-}
+};
 </script>
 ```
 
@@ -354,52 +400,174 @@ export default {
 export class Drag {
   //构造函数
   constructor(el) {
-    this.el = el
+    this.el = el;
     //鼠标摁下时的元素位置
-    this.startOffset = {}
+    this.startOffset = {};
     //鼠标摁下时的鼠标位置
-    this.startPoint = {}
-    let move = (e) => {
-      this.move(e)
-    }
-    let end = (e) => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', end)
-    }
-    el.addEventListener('mousedown', (e) => {
-      this.start(e)
-      document.addEventListener('mousemove', move)
-      document.addEventListener('mouseup', end)
-    })
+    this.startPoint = {};
+    let move = e => {
+      this.move(e);
+    };
+    let end = e => {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", end);
+    };
+    el.addEventListener("mousedown", e => {
+      this.start(e);
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", end);
+    });
   }
   //摁下时的处理函数
   start(e) {
-    let { el } = this
+    let { el } = this;
     this.startOffset = {
       x: el.offsetLeft,
       y: el.offsetTop,
-    }
+    };
     this.startPoint = {
       x: e.clientX,
       y: e.clientY,
-    }
+    };
   }
   //鼠标移动时的处理函数
   move(e) {
-    let { el, startOffset, startPoint } = this
+    let { el, startOffset, startPoint } = this;
     let newPoint = {
       x: e.clientX,
       y: e.clientY,
-    }
+    };
     let dis = {
       x: newPoint.x - startPoint.x,
       y: newPoint.y - startPoint.y,
-    }
-    el.style.left = dis.x + startOffset.x + 'px'
-    el.style.top = dis.y + startOffset.y + 'px'
+    };
+    el.style.left = dis.x + startOffset.x + "px";
+    el.style.top = dis.y + startOffset.y + "px";
   }
 }
 
 // 使用时,导入Drag函数
 // new Drag(el)即可
 ```
+
+## vuex
+
+```js
+// 创建vuex
+const store = new Vuex.Store({
+  state: {
+    count: 0,
+  },
+  mutations: {
+    increment(state) {
+      state.count++;
+    },
+  },
+});
+
+// 使用vuex需要注入到vue实例
+new Vue({
+  render: h => h(App),
+  router,
+  store,
+}).$mount("#app");
+```
+
+- 通过 `store.state` 来获取状态对象
+- 通过 `store.commit` 来提交 mutations 里的方法来改变状态对象
+- 通过 `store.dispatch` 来提交 actions 中的方法来改变状态对象
+- state: 储存数据
+- mutations: 提交更改 state 的方法,mutation 是同步的
+- actions: 提交的是 mutation,而不是直接更改数据,action 可以包括任意异步操作
+- getters 可以理解为 vuex 中的计算属性
+- modules 当 vuex 数据过多时,为了方便管理,可以用 module 划分出模块,每个模块都有对应的(`state` , `mutations` , `actions` ,`getter`)
+
+## vue-router
+
+```js
+// router.ts
+import Vue from "vue";
+import Router from "vue-router";
+import Home from "./views/admin/Home.vue";
+
+Vue.use(Router);
+
+const router = new Router({
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes: [
+    {
+      path: "/",
+      component: Home,
+      beforeEnter: (to, from, next) => {
+        next();
+      },
+      children: [
+        {
+          // 当 /user/:id/profile 匹配成功，
+          // UserProfile 会被渲染在 User 的 <router-view> 中
+          path: "",
+          name: "header",
+          component: () => import(/* webpackChunkName: "header" */ "./views/admin/subPage/Header.vue"),
+        },
+
+        {
+          path: "/banner",
+          name: "banner",
+          component: () => import(/* webpackChunkName: "banner" */ "./views/admin/subPage/Banner.vue"),
+        },
+        {
+          path: "/admin",
+          name: "admin",
+          component: () => import(/* webpackChunkName: "admin" */ "./views/admin/Admin.vue"),
+        },
+      ],
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () => import(/* webpackChunkName: "login" */ "./views/Login.vue"),
+      meta: {
+        keepAlive: false, //不需要被缓存的组件
+      },
+    },
+    {
+      path: "*",
+      name: "404",
+      component: () => import(/* webpackChunkName: "404" */ "./views/404.vue"),
+    },
+  ],
+});
+
+// 路由导航钩子的用法
+router.beforeEach((to, from, next) => {
+  if (from.path.indexOf("/preview") < 0) {
+    sessionStorage.setItem("prevToPreviewPath", from.path);
+  }
+  next();
+});
+
+export default router;
+```
+
+vue-router 的跳转方式?
+
+- 声明式导航. router-link
+- 编程式导航. push
+- router.replace(...)或 `<router-link :to="..." replace>` 不可以返回原页面
+- router.go(n) n 是整数,意思是在 history 记录中向前或者向后退多少步,类似`window.history.go(n)`
+
+## vue 按需加载组件
+
+按需加载组件可以优化项目的性能,减少首屏渲染时间,更改 router 的导入组件方式如下任一种即可:
+
+- 使用 `() => import('导入组件的路劲')`
+- 使用 `resolve => require(['导入组件的路径'], resolve)`
+
+## vue data 中无法检测到 arr 和 obj 的注意事项
+
+vue 无法检测到 data 属性值为数组或对象的修改，所以我们需要用原对象与要混合进去的对象的属性一起创建一个新的对象。可以使用 this.$set 或者对象的深拷贝，如果是数组则可以使用 splice，扩展运算符等方法来更新。
+
+## vue 中怎么在下次 DOM 更新循环结束之后执行延迟回调?
+
+使用 this.$nextTick();
