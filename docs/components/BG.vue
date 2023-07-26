@@ -53,6 +53,11 @@ onMounted(() => {
   border-radius: 100%;
   background-color: transparent;
   z-index: 1000;
+  // 循环翻转播放(向上播放完后向下播放)
+  // animation: toTop 36s infinite linear alternate;
+  // 反转播放(向下移动 下雪一样)
+  // animation: toTop 36s infinite linear reverse;
+  // 正常播放(向上移动)
   animation: toTop 36s infinite linear;
 }
 
