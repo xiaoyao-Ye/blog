@@ -1,5 +1,29 @@
 # JavaScript
 
+## 找出哪些 JavaScript 变量泄露到全局范围
+
+[找出哪些 JavaScript 变量泄漏到全局范围内](https://mmazzarolo.com/blog/2022-02-14-find-what-javascript-variables-are-leaking-into-the-global-scope/)
+
+```JavaScript
+(function () {
+  // Grab browser's default global variables.
+  const iframe = window.document.createElement("iframe");
+  iframe.src = "about:blank";
+  window.document.body.appendChild(iframe);
+  const browserGlobals = Object.keys(iframe.contentWindow);
+  window.document.body.removeChild(iframe);
+
+  // Get the global variables added at runtime by filtering out the browser's
+  // default global variables from the current window object.
+  const runtimeGlobals = Object.keys(window).filter((key) => {
+    const isFromBrowser = browserGlobals.includes(key);
+    return !isFromBrowser;
+  });
+
+  console.log("Runtime globals", runtimeGlobals);
+})();
+```
+
 ## 深拷贝
 
 JavaScript 自带的拷贝，都是浅拷贝，现在浏览器引入一个全局函数 `structuredClone()`，用来深拷贝。
@@ -179,6 +203,12 @@ Math.pow(2, 3); // 8
 ```javascript
 parseInt("9"); // 9
 +"9"; // 9
+```
+
+## 隐藏手机号码中间四位
+
+```JavaScript
+'18888888888'.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 ```
 
 ## 反转字符串
@@ -417,6 +447,9 @@ rgbToHex(0, 51, 255);
 const copyToClipboard = text => navigator.clipboard.writeText(text);
 
 copyToClipboard("Hello World");
+
+// 读取剪贴板内容
+navigator.clipboard.readText();
 ```
 
 ## 检查日期是否有效
@@ -432,13 +465,12 @@ isDateValid("December 17, 1995 03:24:00");
 
 ## 查找一年中的某一天
 
-查找给定日期。
+查找给定日期是这一年中的第几天。
 
 ```javascript
 const dayOfYear = date => Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
 
 dayOfYear(new Date());
-// Result: 272
 ```
 
 ## 大写字符串

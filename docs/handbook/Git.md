@@ -142,7 +142,7 @@ css
 
 ### 创建分支
 
-- `git branch 分支名称`创建分支，分支中的代码，在创建时与当前分支的内容完全相同。
+- `git branch <branch>`创建分支，分支中的代码，在创建时与当前分支的内容完全相同。
 - git 在第一次提交时，就有了一个叫`master`的主分支。
 - `git branch dev`，创建了一个叫做 dev 的分支
 
@@ -154,27 +154,34 @@ css
 
 ### 切换分支
 
-- `git checkout 分支名称`切换分支 HEAD 指针指向了另一个分支
+- `git checkout <branch>`切换分支 HEAD 指针指向了另一个分支
+- `git switch <branch>`切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
 - 在当前分支的任何操作，都不会影响到其他的分支，除非进行了分支合并。
 - 提交代码时，会生产版本号，当前分支会指向最新的版本号。
 
 ### 创建并切换分支
 
-- `git checkout -b 分支名称` 创建并切换分支
+- `git checkout -b <branch>` 创建并切换分支
+- `git switch -c <branch>` 创建并切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
 - 切换分支会做两件事情
   - 创建一个新分支
   - 把 head 指针指向当前的分支
 
 ### 删除分支
 
-- `git branch -d 分支名称` 可以删除分支
+- `git branch -d <branch>` 可以删除分支
 - 注意：不能在当前分支删除当前分支，需要切换到其他分支才能删除。
 - 注意：`master`分支是可以删除的，但是不推荐那么做。
 
 ### 合并分支
 
-- `git merge 分支名称` 将其他分支的内容合并到当前分支。
-- 在`master`分支中执行`git merge dev` 将`dev`分支中的代码合并到`master`分支
+- `git merge <branch>` 将其他分支的内容合并到当前分支。
+- 在 `master` 分支中执行 `git merge dev` 将 `dev` 分支中的代码合并到 `master` 分支
+- `git cherry-pick <target id>` 单独合并某个 commit id 到当前分支
+- `git rebase -i <startpoint> <endpoint>` 合并 [范围] 区间 commit 为一次 commit 记录
+- `git rebase <startpoint> <endpoint> --onto master` 复制 [范围] 部分的提交至 master
+
+> 范围 = 开始(不包含)-结束(包含)(没有则默认至最后一次 commit)
 
 ### git 合并冲突
 

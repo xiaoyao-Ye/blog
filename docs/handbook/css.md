@@ -1,5 +1,41 @@
 # css
 
+## 文字垂直显示
+
+- `writing-mode: vertical-lr;` 数字和字母用这个方法会旋转 90 度
+- `设置固定宽度` + `word-break: break-all;` + `text-align:center;`
+
+## 实现打字机效果
+
+```html
+<h1>Pure CSS Typing animation.</h1>
+```
+
+```css
+h1 {
+  font-family: monospace;
+  width: 26ch;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typing 3s steps(26, end);
+}
+@keyframes typing {
+  0 {
+    width: 0;
+  }
+  100% {
+    width: 26ch;
+  }
+}
+```
+
+## 实现文字镂空效果
+
+```css
+-webkit-text-fill-color: transparent;
+-webkit-text-stroke: 1px #333;
+```
+
 ## 鼠标选中状态
 
 - 元素下的文字颜色和背景颜色改变,只设置 color 默认会无 bgcolor,都不设置,按网站默认的来
@@ -145,7 +181,7 @@ body {
   justify-content: space-between;
   align-items: center;
   &::after {
-    content: '';
+    content: "";
     flex: auto; // 有空间则占领剩余所有空间,没空间width为0
   }
   .card {
@@ -225,7 +261,7 @@ body {
 }
 
 .arrow::after {
-  content: '';
+  content: "";
   position: absolute;
   /* 通过位移覆盖背景 */
   right: -20px;
@@ -590,12 +626,8 @@ try {
         width: 200px;
         height: 200px;
         position: absolute;
-        background: linear-gradient(#03a9f4, #03a9f4), linear-gradient(
-            90deg,
-            #ffffff33 1px,
-            transparent 0,
-            transparent 19px
-          ), linear-gradient(#ffffff33 1px, transparent 0, transparent 19px), linear-gradient(transparent, #2196f3);
+        background: linear-gradient(#03a9f4, #03a9f4), linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px),
+          linear-gradient(#ffffff33 1px, transparent 0, transparent 19px), linear-gradient(transparent, #2196f3);
         background-size: 100% 1.5%, 10% 100%, 100% 10%, 100% 100%;
         background-repeat: no-repeat, repeat, repeat, repeat;
         background-position: 0 0, 0 0, 0 0, 0 0;
@@ -652,26 +684,26 @@ try {
   // 3 允许图片放置这里 ondragover = "allowDrop()"
 
   function allowDrop(ev) {
-    ev.preventDefault()
+    ev.preventDefault();
   }
 
   function drag(ev) {
-    ev.dataTransfer.setData('mark', ev.target.id)
+    ev.dataTransfer.setData("mark", ev.target.id);
   }
 
   function drop(ev) {
-    if (document.querySelector('#' + ev.target.id).nodeName == 'DIV') {
-      ev.preventDefault()
-      var data = ev.dataTransfer.getData('mark')
-      ev.target.appendChild(document.getElementById(data))
-      console.log(ev.target.id)
-    } else if (document.querySelector('#' + ev.target.id).nodeName == 'IMG') {
-      console.log(ev.target.id)
+    if (document.querySelector("#" + ev.target.id).nodeName == "DIV") {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("mark");
+      ev.target.appendChild(document.getElementById(data));
+      console.log(ev.target.id);
+    } else if (document.querySelector("#" + ev.target.id).nodeName == "IMG") {
+      console.log(ev.target.id);
 
-      var transferImg = ev.target.src
-      var markID = ev.dataTransfer.getData('mark')
-      document.querySelector('#' + ev.target.id).src = document.getElementById(markID).src
-      document.getElementById(markID).src = transferImg
+      var transferImg = ev.target.src;
+      var markID = ev.dataTransfer.getData("mark");
+      document.querySelector("#" + ev.target.id).src = document.getElementById(markID).src;
+      document.getElementById(markID).src = transferImg;
     }
   }
 </script>
@@ -719,49 +751,51 @@ try {
     <div id="bj">
       <canvas id="mycanvas" width="500px" height="600px"></canvas>
       <div id="to">
-        画笔颜色: <input id="color" type="color" /> 画笔大小:
+        画笔颜色:
+        <input id="color" type="color" />
+        画笔大小:
         <input type="number" id="number" min="1" max="20" value="1" />
       </div>
     </div>
     <script>
-      var mycanvas = document.querySelector('#mycanvas')
-      var cxt = mycanvas.getContext('2d')
+      var mycanvas = document.querySelector("#mycanvas");
+      var cxt = mycanvas.getContext("2d");
 
-      var color = '#000'
-      var lineWith = 2
+      var color = "#000";
+      var lineWith = 2;
 
       mycanvas.onmousedown = function (e) {
-        start_draw()
-        cxt.moveTo(e.clientX - mycanvas.offsetLeft, e.clientY - mycanvas.offsetTop)
-        mycanvas.addEventListener('mousemove', draw)
-      }
+        start_draw();
+        cxt.moveTo(e.clientX - mycanvas.offsetLeft, e.clientY - mycanvas.offsetTop);
+        mycanvas.addEventListener("mousemove", draw);
+      };
 
       //选择画笔
-      document.querySelector('#color').oninput = function () {
-        color = this.value
-      }
+      document.querySelector("#color").oninput = function () {
+        color = this.value;
+      };
 
       //选择画笔大小
-      document.querySelector('#number').oninput = function () {
-        lineWith = this.value
-      }
+      document.querySelector("#number").oninput = function () {
+        lineWith = this.value;
+      };
 
       //松开鼠标
       mycanvas.onmouseup = function () {
-        mycanvas.removeEventListener('mousemove', draw)
-      }
+        mycanvas.removeEventListener("mousemove", draw);
+      };
 
       //开始画
       function start_draw() {
-        cxt.beginPath()
-        cxt.strokeStyle = color
-        cxt.lineWidth = lineWith
+        cxt.beginPath();
+        cxt.strokeStyle = color;
+        cxt.lineWidth = lineWith;
       }
 
       function draw(e) {
-        e.preventDefault()
-        cxt.lineTo(e.clientX - mycanvas.offsetLeft, e.clientY - mycanvas.offsetTop)
-        cxt.stroke()
+        e.preventDefault();
+        cxt.lineTo(e.clientX - mycanvas.offsetLeft, e.clientY - mycanvas.offsetTop);
+        cxt.stroke();
       }
     </script>
   </body>
@@ -790,26 +824,26 @@ try {
 </html>
 
 <script>
-  var img = document.querySelector('img')
+  var img = document.querySelector("img");
   function scrollRight() {
-    var left = img.offsetLeft
+    var left = img.offsetLeft;
     if (left > 300) {
-      clearInterval(cls)
-      cls = setInterval(scrollLeft, 100)
+      clearInterval(cls);
+      cls = setInterval(scrollLeft, 100);
     }
-    img.style.left = left + 50 + 'px'
+    img.style.left = left + 50 + "px";
   }
 
   function scrollLeft() {
-    var left = img.offsetLeft
+    var left = img.offsetLeft;
     if (left < 0) {
-      clearInterval(cls)
-      cls = setInterval(scrollRight, 100)
+      clearInterval(cls);
+      cls = setInterval(scrollRight, 100);
     }
-    img.style.left = left - 50 + 'px'
+    img.style.left = left - 50 + "px";
   }
 
-  var cls = setInterval(scrollRight, 100)
+  var cls = setInterval(scrollRight, 100);
 </script>
 ```
 
@@ -833,29 +867,29 @@ try {
     /*var mycanvas=document.querySelector("canvas");
     var cxt=mycanvas.getContext("2d");*/
     function drawstar(cxt, x, y, R, r, fillStyle, rot) {
-      cxt.beginPath()
+      cxt.beginPath();
       for (var i = 0; i < 5; i++) {
         cxt.lineTo(
           Math.cos(((18 + 72 * i) / 180) * Math.PI + rot) * R + x,
           -Math.sin(((18 + 72 * i) / 180) * Math.PI + rot) * R + y,
-        )
+        );
         cxt.lineTo(
           Math.cos(((54 + 72 * i) / 180) * Math.PI + rot) * r + x,
           -Math.sin(((54 + 72 * i) / 180) * Math.PI + rot) * r + y,
-        )
+        );
       }
-      cxt.closePath()
-      cxt.fillStyle = fillStyle
-      cxt.fill()
+      cxt.closePath();
+      cxt.fillStyle = fillStyle;
+      cxt.fill();
     }
-    var mycanvas = document.querySelector('canvas')
-    var cx = mycanvas.getContext('2d')
+    var mycanvas = document.querySelector("canvas");
+    var cx = mycanvas.getContext("2d");
 
-    drawstar(cx, 120, 130, 80, 35, 'yellow', 0)
-    drawstar(cx, 250, 50, 30, 12, 'yellow', 12)
-    drawstar(cx, 300, 110, 30, 12, 'yellow', -12)
-    drawstar(cx, 290, 200, 30, 12, 'yellow', -12)
-    drawstar(cx, 220, 250, 30, 12, 'yellow', 12)
+    drawstar(cx, 120, 130, 80, 35, "yellow", 0);
+    drawstar(cx, 250, 50, 30, 12, "yellow", 12);
+    drawstar(cx, 300, 110, 30, 12, "yellow", -12);
+    drawstar(cx, 290, 200, 30, 12, "yellow", -12);
+    drawstar(cx, 220, 250, 30, 12, "yellow", 12);
   </script>
 </html>
 ```
@@ -920,7 +954,7 @@ try {
       }
       .snowglobe:before {
         position: absolute;
-        content: '';
+        content: "";
         height: 280px;
         width: 280px;
         border-radius: 50%;
@@ -930,7 +964,7 @@ try {
       }
       .snowglobe:after {
         position: absolute;
-        content: '';
+        content: "";
         height: 280px;
         width: 290px;
         border-radius: 50%;
@@ -952,7 +986,7 @@ try {
       }
       .base:after {
         position: absolute;
-        content: '';
+        content: "";
         top: 25px;
         left: -10px;
         width: 262px;
@@ -1000,7 +1034,7 @@ try {
       }
       .tree:after {
         position: absolute;
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         border-right: 20px solid transparent;
@@ -1022,7 +1056,7 @@ try {
       }
       .tree4:after {
         position: absolute;
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         border-right: 30px solid transparent;
@@ -1044,7 +1078,7 @@ try {
       }
       .tree2:after {
         position: absolute;
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         border-right: 20px solid transparent;
@@ -1065,7 +1099,7 @@ try {
       }
       .tree3:after {
         position: absolute;
-        content: '';
+        content: "";
         width: 0;
         height: 0;
         border-right: 20px solid transparent;
@@ -1102,7 +1136,7 @@ try {
         border-bottom: 25px solid #534f54;
         border-left: 40px solid transparent;
         border-right: 40px solid transparent;
-        content: '';
+        content: "";
         height: 0;
         left: 0;
         position: absolute;
@@ -1129,65 +1163,65 @@ try {
     </div>
 
     <script type="text/javascript">
-      ;(function () {
-        var c1 = document.getElementById('c1')
-        var c2 = document.getElementById('c2')
-        var ctx1 = c1.getContext('2d')
-        var ctx2 = c2.getContext('2d')
-        c1.height = 300
-        c1.width = 300
-        c2.height = 300
-        c2.width = 300
+      (function () {
+        var c1 = document.getElementById("c1");
+        var c2 = document.getElementById("c2");
+        var ctx1 = c1.getContext("2d");
+        var ctx2 = c2.getContext("2d");
+        c1.height = 300;
+        c1.width = 300;
+        c2.height = 300;
+        c2.width = 300;
 
-        ctx1.fillStyle = 'white'
-        ctx2.fillStyle = 'white'
-        var c1Flakes = []
-        var c2Flakes = []
+        ctx1.fillStyle = "white";
+        ctx2.fillStyle = "white";
+        var c1Flakes = [];
+        var c2Flakes = [];
 
         function Flake(r) {
-          this.x = Math.random() * 300
-          this.y = Math.random() * 250
-          this.r = r
+          this.x = Math.random() * 300;
+          this.y = Math.random() * 250;
+          this.r = r;
         }
 
         for (var i = 0; i <= 80; i++) {
-          var flake = new Flake(2)
-          c1Flakes.push(flake)
+          var flake = new Flake(2);
+          c1Flakes.push(flake);
         }
 
         for (var i = 0; i <= 80; i++) {
-          var flake = new Flake(3)
-          c2Flakes.push(flake)
+          var flake = new Flake(3);
+          c2Flakes.push(flake);
         }
 
         function render() {
-          ctx1.clearRect(0, 0, 300, 300)
-          ctx2.clearRect(0, 0, 300, 300)
+          ctx1.clearRect(0, 0, 300, 300);
+          ctx2.clearRect(0, 0, 300, 300);
           for (var i = 0; i < c1Flakes.length; i++) {
-            ctx1.beginPath()
-            ctx1.arc(c1Flakes[i].x, c1Flakes[i].y, c1Flakes[i].r, 0, Math.PI * 2)
-            ctx1.fill()
+            ctx1.beginPath();
+            ctx1.arc(c1Flakes[i].x, c1Flakes[i].y, c1Flakes[i].r, 0, Math.PI * 2);
+            ctx1.fill();
             if (c1Flakes[i].y <= 245) {
-              c1Flakes[i].y += 0.3
+              c1Flakes[i].y += 0.3;
             } else {
-              c1Flakes[i].y = 0
+              c1Flakes[i].y = 0;
             }
           }
 
           for (var i = 0; i < c2Flakes.length; i++) {
-            ctx2.beginPath()
-            ctx2.arc(c2Flakes[i].x, c2Flakes[i].y, c2Flakes[i].r, 0, Math.PI * 2)
-            ctx2.fill()
+            ctx2.beginPath();
+            ctx2.arc(c2Flakes[i].x, c2Flakes[i].y, c2Flakes[i].r, 0, Math.PI * 2);
+            ctx2.fill();
             if (c2Flakes[i].y <= 245) {
-              c2Flakes[i].y += 0.6
+              c2Flakes[i].y += 0.6;
             } else {
-              c2Flakes[i].y = 0
+              c2Flakes[i].y = 0;
             }
           }
-          requestAnimationFrame(render)
+          requestAnimationFrame(render);
         }
-        render()
-      })()
+        render();
+      })();
     </script>
   </body>
 </html>

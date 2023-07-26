@@ -1,5 +1,19 @@
 # 包管理
 
+## package.json
+
+script 里面有[生命周期钩子](https://docs.npmjs.com/cli/v8/using-npm/scripts/#description)
+
+```json
+{
+  "scripts": {
+    // 限制使用pnpm和安装后初始化git-hooks
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "simple-git-hooks"
+  }
+}
+```
+
 ## package.json 版本管理
 
 > npm version [xxxx] -m"可以提交消息" 如果当前已经有 git 库了,可能会失败.
@@ -9,6 +23,16 @@
 - `npm version major`     破坏模块向后的兼容性, 版本号变动: 1.0.0->2.0.0
 
 详情查看: [semver](https://docs.npmjs.com/cli/v6/using-npm/semver)
+
+## 使用 cli 类型的包
+
+> create-xxx 的 npm 包(例如`create-vite`), 可以直接通过下面这种方式使用:
+
+```bash
+npm create xxx@latest
+yarn create xxx
+pnpm create xxx
+```
 
 ## NPM 源
 
@@ -63,6 +87,48 @@ yarn add -D/-dev  会在  `devDependencies`   中安装一个包
 
 ## 常用包
 
+### shelljs
+
+> ShellJS 是基于 Node.js API 的 Unix shell 命令的可移植（Windows/Linux/OS X）实现。
+
+用于在 nodejs 中用代码使用 shell 命令
+
+### ora
+
+一个命令行加载中状态工具
+
+```JavaScript
+const spinner = ora(str)
+spinner.start();
+spinner.stop();
+spinner.succeed();
+spinner.fail();
+```
+
+### patch-package
+
+当某个第三方包出现漏洞无法及时修复, 只能自己手动更改第三方包解决问题时, 会存在团队间的协作问题, 你的改动需要同步到所有团队成员, 这个时候可以使用 patch-package 这个包处理!
+
+### prompts
+
+一个简洁的命令行交互工具
+
+### minimist
+
+一个获取命令行参数的工具
+
+### kolorist
+
+将颜色放入标准输入/标准输出的微型库
+
+### metalsmith
+
+在 cli 中, 被用作遍历文件夹, 找到需要渲染的模板
+
+### cross-spawn
+
+nodejs 上使用多进程, nodejs 的 spawn 和 spawnSync 的跨平台解决方案。
+
 ### vue3 自动导入
 
 > Auto import APIs on-demand for Vite, Webpack, Rollup and esbuild. With TypeScript support. Powered by [unplugin](https://github.com/unjs/unplugin).
@@ -81,27 +147,29 @@ yarn add -D unplugin-vue-components
 
 ```javascript
 // vite.config.ts
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
 
 export default defineConfig({
   plugins: [
     AutoImport({
-      imports: ['vue', 'vue-router', '@vueuse/core', '@vueuse/head'],
+      imports: ["vue", "vue-router", "@vueuse/core", "@vueuse/head"],
+      // 指定 auto-import.d.ts 的位置
+      // dts: './src/auto-import.d.ts',
     }),
 
     Components({
-      extensions: ['vue', 'md'],
+      extensions: ["vue", "md"],
       dts: true,
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       resolvers: [
         IconsResolver({
-          componentPrefix: '',
+          componentPrefix: "",
         }),
       ],
     }),
   ],
-})
+});
 ```
 
 ## pnpm
@@ -122,8 +190,8 @@ export default defineConfig({
 
    ```yaml
    packages:
-     - 'packages/**'
-     - 'docs'
+     - "packages/**"
+     - "docs"
    ```
 
 2. 安装依赖

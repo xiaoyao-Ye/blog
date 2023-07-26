@@ -571,3 +571,43 @@ vue 无法检测到 data 属性值为数组或对象的修改，所以我们需�
 ## vue 中怎么在下次 DOM 更新循环结束之后执行延迟回调?
 
 使用 this.$nextTick();
+
+## vue.3.3
+
+- 新增 `defineOptions` 在 `script setup` 中使用这个函数配置 options , 不在需要单独的 `script`
+- defineProps 现在允许使用导入的类型或全局的类型(之前只能在当前的 vue 文件声明类型或者直接写在 `defineProps<T>` 上)
+- 使用 `<script setup>` 的组件现在可以通过 `generic` 属性接受通用类型参数：
+
+```vue
+<script setup lang="ts" generic="T">
+defineProps<{
+  items: T[];
+  selected: T;
+}>();
+</script>
+```
+
+- defineEmits 语法变更
+
+  ```vue
+  <script setup>
+  // BEFORE
+  const emit = defineEmits<{
+  (e: 'foo', id: number): void
+  (e: 'bar', name: string, ...rest: any[]): void
+  }>()
+  // AFTER
+  const emit = defineEmits<{
+  foo: [id: number]
+  bar: [name: string, ...rest: any[]]
+  }>()
+  </script>
+  ```
+
+- 新增 `defineSlots` 带类型的插槽, 用于为 IDE 提供插槽名称和 props 类型检查的类型提示
+- `toValue` 和 `toRef` 新特性
+
+实验功能(实验性功能都需要明确选择使用, 使用 vite 的话在 vite.config.ts 中配置)
+
+- 解构可以保持数据的响应式
+- 简化了父子组件的 v-model 响应式语法, 不再需要定义 defineProps(['modelValue']) 和 defineEmits('update:modelValue'), 直接使用 `defineModel` 返回的变量就相当于一个 ref

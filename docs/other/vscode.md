@@ -15,6 +15,23 @@
 | Ctrl + K + 0     | 折叠所有区域                        |
 | Ctrl + K + J     | 展开所有区域                        |
 
+## 生成批量标签
+
+```vue
+<template>
+  <!-- div{我要$个}*8 -->
+  <!-- result: -->
+  <div>我要1个</div>
+  <div>我要2个</div>
+  <div>我要3个</div>
+  <div>我要4个</div>
+  <div>我要5个</div>
+  <div>我要6个</div>
+  <div>我要7个</div>
+  <div>我要8个</div>
+</template>
+```
+
 ## 调试代码
 
 1. JavaScript debug terminal
@@ -60,6 +77,7 @@
    ```json
    {
      "version": "0.2.0",
+     // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
      "configurations": [
        {
          "name": "Launch Program",
@@ -72,7 +90,8 @@
          // 运行时参数
          "args": ["cross-env NODE_ENV=development"],
          // "cwd": "${workspaceFolder}",
-         // 使用terminal调试
+         // 在何处启用调试, integratedTerminal 是 vscode 集成终端
+         // 使用 terminal 调试, 默认使用的是 DEBUG CONSOLE
          "console": "integratedTerminal",
          "runtimeArgs": ["-r", "ts-node/register"],
          // 设置环境
@@ -81,3 +100,30 @@
      ]
    }
    ```
+
+## Copilot x
+
+### 安装
+
+使用 copilot chat 需要满足以下几个条件：
+
+1. 有正在生效的 copilot 订阅（听说学生包的不可以，不确定，我自己是付费订阅的）
+2. 加入并通过了 copilot chat 的 waitList GitHub · Where software is built
+3. 安装 VS code Insider 版本
+4. 安装 GitHub Copilot Nightly 和 Github Chat 插件
+
+都安装好之后使用自己的 copilot 订阅账号登录就可以激活了，这时可以看到侧边栏的 copilot 聊天窗口，同时使用 `ctrl + I` 可以在行内调出对话栏
+
+### usage
+
+在对话框内输入/可以快捷输入已经内置的命令，分别是：
+
+- `/vscode` - 关于 VS code 的问题
+- `/tests` - 为选中代码生成单元测试
+- `/simplify` - 简化选中代码
+- `/fix` - 修复选中代码可能存在的 bug
+- `/explain` - step by step 的解释选中代码
+- `/ext` - 关于 VS Code 扩展开发的问题
+- `/help` - 帮助
+
+copilot chat 还支持通过 ctrl + I 调出行内对话模式，生成的代码会直接以 diff 的形式显示在文件内，方便对比，如果没问题就可以一键接受修改。

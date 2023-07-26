@@ -48,3 +48,20 @@ ln -sf /usr/share/zoneinfo/Shanghai /etc/localtime
 exit
 docker restart 容器ID
 ```
+
+## docker 使用宿主机的 ssh 秘钥
+
+如果你的本地 SSH 代理正在运行，扩展程序(vscode)将自动转发你的本地 SSH 代理。
+
+如果没有运行(mac 一般会默认运行, Linux 和 windows 不会)需要自己运行以下命令(`管理员PowerShell`):
+
+```bash
+# Make sure you're running as an Administrator
+Set-Service ssh-agent -StartupType Automatic
+Start-service ssh-agent
+Get-Service ssh-agent
+```
+
+并将 ssh 添加到代理:
+
+`ssh-add $HOME/.ssh/id_rsa` 或者是 github_rsa 这种自己生成的 ssh 密钥名字
