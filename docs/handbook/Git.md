@@ -73,7 +73,7 @@ git commit   # 需要使用vi输入内容
 git commit -a -m '提交说明'
 
 # 修改最近的一次提交说明， 如果提交说明不小心输错了，可以使用这个命令
-git commit --amend -m "提交说明"
+git commit --amend -m "New commit message"
 ```
 
 ### git log
@@ -105,13 +105,22 @@ git diff c265262 de4845b
 
 ### git reset
 
-- 作用：版本回退，将代码恢复到已经提交的某一个版本中。
-- `git reset --hard 版本号` 将代码回退到某个指定的版本(版本号只要有前几位即可)
-- `git reset --hard head~1`将版本回退到上一次提交
+作用：版本回退，将代码恢复到已经提交的某一个版本中。
 
-  - ~1:上一次提交
-  - ~2:上上次提交
-  - ~0:当前提交
+```bash
+# git 回滚到指定 commit 提交(reset 会撤销更改, 并删除提交)
+git reset --hard <commit-id>
+# 要撤销上一次 Git 提交，您可以使用以下命令(这将会移动 HEAD 指针指向上一个提交，同时保留之前的更改。)：
+git reset --soft HEAD^
+# 如果您想撤销提交并删除更改，请使用以下命令(这将永久删除所有更改，因此请谨慎使用此命令):
+git reset --hard HEAD^
+
+# 将版本回退到上一次提交
+# ~1:上一次提交
+# ~2:上上次提交
+# ~0:当前提交
+git reset --hard head~1
+```
 
 - 当使用了`git reset`命令后，版本会回退，使用`git log`只能看到当前版本之前的信息。使用`git reflog`可以查看所有的版本信息
 
@@ -152,20 +161,30 @@ css
 - 在当前分支的前面会有一个`*`
 - 在 git 中，有一个特殊指针`HEAD`,永远会指向当前分支
 
-### 切换分支
+### 创建/切换分支
 
-- `git checkout <branch>`切换分支 HEAD 指针指向了另一个分支
-- `git switch <branch>`切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
 - 在当前分支的任何操作，都不会影响到其他的分支，除非进行了分支合并。
-- 提交代码时，会生产版本号，当前分支会指向最新的版本号。
-
-### 创建并切换分支
-
-- `git checkout -b <branch>` 创建并切换分支
-- `git switch -c <branch>` 创建并切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
+- 提交代码时，会产生 commit，当前分支会指向最新的 commit。
 - 切换分支会做两件事情
   - 创建一个新分支
   - 把 head 指针指向当前的分支
+
+```bash
+# 创建并切换分支
+git checkout -b <branch>
+# 创建并切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
+git switch -c <branch>
+
+# 切换分支 (切换分支 HEAD 指针指向了另一个分支)
+git checkout <branch>
+# 切换分支(建议使用这个, 如果当前版本 git 没有 switch 就用 checkout)
+git switch <branch>
+
+# git回滚到上一个版本(只是将HEAD指针指向目标版本, 并不会删除任何提交或更改)
+git checkout HEAD~1
+# git回滚到指定版本(只是将HEAD指针指向目标版本, 并不会删除任何提交或更改)
+git checkout <commit-id>
+```
 
 ### 删除分支
 
@@ -175,18 +194,29 @@ css
 
 ### 合并分支
 
-- `git merge <branch>` 将其他分支的内容合并到当前分支。
-- 在 `master` 分支中执行 `git merge dev` 将 `dev` 分支中的代码合并到 `master` 分支
+```bash
+# 将其他分支的内容合并到当前分支
+git merge <branch>
+# 取消当前merge行为
+git merge --abort
+
+# 合并单个提交到当前分支
+git cherry-pick <commit-id>
+# 合并的时候如果遇到冲突, 需要手动解决冲突, 解决完毕后使用 --continue 继续
+git cherry-pick --continue
+# 如果要取消当前合并使用
+git cherry-pick --abort
+```
+
+- 对于同一个文件，如果有多个分支需要合并时，容易出现冲突。
+- 合并分支时，如果出现冲突，只能手动处理，再次提交，一般的作法，把自己的代码放到冲突代码的后面即可。
+- 遇到合并冲突过多无法解决, 想要放弃合并使用 `--abort` 命令
+
 - `git cherry-pick <target id>` 单独合并某个 commit id 到当前分支
 - `git rebase -i <startpoint> <endpoint>` 合并 [范围] 区间 commit 为一次 commit 记录
 - `git rebase <startpoint> <endpoint> --onto master` 复制 [范围] 部分的提交至 master
 
 > 范围 = 开始(不包含)-结束(包含)(没有则默认至最后一次 commit)
-
-### git 合并冲突
-
-- 对于同一个文件，如果有多个分支需要合并时，容易出现冲突。
-- 合并分支时，如果出现冲突，只能手动处理，再次提交，一般的作法，把自己的代码放到冲突代码的后面即可。
 
 ## git 远程仓库
 
@@ -210,16 +240,9 @@ git 与 github 没有直接的关系。
 - `git clone git://github.com/autumnFish/test.git`会在本地新建一个`test`文件夹，在 test 中包含了一个`.git`目录，用于保存所有的版本记录，同时 test 文件中还有最新的代码，你可以直接进行后续的开发和使用。
 - git 克隆默认会使用远程仓库的项目名字，也可以自己指定。需要是使用以下命令：`git clone [远程仓库地址] [本地项目名]`
 
-### git push
-
-- 作用：将本地仓库中代码提交到远程仓库
-- `git push 仓库地址 master` 在代码提交到远程仓库，注意 master 分支必须写，不能省略
-- 例子：`git push git@github.com:autumnFish/test.git master` 如果第一次使用，需要填写 github 的用户名和密码
-
 ### git pull
 
 - 作用：将远程的代码下载到本地
-
 - 通常在 push 前，需要先 pull 一次。
 
 ```bash
@@ -232,14 +255,46 @@ git pull
 每次 push 操作都需要带上远程仓库的地址，非常的麻烦，我们可以给仓库地址设置一个别名
 
 ```bash
-# 给远程仓库设置一个别名
-git remote add 仓库别名 仓库地址
-git remote add autumnFish git@github.com:autumnFish/test.git
+# 添加一个新的远程地址。其中 <name> 是远程地址的别名，<url>是远程地址的URL。
+git remote add <name> <url>
+git remote add origin git@github.com:xiaoyao-Ye/test.git
+# 重复上述步骤添加另外一个远程地址。例如:
+git remote add gitlab git@gitlab.com:username/project.git
+# 完成上述步骤后，我们就可以使用 git push 命令将代码推送到任意一个远程地址。
+# 例如，如果要将代码推送到 GitHub 上，可以运行以下命令 :
+git push origin master
+# 如果要将代码推送到 GitLab 上，可以运行以下命令：
+git push gitlab master
 
-# autumnFish
-git remote remove autumnFish
+# 移除远程地址
+git remote remove origin
 
-# git clone的仓库默认有一个origin的别名
+# git clone 的仓库默认会关联远程仓库并有一个 origin 的别名
+# 查看当前项目的远程地址列表。
+git remote -v
+# git remote 只显示别名, 一般默认别名是 origin, 要查看具体地址, 可以使用:
+git remote get-url origin
+# 这会输出 "origin" 远程地址的URL。如果您的本地仓库只与一个远程仓库关联，那么这个命令和 git config --get remote.origin.url 命令是等价的。
+# 设置当前远程地址为新地址
+git remote set-url origin git@xiaoyao-Ye.github.com:xiaoyao-Ye/mangosteen-service.git
+```
+
+### git push
+
+- 作用：将本地仓库中代码提交到远程仓库
+- `git push 仓库地址 master` 在代码提交到远程仓库，注意 master 分支必须写，不能省略
+- 例子：`git push git@github.com:autumnFish/test.git master` 如果第一次使用，需要填写 github 的用户名和密码
+
+```bash
+# push 本地分支到远程并与远程分支关联, -u 是 --set-upstream 的简写, origin 是远程地址的别名
+git push -u origin local-branch
+# 单独设置上游分支
+git branch --set-upstream <remote-branch>
+# 有关联的分支可以直接 push
+git add .
+git commit -m"commit message"
+git pull
+git push
 ```
 
 ## SSH
@@ -269,6 +324,16 @@ git 支持多种数据传输协议：
 - 5 粘贴 公钥  `id_rsa.pub`  内容到对应文本框中
 - 5 在 github 中新建仓库或者使用现在仓库，拿到`git@github.com:用户名/仓库名.git`
 - 6 此后，再次 SSH 方式与 github“通信”，不用输入密码确认身份了
+
+- 新创建的 SSH 密钥添加到 GitHub 后没有任何效果，可能有以下几个原因
+- 您可能使用了错误的公钥。请确保您在 GitHub 上添加的是正确的公钥。
+- 可能还没有将私钥添加到您的本地 SSH 代理中。请使用以下命令将私钥添加到代理中: `ssh-add ~/.ssh/id_rsa`
+- SSH 配置可能需要更新。请确保您的 SSH 配置文件（通常位于 ~/.ssh/config）包含以下内容:
+
+  ```text
+  Host github.com
+    IdentityFile ~/.ssh/id_rsa
+  ```
 
 ## git 提交规范
 
