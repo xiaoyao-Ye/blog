@@ -7,6 +7,7 @@ const sidebarHandbook = [
       { text: "Vue", link: "/handbook/vue" },
       { text: "Css", link: "/handbook/css" },
       { text: "JavaScript", link: "/handbook/JavaScript" },
+      { text: "ES6", link: "/handbook/ES6" },
       { text: "NodeJS", link: "/handbook/node" },
       { text: "uniapp", link: "/handbook/uniapp" },
       { text: "mpvue", link: "/handbook/mpvue" },
@@ -99,7 +100,7 @@ const navBar = [
   { text: "Handbook", activeMatch: "/handbook/", link: sidebarHandbook[0].items[0].link },
   { text: "Interview", activeMatch: "/interview/", link: sidebarInterview[0].items[0].link },
   { text: "Other", activeMatch: "/other/", link: sidebarOther[0].items[0].link },
-  { text: "Demo", activeMatch: "/demo/", link: "/demo/" },
+  // { text: "Demo", activeMatch: "/demo/", link: "/demo/" },
   { text: "Ghosteye", activeMatch: "/Ghosteye/", link: sidebarGhosteye[0].items[0].link },
 ];
 
