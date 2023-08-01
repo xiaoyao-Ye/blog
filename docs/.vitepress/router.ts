@@ -25,7 +25,7 @@ const sidebarHandbook = [
 
 const sidebarInterview = [
   {
-    text: "八股文",
+    text: "面试相关",
     items: [
       { text: "prepare", link: "/interview/prepare" },
       { text: "工程化", link: "/interview/engineering" },
@@ -72,6 +72,7 @@ const sidebarOther = [
       { text: "mini", link: "/other/mini" },
       { text: "install", link: "/other/install" },
       { text: "js", link: "/other/js" },
+      { text: "web3", link: "/other/web3" },
       { text: "TODO", link: "/other/TODO" },
     ],
   },
