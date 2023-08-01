@@ -8,6 +8,7 @@ const sidebarHandbook = [
       { text: "Css", link: "/handbook/css" },
       { text: "JavaScript", link: "/handbook/JavaScript" },
       { text: "NodeJS", link: "/handbook/node" },
+      { text: "uniapp", link: "/handbook/uniapp" },
       { text: "mpvue", link: "/handbook/mpvue" },
       { text: "other", link: "/handbook/other" },
     ],
