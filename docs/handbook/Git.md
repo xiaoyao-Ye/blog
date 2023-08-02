@@ -330,7 +330,7 @@ git 支持多种数据传输协议：
 - 可能还没有将私钥添加到您的本地 SSH 代理中。请使用以下命令将私钥添加到代理中: `ssh-add ~/.ssh/id_rsa`
 - SSH 配置可能需要更新。请确保您的 SSH 配置文件（通常位于 ~/.ssh/config）包含以下内容:
 
-  ```text
+  ```txt
   Host github.com
     IdentityFile ~/.ssh/id_rsa
   ```
