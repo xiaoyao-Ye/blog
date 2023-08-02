@@ -19,45 +19,30 @@
 
 #### 下载安装
 
-```js
-1.安装Node(官网左边稳定版)
-  下载地址:
-    https://nodejs.org/en/
-
-2.安装 JDK8.x
-  下载地址:
-    https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-    然后下一步下一步安装即可
-
-3.安装Git
-  下载地址:
-    https://git-scm.com/downloads
-
-4.安装 Android sdk
-  已经准备好:
-    https://pan.baidu.com/s/1ImnzcYV0wtNfqH2-BM-QSQ
-
-  下载地址:
-    https://blog.csdn.net/QQxiaoqiang1573/article/details/73274771
-
-5.安装 Android 模拟器
-  推荐夜神模拟器, 轻量级并且使用方便, 下载地址: https://www.yeshen.com/
-```
+1. 安装 [Node(官网左边稳定版)](https://nodejs.org/en/)
+2. 安装 JDK8.x
+   - 下载地址: [java](https://www.oracle.com/java/technologies/downloads/#java8)
+     然后下一步下一步安装即可
+3. 安装 [Git](https://git-scm.com/downloads)
+4. 安装 Android sdk
+   - 已经准备好: [Android](https://pan.baidu.com/s/1ImnzcYV0wtNfqH2-BM-QSQ)
+   - 镜像下载地址: [镜像](https://blog.csdn.net/QQxiaoqiang1573/article/details/73274771)
+5. 安装 Android 模拟器
+   - 推荐夜神模拟器, 轻量级并且使用方便, 下载地址: [夜神模拟器](https://www.yeshen.com/)
 
 #### 安装 JDK8.x 需要注意的问题
 
 - 下载时会提示登录 oracle.
 
-  ```js
+  ```txt
   账号：2696671285@qq.com
   密码：Oracle123
   ```
 
 - 下载时默认是 https，使用 http 之后虽然还是慢，但是也能稳定在 400k 左右!
+- 装完之后还要把 java 的安装目录, 配置为环境变量:
 
-- 装完之后还要把 java 的安装目录,配置为环境变量
-
-  ```js
+  ```txt
   一般会配置到系统环境变量,这样所有用户登录都是可以使用的
   // 1.JAVA_HOME
   这个变量名对应的是JDK8.x的安装路径(完成路径,例如:C:\Windows\System32\Drivers\DriverData)
@@ -74,7 +59,7 @@
 
 - 配置环境变量
 
-  ```js
+  ```txt
   // 1.ANDROID_HOME
   这个变量名对应的变量值是解压出来的android文件放置的对应的位置.
   // 2.Path
@@ -86,9 +71,9 @@
 
 #### React-Native
 
-参考地址: [https://facebook.github.io/react-native/docs/getting-started.html](https://facebook.github.io/react-native/docs/getting-started.html)
+[参考地址](https://facebook.github.io/react-native/docs/getting-started.html)
 
-```js
+```txt
 1.安装python2.x
   下载地址:
     https://www.python.org/downloads/
@@ -96,16 +81,16 @@
 
 #### Weex
 
-> 常见问题: [https://www.jianshu.com/p/8cd872a618d4](https://www.jianshu.com/p/8cd872a618d4)
+[常见问题](https://www.jianshu.com/p/8cd872a618d4)
 
 安装一个 Android 5.1.1 的模拟器, 不要使用它默认的 4.4 的模拟器
 
 #### Flutter
 
-参考地址: [https://flutterchina.club/setup-windows](https://flutterchina.club/setup-windows)
+[参考地址](https://flutterchina.club/setup-windows)
 
-```js
-// 1.安装 Flutter SDK
+```txt
+1.安装 Flutter SDK
 // 下载地址:【建议通过git clone】
 // https://flutter.io/sdk-archive/#windows
 
@@ -117,28 +102,27 @@
 
 ### react-native
 
-1.创建项目:
+1. 创建项目:
 
-```js
-npx react-native init 项目名
-```
+   ```bash
+   npx react-native init 项目名
+   ```
 
-2.连接模拟器或者真机:
+2. 连接模拟器或者真机:
 
-```js
-// 真机:
-https://reactnative.cn/docs/running-on-device/
-// 模拟器:
-adb connect 127.0.0.1:62001    // 这个ip端口是固定的
-adb devices            // 确认是否连接
-```
+   ```bash
+   # 真机:
+   # https://reactnative.cn/docs/running-on-device/
+   #  模拟器:
+   adb connect 127.0.0.1:62001     # 这个ip端口是固定的
+   adb devices                     # 确认是否连接
+   ```
 
-3.运行项目:
+3. 运行项目:
 
-```js
-// 运行项目如果没弹出Metro框的话，需要先运行react-native start在运行项目
-
-yarn android
-# 或者
-yarn react-native run-android
-```
+   ```bash
+   # 运行项目如果没弹出Metro框的话，需要先运行react-native start在运行项目
+   yarn android
+   # 或者
+   yarn react-native run-android
+   ```
