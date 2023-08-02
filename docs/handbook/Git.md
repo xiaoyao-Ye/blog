@@ -315,17 +315,18 @@ git 支持多种数据传输协议：
 
 注意：这些命令需要在 bash 中敲
 
-- 1 创建 SSH Key：`ssh-keygen -t rsa`
-- 2 在文件路径  `C:\用户\当前用户名\`  找到  `.ssh`  文件夹
-- 3 文件夹中有两个文件：
+- 创建 SSH Key：`ssh-keygen -t rsa`
+- 在文件路径  `C:\用户\当前用户名\`  找到  `.ssh`  文件夹
+- 文件夹中有两个文件：
   - 私钥：`id_rsa`
   - 公钥：`id_rsa.pub`
-- 4 在  `github -> settings -> SSH and GPG keys`页面中，新创建 SSH key
-- 5 粘贴 公钥  `id_rsa.pub`  内容到对应文本框中
-- 5 在 github 中新建仓库或者使用现在仓库，拿到`git@github.com:用户名/仓库名.git`
-- 6 此后，再次 SSH 方式与 github“通信”，不用输入密码确认身份了
+- 在  `github -> settings -> SSH and GPG keys`页面中，新创建 SSH key
+- 粘贴 公钥  `id_rsa.pub`  内容到对应文本框中
+- 在 github 中新建仓库或者使用现在仓库，拿到`git@github.com:用户名/仓库名.git`
+- 此后，再次 SSH 方式与 github“通信”，不用输入密码确认身份了
 
-- 新创建的 SSH 密钥添加到 GitHub 后没有任何效果，可能有以下几个原因
+新创建的 SSH 密钥添加到 GitHub 后没有任何效果，可能有以下几个原因:
+
 - 您可能使用了错误的公钥。请确保您在 GitHub 上添加的是正确的公钥。
 - 可能还没有将私钥添加到您的本地 SSH 代理中。请使用以下命令将私钥添加到代理中: `ssh-add ~/.ssh/id_rsa`
 - SSH 配置可能需要更新。请确保您的 SSH 配置文件（通常位于 ~/.ssh/config）包含以下内容:
