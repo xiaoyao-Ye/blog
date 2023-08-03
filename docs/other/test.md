@@ -209,14 +209,143 @@ it("test", () => {
 vi.mock 返回值会替换 config 中所有的导出, 所以如果 vi.mock 只返回了 name, 那么其他属性和方法将不可用, 解决:
 
 ```JavaScript
-vi.mock("./config", () => [
+vi.mock("./config", () => {
   return { name: "Ghosteye" }
-])
+})
 vi.mock("./config", async (importOriginal) => {
   const config = await importOriginal()
   // const config = await vi.importActual("./config") // 跟上面这行代码的结果是一样的
   return { ...config as any, name: "Ghosteye" };      // 只覆盖 name 属性
 })
 ```
+
+### 环境变量
+
+获取环境变量的两种方式:
+
+- 在 node 中使用 `process.env`
+- 在 vite webpack 中使用 `import.meta.env`
+
+:::code-group
+
+```TypeScript [index.spec.ts]
+import { it, expect, vi } from "vitest";
+import { getUserName } from "./helper";
+
+it("test-stub", () => {
+  // 这种方式会影响别的测试 case
+  // process.env.USER_NAME = "Ghosteye";
+  vi.stubEnv("USER_NAME", "Ghosteye");  // [!code hl]
+
+  const res = getUserName();
+
+  expect(res).toBe("username is Ghosteye");
+
+  // 还原所有env, 一般配合 afterEach 使用就不用在这里单独 unstubAllEnvs
+  vi.unstubAllEnvs(); // [!code hl]
+});
+
+it("should", () => {
+  console.log(process.env.USER_NAME); // undefined
+});
+
+// afterEach(() => {
+//   vi.unstubAllEnvs();
+// });
+```
+
+```TypeScript [helper.ts]
+const getUserName = () => {
+  return `username is ` + process.env.USER_NAME;
+  // return `username is ` + (import.meta.env.USER_NAME);
+};
+
+export { getUserName };
+```
+
+:::
+
+### 全局 global
+
+:::code-group
+
+```TypeScript [index.spec.ts]
+import { it, expect, vi } from "vitest";
+import { doubleHeight, getGlobalUser } from "./global";
+
+it("should", () => {
+  vi.stubGlobal("innerHeight", 100);  // [!code hl]
+
+  const res = doubleHeight();
+
+  expect(res).toBe(200);
+});
+
+it("should", () => {
+  vi.stubGlobal("user", { name: "Ghosteye" });  // [!code hl]
+
+  const res = getGlobalUser();
+
+  expect(res).toBe("username is Ghosteye");
+});
+```
+
+```TypeScript [global.ts]
+// window.user = {name: "test"};
+// window.innerHeight = 900;
+
+const getGlobalUser = () => {
+  return "username is " + user.name;
+};
+
+const doubleHeight = () => {
+  return innerHeight * 2;
+};
+
+export { getGlobalUser, doubleHeight };
+```
+
+:::
+
+### 间接层的处理技巧
+
+![test](/other/test-stub.svg)
+
+:::code-group
+
+```TypeScript [index.spec.ts]
+import { it, expect, vi } from "vitest";
+import { doubleHeight } from "./global";
+
+vi.mock("./window.ts", () => {
+  return {
+    innerHeightFn: () => 100,
+  }
+})
+
+it("should", () => {
+  const res = doubleHeight();
+
+  expect(res).toBe(200);
+});
+```
+
+```TypeScript [global.ts]
+import { innerHeightFn } from "./window";
+
+const doubleHeight = () => {
+  return innerHeightFn() * 2;
+};
+
+export { doubleHeight };
+```
+
+```TypeScript [window.ts]
+export const innerHeightFn = () => {
+  return innerHeight;
+}
+```
+
+:::
 
 [\_](https://testing.cuixueshe.com/)
