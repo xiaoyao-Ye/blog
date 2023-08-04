@@ -10,6 +10,13 @@ script 里面有[生命周期钩子](https://docs.npmjs.com/cli/v8/using-npm/scr
     // 限制使用pnpm和安装后初始化git-hooks
     "preinstall": "npx only-allow pnpm",
     "postinstall": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "npx commitlint --edit \"${1}\""
+    // 在使用pnpm的项目中使用 pnpm exec 执行比 npx 更合适
+    // "pre-commit": "pnpm exec lint-staged",
+    // "commit-msg": "pnpm exec commitlint --edit \"${1}\""
   }
 }
 ```
