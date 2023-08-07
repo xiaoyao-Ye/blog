@@ -572,6 +572,42 @@ vue 无法检测到 data 属性值为数组或对象的修改，所以我们需�
 
 使用 this.$nextTick();
 
+## vue3 找不到 vue 模块
+
+```typescript
+// vite-env.d.ts
+/// <reference types="vite/client" />
+
+declare module "*.vue" {
+  import type { DefineComponent } from "vue";
+  const component: DefineComponent<{}, {}, any>;
+  export default component;
+}
+```
+
+## vite 配置 alias 别名
+
+```typescript
+export default defineConfig({
+  resolve: {
+    alias: {
+      "@": resolve("src"),
+    },
+  },
+});
+```
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+```
+
 ## vue.3.3
 
 - 新增 `defineOptions` 在 `script setup` 中使用这个函数配置 options , 不在需要单独的 `script`
