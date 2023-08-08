@@ -348,4 +348,202 @@ export const innerHeightFn = () => {
 
 :::
 
+### 依赖注入
+
+> 强依赖某个模块或者第三方库时, 通过依赖注入的方式解决强依赖, 便于测试
+
+```txt
+依赖倒置原则:
+高层模块不应该依赖底层模块, 二者都应该依赖其抽象;
+抽象不应该依赖细节, 细节应该依赖抽象.
+
+程序的接缝:
+程序接缝是代码中的一个分界线, 它允许我们讲一个组件与其他组件隔离开.
+通过创建接缝, 我们可以轻松地将组件替换为另一个组件, 而不会影响到应用程序的其他部分.
+这有助于将组件之间的耦合降到最低. 使得代码更加模块化.
+```
+
+> 本质上就是调整一下代码结构, 将强依赖的模块或者第三方库抽离出来一个函数, 将这个函数通过参数的方式传入, 那么测试的时候就可以传入一个自定义返回值的函数, 从而达到测试的目的.
+
+函数示例:
+
+- 更改代码结构前: readAndProcessFile(高层) 依赖于 readFileSync(底层)
+- 更改代码结构后: readAndProcessFile 依赖于 FileRender 接口(传入的参数), 而 fileRender.read 是去实现接口, 这样做的好处是我们可以随时去替换 fileRender, 从而达到测试的目的.
+
+```TypeScript [readAndProcessFile.ts]
+import { readFileSync } from "fs";
+
+export const readAndProcessFile = (filePath: string): string => {
+  // 当前强依赖 redFileSync 不利于测试
+  const content = readFileSync(filePath, { encoding: "utf8" });  // [!code hl]
+  // 实际场景下可能 process 的过程会比较复杂
+  return content + "-> Ghosteye";
+};
+```
+
+:::code-group
+
+```TypeScript [readAndProcessFile.ts]
+export interface FileRender {
+  read: (filePath: string) => string;
+}
+// 通过依赖注入的方式解决强依赖, 利于测试
+export const readAndProcessFile = (
+  filePath: string,
+  fileRender: FileRender  // [!code hl]
+): string => {
+  const content = fileRender.read(filePath);  // [!code hl]
+  return content + "-> Ghosteye";
+};
+```
+
+```TypeScript [readAndProcessFile.spec.ts]
+import { it, expect, describe } from "vitest";
+import { readAndProcessFile } from "./readAndProcessFile";
+import type { FileRender } from "./readAndProcessFile";
+
+describe("di function", () => {
+  it("read and process file", () => {
+    class TxtFileRender implements FileRender { // [!code hl]
+      read(filePath: string) {  // [!code hl]
+        return "test "; // [!code hl]
+      } // [!code hl]
+    } // [!code hl]
+
+    const res = readAndProcessFile("test.txt", new TxtFileRender());  // [!code hl]
+    expect(res).toBe("test -> Ghosteye");
+  });
+});
+```
+
+:::
+
+class 示例:
+
+- 构造函数的方式(如果想要表达该参数是必填可以用这个方式, 否则可以用其他两种方式)
+- 属性的方式
+- 方法的方式
+
+> 这三种方式本质都是一样的, 只是写法不同而已.
+
+```TypeScript [readAndProcessFile.ts]
+import { readFileSync } from "fs";
+// 强依赖与 readFileSync 不利于测试
+export class ReadAndProcessFile {
+  run(filePath: string) {
+    const content = readFileSync(filePath, { encoding: "utf-8" }); // [!code hl]
+    return content + "-> Ghosteye";
+  }
+}
+```
+
+:::code-group
+
+```TypeScript [readAndProcessFile.ts]
+export interface FileRender {
+  read: (filePath: string) => string;
+}
+
+// 通过依赖注入的方式解决强依赖, 利于测试
+export interface FileRender {
+  read: (filePath: string) => string;
+}
+
+// 通过依赖注入的方式解决强依赖, 利于测试
+// 构造函数的方式
+// export class ReadAndProcessFile {
+//   private _fileRender: FileRender;
+//   constructor(fileRender: FileRender) {
+//     this._fileRender = fileRender;
+//   }
+//   run(filePath: string) {
+//     const content = this._fileRender.read(filePath);
+//     return content + "-> Ghosteye";
+//   }
+// }
+
+// 属性的方式
+// export class ReadAndProcessFile {
+//   private _fileRender!: FileRender;
+//   constructor() {}
+//   run(filePath: string) {
+//     const content = this.fileRender.read(filePath);
+//     return content + "-> Ghosteye";
+//   }
+
+//   get fileRender() {
+//     return this._fileRender;
+//   }
+
+//   set fileRender(fileRender: FileRender) {
+//     this._fileRender = fileRender;
+//   }
+// }
+
+// 方法的方式
+export class ReadAndProcessFile {
+  private _fileRender!: FileRender;
+  constructor() {}
+  run(filePath: string) {
+    const content = this._fileRender.read(filePath);
+    return content + "-> Ghosteye";
+  }
+
+  setFileRender(fileRender: FileRender) {
+    this._fileRender = fileRender;
+  }
+}
+```
+
+```TypeScript [readAndProcessFile.spec.ts]
+import { it, expect, describe } from "vitest";
+import { ReadAndProcessFile } from "./readAndProcessFile";
+import type { FileRender } from "./readAndProcessFile";
+
+describe("di class", () => {
+  // it("构造函数", () => {
+  //   class StubFileRender implements FileRender {
+  //     read(filePath: string) {
+  //       return "test ";
+  //     }
+  //   }
+
+  //   const readAndProcessFile = new ReadAndProcessFile(new StubFileRender());
+  //   const res = readAndProcessFile.run("./test.txt");
+  //   expect(res).toBe("test -> Ghosteye");
+  // });
+
+  // it("属性", () => {
+  //   class StubFileRender implements FileRender {
+  //     read(filePath: string) {
+  //       return "test ";
+  //     }
+  //   }
+
+  //   const readAndProcessFile = new ReadAndProcessFile();
+  //   readAndProcessFile.fileRender = new StubFileRender();
+  //   const res = readAndProcessFile.run("./test.txt");
+  //   expect(res).toBe("test -> Ghosteye");
+  // });
+
+  it("方法", () => {
+    class StubFileRender implements FileRender {
+      read(filePath: string) {
+        return "test ";
+      }
+    }
+
+    const readAndProcessFile = new ReadAndProcessFile();
+    readAndProcessFile.setFileRender(new StubFileRender());
+    const res = readAndProcessFile.run("./test.txt");
+    expect(res).toBe("test -> Ghosteye");
+  });
+});
+
+```
+
+:::
+
+> 函数示例是通过参数完成依赖注入 class 示例是通过 constructor, 属性, 方法 完成依赖注入
+
 [\_](https://testing.cuixueshe.com/)
