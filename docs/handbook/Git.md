@@ -336,6 +336,31 @@ git 支持多种数据传输协议：
     IdentityFile ~/.ssh/id_rsa
   ```
 
+## proxy
+
+是否经常看到如下错误信息：
+
+```bash
+fatal: Failed to connect to github.com port 443: Timed out
+fatal: Failed to connect to github.com port 443 after 21078 ms: Couldn't connect to server
+```
+
+一般情况下我们访问 GitHub 都会使用梯子, 但是有时候哪怕使用了梯子也会出现无法访问的情况, 分析问题可能是 Git 所设端口与系统代理不一致, 需要重新设置.
+
+```bash
+# 设置/修改 Git 的代理端口
+git config --global http.proxy http://127.0.0.1:8888
+git config --global https.proxy http://127.0.0.1:8888
+# 查看 Git 的代理端口
+git config --global --get http.proxy
+git config --global --get https.proxy
+# 取消 Git 的代理端口
+git config --global --unset http.proxy
+git config --global --unset https.proxy
+```
+
+具体的代理地址一般可以在梯子软件中查看, 或者 windows 系统的 `设置->网络与Internet->查找代理` 中查看.
+
 ## git 提交规范
 
 - `feat` 新增功能
