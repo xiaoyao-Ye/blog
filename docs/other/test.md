@@ -546,4 +546,88 @@ describe("di class", () => {
 
 > 函数示例是通过参数完成依赖注入 class 示例是通过 constructor, 属性, 方法 完成依赖注入
 
+## 状态验证
+
+> 使用最多的方式, 状态是指 `属性/数据结构`, 状态验证最重要的是找到状态然后去验证它. 状态没有暴露出去可以通过间接层去获取状态
+
+状态验证的过程是黑盒验证: 黑盒验证可以让我们大胆的去重构`实现`部分, 因为我们只关心输入和输出, 不关心内部的实现细节
+
+:::code-group
+
+```TypeScript [counter.spec.ts]
+import { Counter } from "./counter";
+import { afterEach, it, expect, describe } from "vitest";
+
+describe("Counter class", () => {
+  it("increment", () => {
+    const counter = new Counter();
+
+    counter.increment();
+
+    expect(counter.getCount()).toBe(1);
+  });
+});
+
+describe("Counter function", () => {
+  afterEach(() => {
+    // reset 可以放到 beforeEach | afterEach 里面
+    reset();
+  });
+  it("increment", () => {
+    increment();
+
+    expect(getCount()).toBe(1);
+  });
+  it("second", () => {
+    increment();
+
+    expect(getCount()).toBe(1);
+  });
+});
+```
+
+```TypeScript [counter.ts]
+// class
+export class Counter {
+  private count: number;
+
+  constructor() {
+    this.count = 0;
+  }
+
+  increment(): void {
+    this.count++;
+  }
+
+  reset(): void {
+    this.count = 0;
+  }
+
+  getCount() {
+    return this.count;
+  }
+}
+// function
+let count = 0;
+
+export function getCount(): number {
+  return count;
+}
+
+export function increment(): void {
+  // 重构很大的空间
+  count--;
+  count++;
+  count++;
+}
+
+export function reset(): void {
+  count = 0;
+}
+```
+
+:::
+
+## 行为验证
+
 [\_](https://testing.cuixueshe.com/)
