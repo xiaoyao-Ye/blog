@@ -6,7 +6,7 @@
 
 > 开箱即用、共用 vite 配置(意味着可以开发环境, 构建环境, 测试环境共用同一套配置)
 
-use
+### Usage
 
 ```bash
 # 安装
@@ -14,6 +14,43 @@ pnpm i vitest -D
 # 测试
 vitest run
 ```
+
+### Common api
+
+- `it/test` 测试用例 (it 和 test 是一样的, 只是为了兼容 jest)
+  - `it.skip` 跳过测试用例
+  - `it.only` 只测试当前测试用例
+  - `it.todo` 标记当前测试用例为待完成
+- `describe` 测试用例分组
+  - `describe.skip` 跳过测试用例分组
+  - `describe.only` 只测试当前测试用例分组
+- `expect` 断言, 语法 `expect(<value>).<api>(target)`
+  - `toBe` 相当于 `===`
+  - `toEqual` 是深度相等的意思, 用于比较对象
+  - `toBeTruthy` 相当于 `!!value`
+  - `toBeFalsy` 相当于 `!value`
+  - `toContain` 相当于 `value.includes(target)`
+  - `toThrow` 相当于 `throw new Error()`
+- `expectTypeOf` 语法 `expectTypeOf(<value>).<api>()`
+  - `toBeObject` 目标是对象类型
+  - `toBeString` 目标是字符串类型
+  - `toBeNumber` 目标是数字类型
+  - `toBeBoolean` 目标是布尔类型
+  - `toBeArray` 目标是数组类型
+  - `toBeFunction` 目标是函数类型
+  - `toBePromise` 目标是 promise 类型
+- `beforeEach` 每个测试用例执行前执行
+- `afterEach` 每个测试用例执行后执行
+- `beforeAll` 所有测试用例执行前执行
+- `afterAll` 所有测试用例执行后执行
+- `vi.mock` 用于 mock 模块
+- `vi.mocked` 用于 mock 模块的函数
+- `vi.importActual` 用于导入真实的模块
+- `vi.doMock` 用于 mock 模块, 与 vi.mock 的区别是 vi.doMock 必须在 import 之前使用
+- `vi.stubEnv` 用于 stub 环境变量
+- `vi.unstubAllEnvs` 用于还原所有 stub 的环境变量
+- `vi.stubGlobal` 用于 stub 全局变量
+- `vi.unstubAllGlobals` 用于还原所有 stub 的全局变量
 
 ## jest
 
