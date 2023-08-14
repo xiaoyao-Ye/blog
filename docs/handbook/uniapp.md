@@ -22,3 +22,14 @@ export default {
 };
 </script>
 ```
+
+## input 光标颜色
+
+```css
+input {
+  color: #fff;
+  caret-color: #fff;
+}
+```
+
+在 ios 上光标的颜色是绿色的设置 color 和 caret-color 都不生效, 可以自己写一个光标模拟或者当前页面使用 webview

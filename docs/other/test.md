@@ -52,6 +52,22 @@ vitest run
 - `vi.stubGlobal` 用于 stub 全局变量
 - `vi.unstubAllGlobals` 用于还原所有 stub 的全局变量
 
+### 测试覆盖率
+
+代码覆盖率是指测试代码覆盖到了多少业务代码
+
+```bash
+# 启动Vitest进程时，它会自动提示您安装相应的支持包(如果没有安装的话)
+vitest run --coverage
+
+# 或者手动安装
+# For v8
+npm i -D @vitest/coverage-v8
+
+# For istanbul
+npm i -D @vitest/coverage-istanbul
+```
+
 ## jest
 
 > 构建和开发是分开的配置, 有一定的维护成本
@@ -666,5 +682,9 @@ export function reset(): void {
 :::
 
 ## 行为验证
+
+优先使用状态验证, 当找不着状态的时候, 或者当状态非常难获取的时候才使用行为验证
+
+## 分析如何写出更好的测试
 
 [\_](https://testing.cuixueshe.com/)
