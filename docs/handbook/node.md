@@ -116,3 +116,29 @@ Shebang 的作用是指定脚本文件的解释器。
 当 node 中需要导入一个文件时, 使用 import 导入需要的是一个 fileURL, 不能直接是 path
 
 可以使用 `await import(url.pathToFileURL(resolve('./xx.js')).toString());` 这种方式转换.
+
+## restful api
+
+典型的特征是，用请求方法来表示不同的操作:
+
+- `GET` 表示获取资源
+- `POST` 表示新建资源
+- `PUT` 表示更新资源
+- `PATCH` 表示更新资源(部分更新)
+- `DELETE` 表示删除资源
+
+为了更好的扩展性、可读性，API 的结构一般是这样的:
+
+- `/{系统类型或者api}/{版本号}/{功能模块}/{具体操作}`
+
+> 个人觉得版本是 v1 的时候, 可以省略版本号. 其他情况根据实际情况而定
+
+参考:
+
+[RESTful API 最佳实践 ---阮一峰](http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html)
+
+[理解 RESTful 架构 ---阮一峰](http://www.ruanyifeng.com/blog/2011/09/restful.html)
+
+[什么是 RESTful](https://easydoc.net/a/restful/)
+
+[如何设计一个好的 API 接口名](https://easydoc.net/a/api-design/)
