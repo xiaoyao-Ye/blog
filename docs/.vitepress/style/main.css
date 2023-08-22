@@ -48,3 +48,7 @@
 .dark ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+img {
+  border-radius: 8px;
+}

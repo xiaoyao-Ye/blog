@@ -1,6 +1,8 @@
 # test
 
-- 保持单元测试的可读性(测试非常重视可读性和可维护性, 只有测试的维护成本小于业务代码的维护成本, 才会愿意去维护它)
+::: tip 保持单元测试的可读性
+测试非常重视可读性和可维护性, 只有测试的维护成本小于业务代码的维护成本, 才会愿意去维护它
+:::
 
 ## vitest
 
@@ -181,7 +183,9 @@ it("stub", () => {
 })
 ```
 
+::: tip
 注意: 上面示例中的 `vi.mock` 是全局的, 当前测试文件所有用到 `countNum` 函数的测试用例都会返回 4.
+:::
 
 ::: code-group
 
@@ -683,6 +687,153 @@ export function reset(): void {
 
 ## 行为验证
 
+- 定义: 验证对象之间的交互是否按预期进行, 验证是指 `函数/方法` 的调用次数, 调用顺序, 调用参数, 调用时机等等.
+- 本质: 假定状态的改变都是由行为交互去引起的, 那么行为按预期进行了, 则断定状态也就按预期改变了.
+- 实施: 记录交互信息, 验证信息:
+  - stub 提供间接输入 (只是提供值, 不记录交互信息)
+  - mock 提供间接输入以外还会记录交互信息, 用于行为验证
+    - `vi.fn` mock 函数, 但是会影响模块的其他导出
+    - `vi.spyOn` mock 函数, 但是不会影响模块的其他导出
+- 缺点:
+  - 白盒验证, 暴露了内部细节, 重构的时候需要修改测试代码, 破坏了封装性
+  - 破坏了测试的有效性(我们做行为验证的时候断定状态也就按预期改变了, 但是实际上内部实现没有改变状态时, 行为验证并不能有效验证到)
+
+::: warning 再次提醒
+优先使用状态验证.
+:::
+
+示例 1:
+
+:::code-group
+
+```TypeScript [userService.spec.ts]
+import { vi, it, expect, describe } from "vitest";
+import { UserService } from "./userService";
+import { Database } from "./database";
+
+describe("UserService", () => {
+  it("should create user ", () => {
+    // 与 vi.spyOn 一样
+    // Database.prototype.addUser = vi.fn();
+    const database = new Database();
+    // 记录 addUser 的行为
+    vi.spyOn(database, "addUser");
+    console.log(database.addUser); // 多了非常多的 function 用于记录行为信息
+    // 调用 addUser 之前 addUser.isCalled 是 false
+    const userService = new UserService(database);
+    // 调用 addUser 之后 addUser.isCalled 是 true
+
+    userService.createUser("Ghosteye");
+
+    expect(database.addUser).toBeCalled();
+  });
+});
+```
+
+```TypeScript [userService.ts]
+import { Database, User } from "./database";
+
+export class UserService {
+  constructor(private userDatabase: Database) {}
+
+  createUser(name: string): User {
+    const id = Math.random() * 1000000;
+    const newUser: User = { id, name };
+    this.userDatabase.addUser(newUser);
+    return newUser;
+  }
+
+  findUser(id: number) {
+    return this.userDatabase.getUser(id);
+  }
+}
+```
+
+```TypeScript [database.ts]
+export interface User {
+  id: number;
+  name: string;
+}
+
+export class Database {
+  private users: User[] = [];
+
+  addUser(user: User): void {
+    this.users.push(user);
+    // axios("/addUser")
+  }
+
+  getUser(id: number): User | undefined {
+    return this.users.find((user) => user.id === id);
+  }
+}
+```
+
+示例 2:
+
+:::
+
+:::code-group
+
+```TypeScript [login.spec.ts]
+import { it, expect, describe, vi } from "vitest";
+import { getTips, login, loginV2 } from "./login";
+import { appLogin } from "api";
+
+vi.mock("api", () => {
+  return {
+    // appLogin: vi.fn(),
+    // appLogin: vi.fn().mockReturnValue(true),
+    appLogin: vi.fn(() => true),
+  };
+});
+
+describe("login", () => {
+  it("should called login function from api", () => {
+    login("Ghosteye", "jiubugaosuni");
+
+    // 验证是否调用了 appLogin 函数
+    expect(appLogin).toBeCalled();
+    // 是否调用了 appLogin 函数，并且传入了 Ghosteye 和 jiubugaosuni 两个参数
+    // expect(appLogin).toBeCalledWith("Ghosteye", "jiubugaosuni");
+    // 是否只调用了一次 appLogin 函数
+    // expect(appLogin).toBeCalledTimes(1);
+  });
+
+  it("v2", () => {
+    loginV2("Ghosteye", "jiubugaosuni");
+    // 行为验证: 是否调用了 appLogin 函数
+    expect(appLogin).toBeCalled();
+    // 状态验证: tipString 是否为 login success
+    expect(getTips()).toBe("login success");
+  });
+});
+```
+
+```TypeScript [login.ts]
+import { appLogin } from "api";
+
+const state = { tipString: "" };
+
+export function login(username: string, password: string) {
+  appLogin(username, password);
+}
+
+export function loginV2(username: string, password: string) {
+  const isLogin = appLogin(username, password);
+
+  if (isLogin) {
+    state.tipString = "login success";
+  }
+}
+
+export function getTips() {
+  return state.tipString;
+}
+```
+
+:::
+
 <!-- 优先使用状态验证, 当找不着状态的时候, 或者当状态非常难获取的时候才使用行为验证
 
 - 测试的写法风格：
@@ -708,6 +859,133 @@ export function reset(): void {
 - 群居测试
   - 把 searchTasks 和 searchCommands 包含进来一起测试的测试 -->
 
+## 可预测性
+
+::: info 保证给定特定输入时产生的输出是可预测的
+代码的可预测性是指代码的执行结果是可预测的, 代码的可预测性是测试的前提.
+:::
+
+不稳定的代码:
+
+- 外部依赖
+  - api
+  - 第三方库
+  - 数据库
+- 随机数
+- 时间
+
+### 随机数
+
+:::code-group
+
+```TypeScript [random.spec.ts]
+import { vi, it, expect, describe } from "vitest";
+import { generateRandomString } from "./random";
+
+describe("Math.random", () => {
+  it("should generate random string", () => {
+    // 返回 0.1
+    //     vi.spyOn(Math, "random").mockImplementation(() => {
+    //       return 0.1;
+    //     });
+
+    // 第一次调用返回 0.1，第二次调用返回 0.2
+    vi.spyOn(Math, "random").mockImplementationOnce(() => {
+      return 0.1;
+    });
+    vi.spyOn(Math, "random").mockImplementationOnce(() => {
+      return 0.2;
+    });
+
+    const result = generateRandomString(2);
+
+    expect(result).toBe("fc");
+  });
+});
+```
+
+```TypeScript [random.ts]
+/**
+ * 基于 Math.random 生成一个随机字符串
+ * @param length 字符串长度
+ * @returns 生成的随机字符串
+ */
+export function generateRandomString(length: number): string {
+  let result = "";
+  const characters = "abcdefghijklmnopqrstuvwxyz";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length); // 生成 0 到字符串长度之间的随机整数
+    result += characters.charAt(randomIndex); // 将指定位置上的字符添加到结果字符串中
+  }
+  return result;
+}
+```
+
+:::
+
+### 时间 Date
+
+:::code-group
+
+```TypeScript [date.spec.ts]
+import { beforeEach, afterEach, vi, it, expect, describe } from "vitest";
+import { checkFriday } from "./date";
+
+describe("date", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("should be happy when it's Friday", () => {
+    vi.setSystemTime(new Date(2023, 3, 21));
+
+    const result = checkFriday();
+
+    expect(result).toBe("happy");
+  });
+
+  it("should be sad when it's not Friday", () => {
+    vi.setSystemTime(new Date(2023, 3, 22));
+
+    const result = checkFriday();
+
+    expect(result).toBe("sad");
+  });
+
+  it("third", () => {
+    checkFriday(); // 这里还是 22 号, 需要使用 vi.useRealTimers(); 还原真实时间
+  });
+});
+```
+
+```TypeScript [date.ts]
+/**
+ * 检测今天是否为周五
+ * @returns 如果今天是周五返回 "开心"，否则返回 "不开心"
+ */
+export function checkFriday(): string {
+  const today = new Date();
+  console.log(today.getDay());
+  if (today.getDay() === 5) {
+    return "happy";
+  } else {
+    return "sad";
+  }
+}
+```
+
+:::
+
 ## 分析如何写出更好的测试
+
+- 不要完美主义, 试图找出所有边界, 小步走逐步完善
+- 视角转换, 从使用者的角度去思考功能而不是只思考当前开发的函数, 不要过度设计, 用到啥测试啥
+- 不要追求 100%覆盖率, 该测的测, 不该测的不要为了测试覆盖率而测
+
+![test_map](/other/test_map.svg)
 
 [\_](https://testing.cuixueshe.com/)
