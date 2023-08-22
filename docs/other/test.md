@@ -1,12 +1,16 @@
 # test
 
-::: tip 保持单元测试的可读性
-测试非常重视可读性和可维护性, 只有测试的维护成本小于业务代码的维护成本, 才会愿意去维护它
+::: tip 分析如何写出更好的测试
+不要完美主义, 试图找出所有边界, 小步走逐步完善
+
+视角转换, 从使用者的角度去思考功能而不是只思考当前开发的函数, 不要过度设计, 用到啥测试啥
+
+不要追求 100%覆盖率, 该测的测, 不该测的不要为了测试覆盖率而测
 :::
 
 ## vitest
 
-> 开箱即用、共用 vite 配置(意味着可以开发环境, 构建环境, 测试环境共用同一套配置)
+开箱即用、共用 vite 配置(意味着可以开发环境, 构建环境, 测试环境共用同一套配置)
 
 ### Usage
 
@@ -53,6 +57,9 @@ vitest run
 - `vi.unstubAllEnvs` 用于还原所有 stub 的环境变量
 - `vi.stubGlobal` 用于 stub 全局变量
 - `vi.unstubAllGlobals` 用于还原所有 stub 的全局变量
+- `vi.spyOn` 用于 mock 模块的函数, 但是不会影响模块的其他导出
+- `vi.fn`
+- [more...](https://vitest.dev/api/)
 
 ### 测试覆盖率
 
@@ -124,7 +131,9 @@ jest
 
 ## 最小准备测试数据原则
 
-> 当前测试 case 中没有用的数据就不要创建, 保持单元测试的可读性
+::: info 可读性原则
+当前测试 case 中没有用的数据就不要创建, 保持单元测试的可读性
+:::
 
 1. 默认参数的方式
 
@@ -183,8 +192,8 @@ it("stub", () => {
 })
 ```
 
-::: tip
-注意: 上面示例中的 `vi.mock` 是全局的, 当前测试文件所有用到 `countNum` 函数的测试用例都会返回 4.
+::: tip 注意
+上面示例中的 `vi.mock` 是全局的, 当前测试文件所有用到 `countNum` 函数的测试用例都会返回 4.
 :::
 
 ::: code-group
@@ -407,20 +416,20 @@ export const innerHeightFn = () => {
 
 ### 依赖注入
 
-> 强依赖某个模块或者第三方库时, 通过依赖注入的方式解决强依赖, 便于测试
-
-```txt
-依赖倒置原则:
-高层模块不应该依赖底层模块, 二者都应该依赖其抽象;
+::: info 依赖倒置原则
+高层模块不应该依赖底层模块, 二者都应该依赖其抽象.
 抽象不应该依赖细节, 细节应该依赖抽象.
+:::
 
-程序的接缝:
+::: info 程序的接缝
 程序接缝是代码中的一个分界线, 它允许我们讲一个组件与其他组件隔离开.
 通过创建接缝, 我们可以轻松地将组件替换为另一个组件, 而不会影响到应用程序的其他部分.
 这有助于将组件之间的耦合降到最低. 使得代码更加模块化.
-```
+:::
 
-> 本质上就是调整一下代码结构, 将强依赖的模块或者第三方库抽离出来一个函数, 将这个函数通过参数的方式传入, 那么测试的时候就可以传入一个自定义返回值的函数, 从而达到测试的目的.
+强依赖某个模块或者第三方库时, 通过依赖注入的方式解决强依赖, 便于测试.
+
+本质上就是调整一下代码结构, 将强依赖的模块或者第三方库抽离出来一个函数, 将这个函数通过参数的方式传入, 那么测试的时候就可以传入一个自定义返回值的函数, 从而达到测试的目的.
 
 函数示例:
 
@@ -605,9 +614,14 @@ describe("di class", () => {
 
 ## 状态验证
 
-> 使用最多的方式, 状态是指 `属性/数据结构`, 状态验证最重要的是找到状态然后去验证它. 状态没有暴露出去可以通过间接层去获取状态
+::: info 状态验证的过程是黑盒验证
+黑盒验证可以让我们大胆的去重构`实现`部分, 因为我们只关心输入和输出, 不关心内部的实现细节
+:::
 
-状态验证的过程是黑盒验证: 黑盒验证可以让我们大胆的去重构`实现`部分, 因为我们只关心输入和输出, 不关心内部的实现细节
+- 状态验证是测试中使用最多的方式, 状态是指 `属性/数据结构`
+- 状态验证最重要的是找到状态然后去验证它. 状态没有暴露出去可以通过间接层去获取状态
+
+<!-- 状态验证的过程是黑盒验证: 黑盒验证可以让我们大胆的去重构`实现`部分, 因为我们只关心输入和输出, 不关心内部的实现细节 -->
 
 :::code-group
 
@@ -974,6 +988,196 @@ export function checkFriday(): string {
     return "happy";
   } else {
     return "sad";
+  }
+}
+```
+
+:::
+
+## 快速反馈
+
+::: info 保证测试的执行速度快
+当执行测试的时候, 我们希望测试能够快速的执行完毕, 从而让我们能够快速的得到反馈. 想象一下一个单测需要等待 10s 才能执行完毕, 才能得到反馈, 那么越来越多这种单测, 也就不会愿意维护单测了.
+:::
+
+导致单测执行速度慢的原因:
+
+- 外部依赖
+  - api
+  - 第三方库
+  - 数据库
+- time
+- promise
+
+### time
+
+通过 vi.useFakeTimers() 和 vi.useRealTimers() 切换真实时间和假时间来保证测试执行速度快
+
+:::code-group
+
+```TypeScript [time.spec.ts]
+import { vi, it, expect, describe } from "vitest";
+import { User } from "./setTimeout";
+
+describe("setTimeout", () => {
+  it("should fetch User data", () => {
+    vi.useFakeTimers(); // [!code hl]
+    const user = new User("1");
+
+    const callback = vi.fn();
+    user.fetchData(callback, 1000);
+    // vi.advanceTimersByTime(1000);  // [!code hl] 时间快进 1000ms
+    vi.advanceTimersToNextTimer(); // [!code hl] 推荐使用
+
+    expect(callback).toBeCalledWith("Data for user with id: 1");
+  });
+
+  it("should fetch User data", () => {
+    vi.useFakeTimers(); // [!code hl]
+    const user = new User("1");
+
+    const callback = vi.fn();
+    user.fetchDataV2(callback);
+    // 这里 delay 是写死的 2000, 使用 advanceTimersToNextTimer 避免重构更改时间后测试不通过
+    vi.advanceTimersToNextTimer();  // [!code hl]
+
+    expect(callback).toBeCalledWith("Data for user with id: 1");
+  });
+
+  it("should fetch User data, all", () => {
+    vi.useFakeTimers(); // [!code hl]
+    const user = new User("1");
+    const callback = vi.fn();
+    user.fetchData(callback, 1000);
+
+    const user2 = new User("2");
+    const callbackV2 = vi.fn();
+    user2.fetchDataV2(callbackV2);
+
+    vi.runAllTimers(); // [!code hl] 运行所有的定时器
+
+    expect(callback).toBeCalledWith("Data for user with id: 1");
+    expect(callbackV2).toBeCalledWith("Data for user with id: 2");
+  });
+});
+```
+
+```TypeScript [time.ts]
+export class User {
+  id: string;
+
+  constructor(id: string) {
+    this.id = id;
+  }
+
+  fetchData(callback: (data: string) => void, delay: number): void {
+    setTimeout(() => {
+      const data = `Data for user with id: ${this.id}`;
+      callback(data);
+    }, delay);
+  }
+
+  fetchDataV2(callback: (data: string) => void): void {
+    setTimeout(() => {
+      const data = `Data for user with id: ${this.id}`;
+      callback(data);
+    }, 2000);
+  }
+}
+```
+
+:::
+
+### promise
+
+处理异步快速反馈的方式:
+
+示例 1(通过 await 和 advanceTimersToNextTimer 解决 promise + time 的情况):
+
+:::code-group
+
+```TypeScript [promise.spec.ts]
+import { vi, it, expect, describe } from "vitest";
+import { delay, fetchUserData } from "./index";
+
+describe("Promise", () => {
+  it("normal", async () => {
+    const result = await fetchUserData();
+
+    expect(result).toBe("1");
+  });
+
+  it("delay", async () => {
+    vi.useFakeTimers();
+
+    // error case
+    // vi.advanceTimersToNextTimer();
+    // const result = await delay(1000);
+    // vi.advanceTimersToNextTimer();
+
+    // 先拿到 promise 对象不用 await
+    const result = delay(100);  // [!code hl]
+    // 再调用 advanceTimersToNextTimer 快进时间
+    vi.advanceTimersToNextTimer();  // [!code hl]
+    // 最后取出 promise 的 resolve 值
+    expect(result).resolves.toBe("ok"); // [!code hl]
+  });
+});
+```
+
+```TypeScript [promise.ts]
+export function fetchUserData() {
+  return new Promise((resolve, reject) => {
+    resolve("1");
+  });
+}
+
+export function delay(time: number) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("ok");
+    }, time);
+  });
+}
+```
+
+:::
+
+示例 2(通过 flushPromises 解决 promise 嵌套 promise 的情况):
+
+:::code-group
+
+```TypeScript [view.spec.ts]
+import { it, expect, describe } from "vitest";
+import { View } from "./view";
+import flushPromises from "flush-promises";
+
+// flushPromises 源码很简单, 如果不想引入这个库, 可以自己 copy 一个放到 utils 里面
+
+describe("View", () => {
+  it("should change count", async () => {
+    const view = new View();
+    // await view.render(); // error case
+    // 关于 promise 嵌套 promise 的情况进行测试
+    view.render();
+    await flushPromises();  // [!code hl]
+
+    expect(view.count).toBe(3);
+  });
+});
+```
+
+```TypeScript [view.ts]
+export class View {
+  count: number = 1;
+  render() {
+    Promise.resolve()
+      .then(() => {
+        this.count = 2;
+      })
+      .then(() => {
+        this.count = 3;
+      });
   }
 }
 ```
