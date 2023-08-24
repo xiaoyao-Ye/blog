@@ -1,4 +1,4 @@
-# test
+# 单元测试
 
 ::: tip 分析如何写出更好的测试
 不要完美主义, 试图找出所有边界, 小步走逐步完善
@@ -292,7 +292,7 @@ vi.mock("./config", async (importOriginal) => {
 - 在 node 中使用 `process.env`
 - 在 vite webpack 中使用 `import.meta.env`
 
-:::code-group
+::: code-group
 
 ```TypeScript [index.spec.ts]
 import { it, expect, vi } from "vitest";
@@ -333,7 +333,7 @@ export { getUserName };
 
 ### 全局 global
 
-:::code-group
+::: code-group
 
 ```TypeScript [index.spec.ts]
 import { it, expect, vi } from "vitest";
@@ -377,7 +377,7 @@ export { getGlobalUser, doubleHeight };
 
 ![test](/other/test-stub.svg)
 
-:::code-group
+::: code-group
 
 ```TypeScript [index.spec.ts]
 import { it, expect, vi } from "vitest";
@@ -447,7 +447,7 @@ export const readAndProcessFile = (filePath: string): string => {
 };
 ```
 
-:::code-group
+::: code-group
 
 ```TypeScript [readAndProcessFile.ts]
 export interface FileRender {
@@ -503,7 +503,7 @@ export class ReadAndProcessFile {
 }
 ```
 
-:::code-group
+::: code-group
 
 ```TypeScript [readAndProcessFile.ts]
 export interface FileRender {
@@ -623,7 +623,7 @@ describe("di class", () => {
 
 <!-- 状态验证的过程是黑盒验证: 黑盒验证可以让我们大胆的去重构`实现`部分, 因为我们只关心输入和输出, 不关心内部的实现细节 -->
 
-:::code-group
+::: code-group
 
 ```TypeScript [counter.spec.ts]
 import { Counter } from "./counter";
@@ -718,7 +718,7 @@ export function reset(): void {
 
 示例 1:
 
-:::code-group
+::: code-group
 
 ```TypeScript [userService.spec.ts]
 import { vi, it, expect, describe } from "vitest";
@@ -787,7 +787,7 @@ export class Database {
 
 :::
 
-:::code-group
+::: code-group
 
 ```TypeScript [login.spec.ts]
 import { it, expect, describe, vi } from "vitest";
@@ -890,7 +890,7 @@ export function getTips() {
 
 ### 随机数
 
-:::code-group
+::: code-group
 
 ```TypeScript [random.spec.ts]
 import { vi, it, expect, describe } from "vitest";
@@ -939,7 +939,7 @@ export function generateRandomString(length: number): string {
 
 ### 时间 Date
 
-:::code-group
+::: code-group
 
 ```TypeScript [date.spec.ts]
 import { beforeEach, afterEach, vi, it, expect, describe } from "vitest";
@@ -1013,7 +1013,7 @@ export function checkFriday(): string {
 
 通过 vi.useFakeTimers() 和 vi.useRealTimers() 切换真实时间和假时间来保证测试执行速度快
 
-:::code-group
+::: code-group
 
 ```TypeScript [time.spec.ts]
 import { vi, it, expect, describe } from "vitest";
@@ -1094,7 +1094,7 @@ export class User {
 
 示例 1(通过 await 和 advanceTimersToNextTimer 解决 promise + time 的情况):
 
-:::code-group
+::: code-group
 
 ```TypeScript [promise.spec.ts]
 import { vi, it, expect, describe } from "vitest";
@@ -1145,7 +1145,7 @@ export function delay(time: number) {
 
 示例 2(通过 flushPromises 解决 promise 嵌套 promise 的情况):
 
-:::code-group
+::: code-group
 
 ```TypeScript [view.spec.ts]
 import { it, expect, describe } from "vitest";
@@ -1186,34 +1186,260 @@ export class View {
 
 ## API 的多种测试方式
 
-- 直接 mock axios
-- mock 中间层
-- 使用 mock server worker
+![API](/other/API_test.svg)
 
-待补充...
+### 直接 mock axios(不推荐)
+
+使用 `vi.mocked(axios.[methods]).mockResolvedValue` 或者 mockRejectedValue 直接返回数据, 这种方式并没有检测传入的参数, 也就是说不传参数也能测试成功, 所以需要增加行为验证 验证是否调用指定函数
+
+使用 `vi.mocked(axios.[methods]).mockImplementation((title: string)=> ({title}))` 这种方式可以检测传入的参数, 将行为验证改为状态验证
+
+> 输入和输出时比较麻烦, 暴露了实现细节
+
+### mock 中间层
+
+使用 `vi.mocked(fetchAddTodo).mockImplementation((title: string)=> ({title}))` 没有暴露实现细节 axios, 只暴露了 fetchAddTodo, 这样做的好处是我们可以随时去重构 fetchAddTodo, 从而达到测试的目的.
+
+> 输入和输出更好处理, 没有暴露实现细节, 没有额外的学习成本
+
+### 使用 mock server worker
+
+> 有额外的学习成本, 但是如有有 koa 和 express 的使用经验, 学习成本不大
+
+::: code-group
+
+```typescript [serverWorker.spec.ts]
+import { it, expect, describe, beforeEach, afterEach } from "vitest";
+import { server } from "../mocks/server";
+import { mockAddTodo } from "../mocks/handlers";
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+describe("server worker", () => {
+  it("todo", () => {
+    // server.use(
+    //   // 注意这里的 url 是`完整的 url`, 不是相对路径, 跟 koa express 类似, 可以自定义路由, 返回数据
+    //   rest.get("http://localhost:3000/api/todo", await (req, res, context) => {
+    //     const { title } = await req.json();
+    //     return res(context.json({ title }));
+    //   }),
+    // );
+    // 这种方式的代码会比较多比较杂, 可以把 server 部分的代码抽离出去
+    server.use(mockAddTodo());
+  });
+});
+```
+
+```typescript [server.ts]
+import { setupServer } from "msw/node";
+
+export const server = setupServer();
+```
+
+```typescript [handlers.ts]
+export const mockAddTodo = () => {
+  return rest.get("http://localhost:3000/api/todo", await (req, res, context) => {
+    const { title } = await req.json();
+    return res(context.json({ title }));
+  });
+};
+```
+
+:::
+
+初始化部分的逻辑可能是在每个测试脚本都需要执行的, 可以放到 vitest 的配置当中.
+
+::: code-group
+
+```typescript [vite.config.ts]
+// vitest.config.ts || vite.config.ts 都可以, 推荐使用 vite.config.ts
+export default defineConfig({
+  test: {
+    setupFiles: ["./src/setup.ts"],
+  },
+  // ...
+});
+```
+
+```typescript [setup.ts]
+import { server } from "./mocks/server";
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+```
+
+:::
 
 ## 参数化验证
 
-...
+::: info 作用
+提供在多个 test case 中重用相同测试逻辑的方法
+:::
+
+在这个示例中, 测试代码逻辑都是相同的只是输入和输出不同, 所以可以使用参数化验证
+
+::: code-group
+
+```typescript [param.spec.ts]
+describe("emailValidator", () => {
+  // [!code hl] // 重复的测试 case
+  // it("should return true for valid email", () => {
+  //   const email = "valid-email@example.com";
+  //   expect(emailValidator(email)).toBe(true);
+  // });
+
+  // it("should return false for invalid email without domain extension", () => {
+  //   const email = "invalid.email@example";
+  //   expect(emailValidator(email)).toBe(false);
+  // });
+
+  // it("should return false for invalid email with extra dot at the end", () => {
+  //   const email = "another.invalid.email@example.";
+  //   expect(emailValidator(email)).toBe(false);
+  // });
+
+  // it("should return false for invalid email with missing '@'", () => {
+  //   const email = "yet.another.invalid.email.example.com";
+  //   expect(emailValidator(email)).toBe(false);
+  // });
+
+  // [!code hl] // 这种方式的缺点是, 当测试失败的时候, 无法知道是哪个 case 失败了
+  it.each([
+    ["valid-email@example.com", true],
+    ["invalid.email@example", false],
+    ["another.invalid.email@example.", false],
+    ["yet.another.invalid.email.example.com", false],
+  ])("should return %s when email is %s", (email, expected) => {
+    expect(emailValidator(email)).toBe(expected);
+  });
+
+  // [!code hl] // 使用对象的方式可以知道 case 对应的输入和输出从而知道是哪个 case 失败了
+  it.each([{ email: "valid-email@example.com", expected: true }])(
+    "should return $email when email is $expected",
+    ({ email, expected }) => {
+      console.log(email, expected);
+      expect(emailValidator(email)).toBe(expected);
+    },
+  );
+
+  // [!code hl] // 使用模板字符的方式调用更灵活
+  it.each`
+    email                        | expected
+    ${"valid-email@example.com"} | ${true}
+    ${"invalid.email@example"}   | ${false}
+  `("should return $email when email is $expected", ({ email, expected }) => {
+    console.log(email, expected);
+    expect(emailValidator(email)).toBe(expected);
+  });
+
+  // [!code hl] // 使用模板字符的方式调用更灵活
+  it.each`
+    email             | expected
+    ${{ a: "aaaaa" }} | ${true}
+  `("should return $email.a when email is $expected", ({ email, expected }) => {
+    console.log(email, expected);
+    expect(emailValidator(email)).toBe(expected);
+  });
+});
+```
+
+```typescript [emailValidator.ts]
+export function emailValidator(email: string): boolean {
+  const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+  return regex.test(email);
+}
+```
+
+:::
 
 ## 手动测试到单元测试的认知转变
 
+::: info
+不会写测试的时候, 可以想一下用手动测试的时候是如何去验证的, 然后转化为使用单元测试去验证就好了
+
+现代框架 vue 和 react 都是数据驱动视图的, 所以只要保证数据的正确性, 视图就是正确的
+:::
+
+- 手动测试 -> 去看试图的变化
+- 单元测试 -> 去看状态 -> 数据的变化
+
+![learning_test](/other/learning_test.svg)
+
+> 相同点都对数据进行处理<br>
+> 不同的地方是手动测试是通过用户的交互(键盘事件/鼠标事件等)去 input<br>
+> 单元测试是通过调用函数去 input
+
+- 单元测试是测试单个逻辑
+- 组件测试是测试组件逻辑和 UI
+- e2e 测试是测试整个应用
+
+![test](/other/test.svg)
+
 ## 测试的基本策略
 
-- 正向测试
-- 反向测试
-- 异常测试
+- 正向测试(happy path):
+  - 给定预期输入时能产生预期的输入, 满足功能要求
+- 反向测试(sad path):
+  - 处理无效输入: 程序在使用过程中可能会收到无效或错误的输入
+  - 提高程序的健壮性: 通过反向测试, 我们可以发现和修复程序中的一些潜在问题, 从而提高程序的健壮性
+- 异常测试(sad path):
+  - 处理运行时错误: 程序在运行过程中可能会出现各种运行时错误, 例如网络错误, 服务器错误
 
 ::: warning 再次提醒
-不要完美主义, 不要陷入测试 case 的陷进试图找出所有反向测试和异常测试, 小步走逐步完善即可
+不要完美主义, 不要陷入测试 case 的陷阱试图找出所有反向测试和异常测试, 小步走逐步完善即可.
+
+如果不知道哪些测试是该写的, 哪些测试是不该写的, 可以先想一下这个功能如果是手动测试的话是如何去做的. 然后将手动测试改成单元测试就好了. 后续遇到无效输入和运行时错误的时候再去补充测试即可.
 :::
 
 ## 不是所有代码都值得写测试
 
-回报率
-追求 100%覆盖率回报率是特别低的
-库可能覆盖率高一点比较好, 业务代码覆盖率低一点也没关系
-只测试容易出错的代码
+::: info 回报率
+简单的代码, 不容易出错的代码, 写测试的回报率都特别低
+
+测试覆盖率值越高, 回报率越低
+
+回报率特别低的代码就没有必要去写测试了
+:::
+
+- 简单的代码, 不容易出错误的代码就没有必要去写测试, 因为它的回报率特别的低
+- 没必要追求 100% 覆盖率, 当覆盖率达到一定值的时候回报率是特别低的
+- 库可能覆盖率高一点比较好, 业务代码经常重构或者更改业务, 单元测试的作用就不那么大, 覆盖率低一点也没关系
+- 结合功能去写单元测试, 而不是仅仅测试独立的函数
+- 非关键的代码, 比如 `console.log` 日志
+- 只是将后端数据格式进行简单的转换后渲染, 这个根据实际情况选择是否测试, 如果个人写的比较自信那么可以不写, 如果对自己写的代码没那么自信写一下也是可以的
+
+## 掌握使用测试替身的核心思想
+
+::: info 核心思想
+将被测代码与周围隔离开来, 从而使测试更加容易编写, 更加可靠
+
+将那些不可控, 不可预测的部分隔离开, 然后通过测试替身替换成可控, 可预测的部分
+:::
+
+![stub](/other/stub.svg)
+
+> 将 car 跟 engine 隔离开来, 可以使用测试替身替换 engine
+
+使用测试替身(stub/mock)进行以下操作:
+
+- 加速执行测试
+- 使执行变得确定
+- 模拟特殊情况
+- 暴露隐藏的信息
+
+## 测试替身的类型
+
+- Dummy(哑元对象) 占位符 类型报错
+- Stub(测试桩) 隔离依赖
+
+...
+
+## 独居测试和群居测试
+
+...
 
 ## 分析如何写出更好的测试
 
@@ -1221,6 +1447,6 @@ export class View {
 - 视角转换, 从使用者的角度去思考功能而不是只思考当前开发的函数, 不要过度设计, 用到啥测试啥
 - 不要追求 100%覆盖率, 该测的测, 不该测的不要为了测试覆盖率而测
 
-![test_map](/other/test_map.svg)
+![test_map](/other/test_map_new.svg)
 
 [\_](https://testing.cuixueshe.com/)
