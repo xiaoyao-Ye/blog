@@ -1432,14 +1432,338 @@ export function emailValidator(email: string): boolean {
 
 ## 测试替身的类型
 
-- Dummy(哑元对象) 占位符 类型报错
-- Stub(测试桩) 隔离依赖
+![stub_test](/other/stub_test.svg)
 
-...
+### Dummy(哑元对象) 占位符 类型报错
+
+::: info Dummy
+它的本质是占位符.
+
+作用是解决类型报错.
+:::
+
+::: code-group
+
+```typescript [dummy.spec.ts]
+import { test } from "vitest";
+import { Message, Recipient, sendEmail } from "./dummy";
+
+test("EmailService", () => {
+  const message: Message = {
+    subject: "heihei",
+    body: "hahaha",
+  };
+  // 创建一个基础数据结构, 占位
+  // const dummyRecipient: Recipient = {
+  //   email: "",
+  //   name: "",
+  // };
+  // 创建一个空对象, 占位
+  const dummyRecipient = {} as Recipient;
+  sendEmail(message, dummyRecipient);
+});
+```
+
+```typescript [dummy.ts]
+export interface Message {
+  subject: string;
+  body: string;
+}
+
+export interface Recipient {
+  email: string;
+  name: string;
+}
+
+export function sendEmail(message: Message, recipient: Recipient) {
+  // 假设这里是发送邮件的真实逻辑，它只使用了 message 参数
+  console.log(`Email subject: ${message.subject}`);
+  console.log(`Email body: ${message.body}`);
+
+  // 真实逻辑会调用 recipient
+  // console.log(recipient);
+}
+```
+
+:::
+
+### Stub(测试桩)
+
+::: info stub
+它主要是去做隔离依赖的, 让我们可以更随意的去控制我们想要的值, 一般用于间接输入的时候.
+:::
+
+::: code-group
+
+```typescript [stub.spec.ts]
+// user.test.js
+import { vi, it, expect, describe } from "vitest";
+import { sendWelcomeEmail } from "./stub";
+import { getUserEmail } from "./stub.database";
+
+vi.mock("./stub.database.ts", () => {
+  return {
+    getUserEmail: () => "test@gmail.com",
+  };
+});
+
+it("sendWelcomeEmail sends email to the correct address", async () => {
+  const email = sendWelcomeEmail(1);
+  expect(email).toBe("test@gmail.com");
+});
+```
+
+```typescript [stub.ts]
+import { getUserEmail } from "./stub.database";
+// user.js
+export function sendWelcomeEmail(userId: number) {
+  const email = getUserEmail(userId);
+  // Send email to the user...
+  return email;
+}
+```
+
+```typescript [stub.database.ts]
+// database.js
+// 模拟的数据库数据
+const users = [
+  { id: 1, email: "alice@example.com" },
+  { id: 2, email: "bob@example.com" },
+  { id: 3, email: "charlie@example.com" },
+];
+
+// 模拟从数据库中获取用户电子邮件的函数
+export function getUserEmail(userId: number) {
+  // 在真实的函数中，你可能会进行数据库查询
+  // 但在这个模拟的函数中，我们只是从一个数组中获取数据
+  const user = users.find(user => user.id === userId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user.email;
+}
+```
+
+:::
+
+### Spy(测试间谍)
+
+::: info spyOn
+它的主要作用是记录目标函数被调用的方式和次数用于验证, 一般用于行为验证.
+:::
+
+::: code-group
+
+```typescript [spy.spec.ts]
+import { vi, test, expect, describe } from "vitest";
+import { user } from "./spy";
+
+test("spy", () => {
+  vi.spyOn(user, "getName");
+  user.getName();
+
+  expect(user.getName).toBeCalled();
+});
+```
+
+```typescript [spy.ts]
+export const user = {
+  getName() {
+    return "cxr";
+  },
+};
+```
+
+:::
+
+### mock(模拟对象)
+
+::: info mock
+可以理解为它是 stub 和 spy 的结合体, 用于隔离依赖, 控制代码的行为, 去验证代码的行为.
+
+一般在行为验证的时候去用它, 用于间接输出.
+:::
+
+::: code-group
+
+```typescript [spy.spec.ts]
+import { vi, test, expect, describe } from "vitest";
+import { user } from "./spy";
+
+test("spy", () => {
+  vi.spyOn(user, "getName").mockImplementation(() => "heiheihei"); // [!code hl]
+  user.getName();
+
+  expect(user.getName).toBeCalled();
+  expect(user.getName()).toBe("heiheihei"); // [!code hl]
+  console.log(user.getName);
+});
+```
+
+```typescript [spy.ts]
+export const user = {
+  getName() {
+    return "cxr";
+  },
+};
+```
+
+:::
+
+::: code-group
+
+```typescript [stub.spec.ts]
+// user.test.js
+import { vi, it, expect, describe } from "vitest";
+import { sendWelcomeEmail } from "./stub";
+import { getUserEmail } from "./stub.database";
+
+vi.mock("./stub.database.ts", () => {
+  return {
+    getUserEmail: vi.fn(() => "test@gmail.com"), // [!code hl]
+  };
+});
+
+it("sendWelcomeEmail sends email to the correct address", async () => {
+  const email = sendWelcomeEmail(1);
+  console.log(getUserEmail); // [!code hl]
+  expect(email).toBe("test@gmail.com");
+});
+```
+
+```typescript [stub.ts]
+import { getUserEmail } from "./stub.database";
+// user.js
+export function sendWelcomeEmail(userId: number) {
+  const email = getUserEmail(userId);
+  // Send email to the user...
+  return email;
+}
+```
+
+```typescript [stub.database.ts]
+// database.js
+// 模拟的数据库数据
+const users = [
+  { id: 1, email: "alice@example.com" },
+  { id: 2, email: "bob@example.com" },
+  { id: 3, email: "charlie@example.com" },
+];
+
+// 模拟从数据库中获取用户电子邮件的函数
+export function getUserEmail(userId: number) {
+  // 在真实的函数中，你可能会进行数据库查询
+  // 但在这个模拟的函数中，我们只是从一个数组中获取数据
+  const user = users.find(user => user.id === userId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user.email;
+}
+```
+
+:::
+
+### fake(伪造对象)
+
+::: info
+它主要用于替代那些在测试环境中难以创建或者过于复杂耗时的真实对象, 伪造一个简单版本用于辅助触发测试
+
+一个功能有一些方法可能不是你触发的(比如服务端去触发), 这个时候要进行测试需要某个方法去触发需要测试的函数就需要用到伪造对象
+:::
+
+::: code-group
+
+```typescript [fake.spec.ts]
+import { vi, test, expect } from "vitest";
+class FakeSocket {
+  private listeners: { [key: string]: ((...args: any[]) => void)[] } = {};
+
+  // 模拟 `on` 方法，用于监听事件
+  on(event: string, listener: (...args: any[]) => void) {
+    if (!this.listeners[event]) {
+      this.listeners[event] = [];
+    }
+    this.listeners[event].push(listener);
+  }
+
+  // 用于在测试中手动触发事件，模拟从服务器接收到消息
+  trigger(event: string, ...args: any[]) {
+    const eventListeners = this.listeners[event];
+    if (eventListeners) {
+      eventListeners.forEach(listener => listener(...args));
+    }
+  }
+}
+
+function io() {
+  return new FakeSocket();
+}
+
+vi.mock("socket.io-client", () => {
+  return {
+    default: io,
+  };
+});
+
+// 现在，你的代码将使用我们的 Fake `socket.io` 而不是真实的 `socket.io`
+import { initSocket, addListener } from "./fake.socket";
+
+test("should handle messages from the server", () => {
+  const mockListener = vi.fn();
+  addListener(mockListener);
+
+  const socket = initSocket();
+
+  // 手动触发 "message" 事件，模拟从服务器接收到消息
+  socket.trigger("message", "Hello, world!");
+
+  expect(mockListener).toHaveBeenCalledWith("Hello, world!");
+});
+```
+
+```typescript [fake.socket.ts]
+import io from "socket.io-client";
+
+const listeners: Listen[] = [];
+
+export let socket;
+export function initSocket() {
+  socket = io("http://localhost:3000");
+
+  socket.on("message", message => {
+    listeners.forEach(listener => {
+      listener(message);
+    });
+  });
+
+  return socket;
+}
+
+type Listen = (message: string) => void;
+
+export function addListener(listen: Listen) {
+  listeners.push(listen);
+}
+```
+
+:::
 
 ## 独居测试和群居测试
 
 ...
+
+## 测试的拆卸
+
+## 自定义环境&模拟浏览器环境
+
+::: info
+很多时候没有浏览器环境, 比如说 localStorage 等. 或者是没有 path, fs 等 node 模块
+:::
 
 ## 分析如何写出更好的测试
 
