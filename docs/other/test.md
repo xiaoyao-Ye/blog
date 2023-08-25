@@ -1755,15 +1755,191 @@ export function addListener(listen: Listen) {
 
 ## 独居测试和群居测试
 
-...
+::: info
+独居测试就是只测待测部分的 SUT, 其他内容都隔离开.
+
+群居测试就是将 SUT 所依赖的部分一起测试.
+
+独居和群居都各自是一个流派, 没有哪个更好, 根据实际场景去使用就行. 最好是根据团队风格规范去统一.
+:::
+
+![solitary-test-sociable-test](/other/solitary-test-sociable-test.svg)
+
+示例代码(分别给下面代码写独居测试和群居测试):
+
+::: code-group
+
+```typescript [orderProcessor.ts]
+import { checkStock } from "./InventoryService";
+import { sendEmail } from "./EmailService";
+// 订单处理系统
+export class OrderProcessor {
+  processOrder(order) {
+    // 检查并更新库存，发送确认邮件
+    const isOk = checkStock(order);
+    if (isOk) {
+      sendEmail();
+    }
+  }
+}
+```
+
+```typescript [EmailService.ts]
+import axios from "axios";
+// 邮件服务
+
+export function sendEmail() {
+  axios.get("/sendEmail");
+}
+```
+
+```typescript [InventoryService.ts]
+const stock = [
+  {
+    name: "北冰洋",
+    count: 10,
+  },
+];
+// 库存服务
+export function checkStock(order) {
+  // 真实的逻辑
+  const item = stock.find(item => order.name === item.name);
+  if (!item) return false;
+  return item.count > 0;
+}
+
+export function updateStock(item) {
+  const stockItem = stock[item.name];
+
+  if (stockItem) {
+    stockItem.count += item.count;
+  } else {
+    stock.push(item);
+  }
+}
+```
+
+:::
+
+### 独居测试
+
+```typescript
+import { OrderProcessor } from "./orderProcessor";
+import { vi, test, expect, describe } from "vitest";
+import { sendEmail } from "./EmailService";
+
+// 大量的 mock 代码
+vi.mock("./EmailService", () => {
+  return {
+    sendEmail: vi.fn(),
+  };
+});
+
+vi.mock("./InventoryService.ts", () => {
+  return {
+    //stub
+    checkStock() {
+      return true;
+    },
+  };
+});
+
+test("processOrder should succeed when there is enough stock", () => {
+  const orderProcessor = new OrderProcessor();
+
+  orderProcessor.processOrder({ name: "hei", count: 1 });
+
+  expect(sendEmail).toBeCalled();
+});
+```
+
+优点:
+
+- 如果测试报错可以更精准的去定位问题, 因为测试范围比较窄
+
+缺点:
+
+- 大量的 mock 代码: 示例只是两个依赖, 如果有更多的依赖意味着需要写更多的 mock 代码
+- 暴露了实现细节: 比如改动 `checkStock` 重命名为 `checkStockNew` 并没有更改逻辑, 但是会导致测试用例失败
+- 忽略了组件之间的交互: 上面通过 mock 直接返回了 `checkStock` 的结果, 假设我破坏了 `checkStock` 内的代码(比如注释掉), `测试还是通过!!!`
+
+适用场景:
+
+- 架构分层比较清晰的时候, 比如 nest.js 或者 koa 等
+
+### 群居测试
+
+```typescript
+import { test, vi, expect, describe } from "vitest";
+import { OrderProcessor } from "./orderProcessor";
+import { updateStock } from "./InventoryService";
+import { sendEmail } from "./EmailService";
+
+vi.mock("./EmailService.ts", () => {
+  return {
+    sendEmail: vi.fn(),
+  };
+});
+
+// 群居
+test("processOrder should succeed when there is enough stock", () => {
+  // setup 因为测试需要 checkStock 返回 true, 所以需要先更新库存
+  updateStock({ name: "hei", count: 1 });
+
+  const orderProcessor = new OrderProcessor();
+
+  orderProcessor.processOrder({ name: "hei", count: 1 });
+
+  expect(sendEmail).toBeCalled();
+});
+```
+
+优点:
+
+- 更真实的环境: 假设将 `checkStock` 的内容注释掉, 那么测试就会报错, 可以发现组件之间的交互问题
+
+缺点:
+
+- 定位问题比较困难: 如果 `processOrder` 依赖的不止是 `sendEmail` `checkStock` 这两个模块, 还有更多的模块的话, 那么当测试报错的时候就很难定位问题了
+- setup 比较费力: 需要创建一些数据, 比如上面的 `updateStock` 就是为了让 `checkStock` 返回 true, 如果 `checkStock` 依赖的数据比较多, 那么 setup 的代码就会比较多
+
+> 解决定位困难: 平时写单元测试的时候是小步走的方式, 那么每次写到一部分的时候报错了, 就可以定位到刚才写的部分出了问题<br>
+> 解决 setup 费力: 创建工厂函数用于创建数据
+
+适用场景:
+
+- 前端业务代码, 分层不太清晰的功能等
 
 ## 测试的拆卸
+
+::: info 拆卸
+主要用于在测试执行后, 清除或者还原测试期间产生的副作用, 以确保每个测试之间的独立性和可重复性
+:::
+
+- 利用垃圾回收机制: 临时创建的变量使用完毕后会自动回收
+- 内联拆卸: 指一些全局/数据库/文件/永久数据, 需要手动去清理. 可以封装一个重置方法, 在对应的 test case 后面调用重置
+- 隐式拆卸: 假设一个 test case 执行过程中已经产生了副作用, 但是在重置之前抛出了错误, 导致没有执行到重置方法就进行下一个 test case 了, 这个时候就需要在下一个 test case 之前去重置, 可以使用 afterEach 来实现
+
+> 示例待补充...
 
 ## 自定义环境&模拟浏览器环境
 
 ::: info
 很多时候没有浏览器环境, 比如说 localStorage 等. 或者是没有 path, fs 等 node 模块
 :::
+
+## 测试命名
+
+测试命名的作用
+测试命名的规则
+一个不好的命名会导致什么问题
+
+<!-- 测试命名的目的是为了让测试更加容易理解, 一般遵循以下规则: -->
+
+<!-- - 测试的名称应该是一个完整的句子 -->
+<!-- - 测试的名称应该包含三个部分: 主语, 动词, 宾语 -->
+
+## 快照测试
 
 ## 分析如何写出更好的测试
 
