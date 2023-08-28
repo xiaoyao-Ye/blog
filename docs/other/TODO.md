@@ -44,3 +44,77 @@
 （5）一个 10 分钟的视频，看了 3 分 42 秒，如果还是觉得不好看，就可以关掉了。
 
 （6）一个年轻人想在 18 岁到 24 岁，一共 7 年时间里找到人生方向，确定未来想做什么。那么，他有 2.59 年（7 \* 0.37）的时间自由尝试。也就是说，到了大三下学期就应该初步定下自己的方向，后面除非遇到更有吸引力的事情，否则就不应该转换事业方向。
+
+## refreshToken
+
+> 开一个 blog 或者开一个 admin-pc 的实践文章栏记录这些信息
+
+- 登录有 session 和 jwt 两种方案.
+- session 是通过 cookie 携带, 用户信息保存在服务端.
+- jwt 是通过 token 携带, 一般通过请求头的 authorization 字段, 用户信息保存在客户端. jwt 天然支持分布式, 使用较多. jwt 不支持注销.
+- 使用 jwt 的时候会有过期时间, 过期后需要重新登录, 为了让用户有更好的体验需要设置无感刷新 token 的机制, 也就是 refreshToken.
+- 可以使用 access_token, refresh_token 两个 token 来实现, access_token 用来访问资源, refresh_token 用来刷新 access_token, 两个 token 的过期时间不同, refresh_token 的过期时间长一些, 一般是 access_token 的两倍.
+
+```typescript
+interface PendingTask {
+  config: AxiosRequestConfig;
+  resolve: Function;
+}
+
+// 通过 refreshing, queue 避免并发请求多个401的情况导致多个刷新 token 的请求
+// 是否正在刷新 token
+let refreshing = false;
+// 保存请求的数组
+const queue: PendingTask[] = [];
+
+axiosInstance.interceptors.response.use(
+  response => {
+    return response;
+  },
+  async error => {
+    let { data, config } = error.response;
+
+    // 如果正在刷新 token, 则把请求保存到队列中
+    if (refreshing) {
+      return new Promise(resolve => {
+        queue.push({
+          config,
+          resolve,
+        });
+      });
+    }
+
+    // 401 代表 token 过期, 避免刷新 token 时死循环, 需要判断是否是刷新 token 的请求
+    if (data.statusCode === 401 && !config.url.includes("/refresh")) {
+      refreshing = true;
+      // 刷新 token
+      const res = await refreshToken();
+      refreshing = false;
+      // 刷新成功后重新请求
+      if (res.status === 200) {
+        // 把队列中的请求重新发出
+        queue.forEach(({ config, resolve }) => {
+          resolve(axiosInstance(config));
+        });
+        return axiosInstance(config);
+      } else {
+        alert(data || "登录过期，请重新登录");
+      }
+    } else {
+      return error.response;
+    }
+  },
+);
+
+async function refreshToken() {
+  const res = await axiosInstance.get("/refresh", {
+    params: {
+      token: localStorage.getItem("refresh_token"),
+    },
+  });
+  // 刷新成功后重新设置 token
+  localStorage.setItem("access_token", res.data.accessToken);
+  localStorage.setItem("refresh_token", res.data.refreshToken);
+  return res;
+}
+```

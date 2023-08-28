@@ -85,7 +85,7 @@ use
 
 ```bash
 # 安装
-pnpm i jest typescript @types/jest ts-jest -D
+pnpm i jest TypeScript @types/jest ts-jest -D
 # 初始化配置
 npx ts-jest config:init
 # 测试
@@ -1208,7 +1208,7 @@ export class View {
 
 ::: code-group
 
-```typescript [serverWorker.spec.ts]
+```TypeScript [serverWorker.spec.ts]
 import { it, expect, describe, beforeEach, afterEach } from "vitest";
 import { server } from "../mocks/server";
 import { mockAddTodo } from "../mocks/handlers";
@@ -1232,13 +1232,13 @@ describe("server worker", () => {
 });
 ```
 
-```typescript [server.ts]
+```TypeScript [server.ts]
 import { setupServer } from "msw/node";
 
 export const server = setupServer();
 ```
 
-```typescript [handlers.ts]
+```TypeScript [handlers.ts]
 export const mockAddTodo = () => {
   return rest.get("http://localhost:3000/api/todo", await (req, res, context) => {
     const { title } = await req.json();
@@ -1253,7 +1253,7 @@ export const mockAddTodo = () => {
 
 ::: code-group
 
-```typescript [vite.config.ts]
+```TypeScript [vite.config.ts]
 // vitest.config.ts || vite.config.ts 都可以, 推荐使用 vite.config.ts
 export default defineConfig({
   test: {
@@ -1263,7 +1263,7 @@ export default defineConfig({
 });
 ```
 
-```typescript [setup.ts]
+```TypeScript [setup.ts]
 import { server } from "./mocks/server";
 
 beforeAll(() => server.listen());
@@ -1283,7 +1283,7 @@ afterAll(() => server.close());
 
 ::: code-group
 
-```typescript [param.spec.ts]
+```TypeScript [param.spec.ts]
 describe("emailValidator", () => {
   // [!code hl] // 重复的测试 case
   // it("should return true for valid email", () => {
@@ -1346,7 +1346,7 @@ describe("emailValidator", () => {
 });
 ```
 
-```typescript [emailValidator.ts]
+```TypeScript [emailValidator.ts]
 export function emailValidator(email: string): boolean {
   const regex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   return regex.test(email);
@@ -1444,7 +1444,7 @@ export function emailValidator(email: string): boolean {
 
 ::: code-group
 
-```typescript [dummy.spec.ts]
+```TypeScript [dummy.spec.ts]
 import { test } from "vitest";
 import { Message, Recipient, sendEmail } from "./dummy";
 
@@ -1464,7 +1464,7 @@ test("EmailService", () => {
 });
 ```
 
-```typescript [dummy.ts]
+```TypeScript [dummy.ts]
 export interface Message {
   subject: string;
   body: string;
@@ -1495,7 +1495,7 @@ export function sendEmail(message: Message, recipient: Recipient) {
 
 ::: code-group
 
-```typescript [stub.spec.ts]
+```TypeScript [stub.spec.ts]
 // user.test.js
 import { vi, it, expect, describe } from "vitest";
 import { sendWelcomeEmail } from "./stub";
@@ -1513,7 +1513,7 @@ it("sendWelcomeEmail sends email to the correct address", async () => {
 });
 ```
 
-```typescript [stub.ts]
+```TypeScript [stub.ts]
 import { getUserEmail } from "./stub.database";
 // user.js
 export function sendWelcomeEmail(userId: number) {
@@ -1523,7 +1523,7 @@ export function sendWelcomeEmail(userId: number) {
 }
 ```
 
-```typescript [stub.database.ts]
+```TypeScript [stub.database.ts]
 // database.js
 // 模拟的数据库数据
 const users = [
@@ -1556,7 +1556,7 @@ export function getUserEmail(userId: number) {
 
 ::: code-group
 
-```typescript [spy.spec.ts]
+```TypeScript [spy.spec.ts]
 import { vi, test, expect, describe } from "vitest";
 import { user } from "./spy";
 
@@ -1568,10 +1568,10 @@ test("spy", () => {
 });
 ```
 
-```typescript [spy.ts]
+```TypeScript [spy.ts]
 export const user = {
   getName() {
-    return "cxr";
+    return "Ghosteye";
   },
 };
 ```
@@ -1588,7 +1588,7 @@ export const user = {
 
 ::: code-group
 
-```typescript [spy.spec.ts]
+```TypeScript [spy.spec.ts]
 import { vi, test, expect, describe } from "vitest";
 import { user } from "./spy";
 
@@ -1602,10 +1602,10 @@ test("spy", () => {
 });
 ```
 
-```typescript [spy.ts]
+```TypeScript [spy.ts]
 export const user = {
   getName() {
-    return "cxr";
+    return "Ghosteye";
   },
 };
 ```
@@ -1614,7 +1614,7 @@ export const user = {
 
 ::: code-group
 
-```typescript [stub.spec.ts]
+```TypeScript [stub.spec.ts]
 // user.test.js
 import { vi, it, expect, describe } from "vitest";
 import { sendWelcomeEmail } from "./stub";
@@ -1633,7 +1633,7 @@ it("sendWelcomeEmail sends email to the correct address", async () => {
 });
 ```
 
-```typescript [stub.ts]
+```TypeScript [stub.ts]
 import { getUserEmail } from "./stub.database";
 // user.js
 export function sendWelcomeEmail(userId: number) {
@@ -1643,7 +1643,7 @@ export function sendWelcomeEmail(userId: number) {
 }
 ```
 
-```typescript [stub.database.ts]
+```TypeScript [stub.database.ts]
 // database.js
 // 模拟的数据库数据
 const users = [
@@ -1678,7 +1678,7 @@ export function getUserEmail(userId: number) {
 
 ::: code-group
 
-```typescript [fake.spec.ts]
+```TypeScript [fake.spec.ts]
 import { vi, test, expect } from "vitest";
 class FakeSocket {
   private listeners: { [key: string]: ((...args: any[]) => void)[] } = {};
@@ -1726,7 +1726,7 @@ test("should handle messages from the server", () => {
 });
 ```
 
-```typescript [fake.socket.ts]
+```TypeScript [fake.socket.ts]
 import io from "socket.io-client";
 
 const listeners: Listen[] = [];
@@ -1769,7 +1769,7 @@ export function addListener(listen: Listen) {
 
 ::: code-group
 
-```typescript [orderProcessor.ts]
+```TypeScript [orderProcessor.ts]
 import { checkStock } from "./InventoryService";
 import { sendEmail } from "./EmailService";
 // 订单处理系统
@@ -1784,7 +1784,7 @@ export class OrderProcessor {
 }
 ```
 
-```typescript [EmailService.ts]
+```TypeScript [EmailService.ts]
 import axios from "axios";
 // 邮件服务
 
@@ -1793,7 +1793,7 @@ export function sendEmail() {
 }
 ```
 
-```typescript [InventoryService.ts]
+```TypeScript [InventoryService.ts]
 const stock = [
   {
     name: "北冰洋",
@@ -1823,7 +1823,7 @@ export function updateStock(item) {
 
 ### 独居测试
 
-```typescript
+```TypeScript
 import { OrderProcessor } from "./orderProcessor";
 import { vi, test, expect, describe } from "vitest";
 import { sendEmail } from "./EmailService";
@@ -1869,7 +1869,7 @@ test("processOrder should succeed when there is enough stock", () => {
 
 ### 群居测试
 
-```typescript
+```TypeScript
 import { test, vi, expect, describe } from "vitest";
 import { OrderProcessor } from "./orderProcessor";
 import { updateStock } from "./InventoryService";
@@ -1918,14 +1918,125 @@ test("processOrder should succeed when there is enough stock", () => {
 
 - 利用垃圾回收机制: 临时创建的变量使用完毕后会自动回收
 - 内联拆卸: 指一些全局/数据库/文件/永久数据, 需要手动去清理. 可以封装一个重置方法, 在对应的 test case 后面调用重置
-- 隐式拆卸: 假设一个 test case 执行过程中已经产生了副作用, 但是在重置之前抛出了错误, 导致没有执行到重置方法就进行下一个 test case 了, 这个时候就需要在下一个 test case 之前去重置, 可以使用 afterEach 来实现
+- 隐式拆卸: 假设一个 test case 执行过程中已经产生了副作用, 但是在重置之前抛出了错误, 导致没有执行到重置方法就进行下一个 test case 了, 这个时候就需要在下一个 test case 之前去重置, 可以使用 `afterEach` 来实现
 
 > 示例待补充...
 
 ## 自定义环境&模拟浏览器环境
 
-::: info
+::: info tips
 很多时候没有浏览器环境, 比如说 localStorage 等. 或者是没有 path, fs 等 node 模块
+:::
+
+### 浏览器环境
+
+> 推荐使用 `happy-dom` 这个包, 测试时性能更好, 也可以使用 js-dom 等包
+
+::: code-group
+
+```TypeScript [browser-env.spec.ts]
+import { test, expect } from "vitest";
+import { getName } from "./browser-env";
+// import { Window } from "happy-dom";
+
+test("browser-env", () => {
+  // 在 vitest.config.ts 文件中配置后不再需要手动挂载
+  // const window = new Window();
+  // console.log(window)
+  // globalThis.localStorage = window.localStorage;
+  localStorage.setItem("name", "Ghosteye");
+  expect(getName()).toBe("Ghosteye");
+});
+```
+
+```TypeScript [browser-env.ts]
+export function getName() {
+  return localStorage.getItem("name");
+}
+```
+
+```TypeScript [vitest.config.ts]
+import { defineConfig } from "vitest/dist/config";
+
+export default defineConfig({
+  test: {
+    environment: "happy-dom",
+  },
+});
+```
+
+:::
+
+### 自定义环境
+
+[vitest-environment](https://cn.vitest.dev/guide/environment.html)
+
+::: info tips
+创建自定义环境 vitest 框架有要求文件夹名称必须是 `vitest-environment-*` 的格式
+:::
+
+```JavaScript [vitest-environment-ghosteye/index.js]
+export default {
+  name: "custom Ghosteye",
+  transformMode: "ssr",
+  setup(global) {
+    console.log(" vitest - env - Ghosteye");
+    let obj = {};
+    global.localStorage = {
+      getItem(key) {
+        return obj[key];
+      },
+      setItem(key, name) {
+        obj[key] = name;
+      },
+    };
+
+    return {
+      teardown() {
+        // called after all tests with this env have been run
+      },
+    };
+  },
+};
+```
+
+::: info Usage
+首先需要在 vitest-environment-ghosteye 文件夹创建 package.json( `pnpm init -y` ) 文件
+
+然后安装到依赖 `pnpm i ./vitest-environment-ghosteye -D`
+
+然后在 vitest.config.ts 文件中配置 `environment: "ghosteye"`
+:::
+
+::: code-group
+
+```TypeScript [browser-env.spec.ts]
+import { test, expect } from "vitest";
+import { getName } from "./browser-env";
+
+test("browser-env", () => {
+  localStorage.setItem("name", "Ghosteye");
+  expect(getName()).toBe("Ghosteye");
+});
+```
+
+```TypeScript [browser-env.ts]
+export function getName() {
+  return localStorage.getItem("name");
+}
+```
+
+```TypeScript [vitest.config.ts]
+import { defineConfig } from "vitest/dist/config";
+
+export default defineConfig({
+  test: {
+    // vitest 会自己加上自定义环境的前缀
+    environment: "ghosteye",
+  },
+});
+```
+
 :::
 
 ## 测试命名
