@@ -143,8 +143,7 @@ nodejs 上使用多进程, nodejs 的 spawn 和 spawnSync 的跨平台解决方�
 安装
 
 ```bash
-yarn add -D unplugin-auto-import
-yarn add -D unplugin-vue-components
+pnpm add unplugin-auto-import unplugin-vue-components -D
 ```
 
 使用
@@ -156,6 +155,11 @@ yarn add -D unplugin-vue-components
 // vite.config.ts
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
+import {
+  // AntDesignVueResolver,
+  ElementPlusResolver,
+  // VantResolver,
+} from "unplugin-vue-components/resolvers";
 
 export default defineConfig({
   plugins: [
@@ -170,9 +174,10 @@ export default defineConfig({
       dts: true,
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       resolvers: [
-        IconsResolver({
-          componentPrefix: "",
-        }),
+        ElementPlusResolver(),
+        // IconsResolver({
+        //   componentPrefix: "",
+        // }),
       ],
     }),
   ],
