@@ -118,3 +118,9 @@ async function refreshToken() {
   return res;
 }
 ```
+
+## electron
+
+> 安装 electron 经常会失败
+
+手动去 electron 安装对应系统的压缩包, 解压后放置在一个指定的文件夹, 然后将该文件夹设置为环境变量, 打开 cmd 输入 electron -v 查看是否安装成功.
