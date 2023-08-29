@@ -121,7 +121,7 @@ async function refreshToken() {
 
 ## electron
 
-> 安装 electron 经常会失败
+> 安装 electron 经常会失败, 如果发现卡在 postinstall 阶段, 直接去 node_modules 下找到 electron 的 package.json 将 postinstall 命令删除, 然后安装其他的包, 安装完成后再手动安装 electron 即可:
 
 手动去 electron 安装对应系统的压缩包, 解压后放置在一个指定的文件夹, 然后将该文件夹设置为环境变量, 打开 cmd 输入 electron -v 查看是否安装成功.
 
