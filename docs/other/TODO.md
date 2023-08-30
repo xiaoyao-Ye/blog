@@ -133,3 +133,5 @@ async function refreshToken() {
 # 这里我选择在vite.config.ts的plugins的electron的onstart中设置
 process.env.ELECTRON_OVERRIDE_DIST_PATH = "C:\\Users\\Administrator\\Downloads\\electron-v26.1.0-win32-x64";
 ```
+
+发现 postinstall 就是下载对应版本的 zip 文件解压放到 ./dist 中, 然后创建 `path.txt` `echo "electron.exe" ./path.txt`, 我们可以手动这样做
