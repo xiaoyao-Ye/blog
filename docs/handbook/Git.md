@@ -187,6 +187,15 @@ git stash apply <stash@{0}>
 git stash pop <stash@{0}>
 # 清空所有暂存
 git stash clear
+
+# 想要暂存的同时保存新增的文件有三种方式:
+# 1. 先 git add 再暂存
+git add <path/to/new/file>
+git stash
+# 2. 使用 --include-untracked 选项
+git stash --include-untracked
+# 3. 使用 --all 选项
+git stash --all
 ```
 
 ### 创建/切换分支
