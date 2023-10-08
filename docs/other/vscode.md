@@ -15,6 +15,56 @@
 | Ctrl + K + 0     | 折叠所有区域                        |
 | Ctrl + K + J     | 展开所有区域                        |
 
+## 快捷键+代码片段
+
+`ctrl+shift+p` 输入 `Open Keyboard Shortcuts(JSON)` 打开 `keybindings.json`, 配置自己的快捷键
+
+```json
+// 将键绑定放在此文件中以覆盖默认值auto[]
+[
+  {
+    "key": "alt+d",
+    "command": "editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "-editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "-editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    // 自定义快捷键
+    "key": "ctrl+shift+l",
+    // 运行多个命令
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        // 复制选中文本
+        { "command": "editor.action.clipboardCopyAction" },
+        // 光标移动到最后
+        { "command": "cursorEnd" },
+        // 插入片段
+        {
+          "command": "editor.action.insertSnippet",
+          // 调用自己配置的用户代码片段, 这里是代码片段里定义的值
+          "args": { "name": "Print Selected variable" }
+        }
+      ]
+    }
+  }
+]
+```
+
 ## 生成批量标签
 
 ```vue
