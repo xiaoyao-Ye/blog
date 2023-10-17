@@ -161,6 +161,43 @@ css
 - 在当前分支的前面会有一个`*`
 - 在 git 中，有一个特殊指针`HEAD`,永远会指向当前分支
 
+### 暂存
+
+经常会遇到的一个操作是, 当前正在做 `feature/v2.0.0` 分支的功能, 产品突然说当前正式版本有一个 bug 需要紧急修复.
+
+此时当前修改部分不提交可能切换不了分支, 提交又会产生一个额外的 commit message.
+
+```bash {2,4}
+# 暂存当前内容(只会暂存有版本控制的文件, 说人话: 新增的文件是不能被暂存的)
+git stash
+# 应用并删除最近一次暂存
+git stash pop
+
+# ---------- 一般使用上面两个命令居多 ----------
+
+# 查看最近一次暂存
+git stash show
+# 暂存当前内容, 并添加描述
+git stash save <message>
+# 查看暂存记录列表
+git stash list
+# 应用某个暂存 (将 stash@{0} 替换成 git stash list 中的具体下标数字, 例: git stash apply 0)
+git stash apply <stash@{0}>
+# 应用并删除某个暂存
+git stash pop <stash@{0}>
+# 清空所有暂存
+git stash clear
+
+# 想要暂存的同时保存新增的文件有三种方式:
+# 1. 先 git add 再暂存
+git add <path/to/new/file>
+git stash
+# 2. 使用 --include-untracked 选项
+git stash --include-untracked
+# 3. 使用 --all 选项
+git stash --all
+```
+
 ### 创建/切换分支
 
 - 在当前分支的任何操作，都不会影响到其他的分支，除非进行了分支合并。
