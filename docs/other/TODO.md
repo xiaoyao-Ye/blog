@@ -135,3 +135,5 @@ process.env.ELECTRON_OVERRIDE_DIST_PATH = "C:\\Users\\Administrator\\Downloads\\
 ```
 
 发现 postinstall 就是下载对应版本的 zip 文件解压放到 ./dist 中, 然后创建 `path.txt` `echo "electron.exe" ./path.txt`, 我们可以手动这样做
+
+打包缓慢, 需要手动将打包时它提示的文件下载, 放到 xx 目录
