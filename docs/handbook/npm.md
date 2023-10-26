@@ -186,6 +186,9 @@ export default defineConfig({
 
 ## pnpm
 
+- `--frozen-lockfile` 不更新 `pnpm-lock.yaml`
+- `--prod, -P` 代表生产环境只安装生产依赖
+
 ### 硬链接/软连接
 
 pnpm 使用硬链接和软链接来管理 Node.js 项目的依赖关系
