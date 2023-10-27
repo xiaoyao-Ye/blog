@@ -20,7 +20,7 @@
 - `docker start <容器 ID>` 启动一个已经停止的容器
 - `docker restart <容器 ID>` 重启一个容器
 - `docker rm <容器 ID>` 删除给定的若干个容器
-- `docker rmi <容器 ID>` 删除给定的若干个容器
+- `docker rmi <镜像 ID>` 删除给定的若干个镜像
 - `docker cp` 在容器和本地宿主系统之间复制文件中
 
 ## docker 中运行 mysql
@@ -110,8 +110,33 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
+## BuildKit
+
+默认好像是禁用的, 启用需要前往 `/etc/docker/daemon.json` 配置, 如果 daemon.json 文件不存在就 `touch` 新建一个
+
+```json
+{
+  "features": {
+    "buildkit": true
+  }
+}
+```
+
+然后重新启动 Docker 守护进程.
+
+```bash
+sudo systemctl restart docker
+```
+
 ## Linux
 
 - `systemctl start docker` 启动 docker
 - `systemctl restart docker` 重启 docker
 - `systemctl stop docker` 关闭 docker
+- `sudo apt remove --purge docker.io` 删除 docker
+
+## 常用镜像
+
+- `gitlab/gitlab-ce` gitlab-ce 是一个开源的社区版 GitLab
+- `node:16-alpine` node:16-alpine 是一个基于 Alpine 的 Node.js
+- `nginx:stable-alpine` nginx:stable-alpine 是一个基于 Alpine 的 Nginx

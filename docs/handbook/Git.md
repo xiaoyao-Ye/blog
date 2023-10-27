@@ -108,6 +108,9 @@ git diff c265262 de4845b
 作用：版本回退，将代码恢复到已经提交的某一个版本中。
 
 ```bash
+# 删除所有未提交的更改(放弃当前变更)
+git reset --hard HEAD
+
 # git 回滚到指定 commit 提交(reset 会撤销更改, 并删除提交)
 git reset --hard <commit-id>
 # 要撤销上一次 Git 提交，您可以使用以下命令(这将会移动 HEAD 指针指向上一个提交，同时保留之前的更改。)：
