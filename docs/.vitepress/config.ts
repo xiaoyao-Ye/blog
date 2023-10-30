@@ -4,12 +4,12 @@ import { navBar, sidebar } from "./router";
 export default defineConfig({
   head: [
     ["link", { rel: "icon", href: "/blog/favicon.ico" }],
-    ["meta", { name: "author", content: "Ghosteye" }],
+    ["meta", { name: "author", content: "_Ghosteye" }],
   ],
   // srcDir: './src',
   base: "/blog/",
   cleanUrls: true,
-  title: "Ghosteye",
+  title: "_Ghosteye",
   titleTemplate: false,
   srcDir: "../docs",
   srcExclude: ["**/README.md"],
@@ -32,7 +32,7 @@ export default defineConfig({
   },
   themeConfig: {
     logo: "/img/book.png",
-    siteTitle: "Ghosteye",
+    siteTitle: "_Ghosteye",
     outlineTitle: "在本页面",
     outline: [2, 6],
     lastUpdatedText: "最近更新时间",
@@ -45,7 +45,7 @@ export default defineConfig({
     socialLinks: [{ icon: "github", link: "https://github.com/xiaoyao-Ye" }],
     footer: {
       message: "Released under the MIT License.",
-      copyright: "Copyright © 2019-present Ghosteye",
+      copyright: "Copyright © 2019-present _Ghosteye",
     },
     algolia: {
       appId: "EJYW8N5YY2",
