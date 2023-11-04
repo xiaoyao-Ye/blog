@@ -22,7 +22,7 @@
 - 案例:timeID 要在外面声明
 - 获取时间 Date 的时候.如果要用标量接收,要写 new 关键字
 
-```js
+```html
 <!DOCTYPE html>
 <html>
 <head lang="en">

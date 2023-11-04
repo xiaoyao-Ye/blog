@@ -38,25 +38,29 @@ window.onresize = resize;
 ## GoTop
 
 ```vue
-<template>
-  <div id="GoTop" @click="GoTop()">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </div>
-</template>
-
-// methods
 <script>
-GoTop() {
-  (function smoothscroll() {
-    var currentScroll =
-       document.documentElement.scrollTop || document.body.scrollTop;
-    if (currentScroll > 0) {
-      window.requestAnimationFrame(smoothscroll);
-       window.scrollTo(0, currentScroll - currentScroll / 10);
+export default {
+  methods: {
+    GoTop() {
+      (function smoothscroll() {
+        const currentScroll
+       = document.documentElement.scrollTop || document.body.scrollTop
+        if (currentScroll > 0) {
+          window.requestAnimationFrame(smoothscroll)
+          window.scrollTo(0, currentScroll - currentScroll / 10)
+        }
+      })()
     }
-  })();
+  }
 }
 </script>
+
+// methods
+<template>
+  <div id="GoTop" @click="GoTop()">
+    <span class="glyphicon glyphicon-chevron-up" />
+  </div>
+</template>
 
 <style scoped>
 #GoTop {

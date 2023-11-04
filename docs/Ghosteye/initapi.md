@@ -50,6 +50,7 @@ pnpm i initapi -D
 
 ```ts
 import { defineConfig } from 'initapi'
+
 export default defineConfig({
   service: {
     // 后端有几个服务就配置几个
@@ -67,10 +68,12 @@ export default defineConfig({
 package.json:
 
 ```json
+{
   "scripts": {
-    "api": "initapi create",
+    "api": "initapi create"
     // ...
-  },
+  }
+}
 ```
 
 ```bash

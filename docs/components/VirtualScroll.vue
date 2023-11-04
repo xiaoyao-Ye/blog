@@ -1,16 +1,5 @@
-<template>
-  <div ref="wrapper" class="wrapper" @scroll="onScroll">
-    <div class="placeholder" :style="{ height: totalHeight + 'px' }"></div>
-    <div class="content" :style="{ transform: 'translateY(' + offsetY + 'px)' }">
-      <div v-for="(item, index) in visibleItems" :key="index" class="item" :style="{ height: item.height + 'px' }">
-        {{ item.text }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref, reactive, computed, watch } from 'vue'
+import { computed, defineComponent, reactive, ref, watch } from 'vue'
 
 interface ListItem {
   text: string
@@ -20,6 +9,10 @@ interface ListItem {
 export default defineComponent({
   name: 'VirtualScroll',
   setup() {
+    const itemHeight = 30
+    const visibleCount = 10
+    const overscanCount = 5
+
     const wrapper = ref<HTMLDivElement | null>(null)
     const scrollTop = ref(0)
     const viewportHeight = ref(0)
@@ -35,10 +28,6 @@ export default defineComponent({
     const offsetY = computed(() => {
       return scrollTop.value ? scrollTop.value - overscanCount * itemHeight : 0
     })
-
-    const itemHeight = 30
-    const visibleCount = 10
-    const overscanCount = 5
 
     const generateRandomItems = () => {
       const newItems: ListItem[] = []
@@ -73,6 +62,17 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <div ref="wrapper" class="wrapper" @scroll="onScroll">
+    <div class="placeholder" :style="{ height: `${totalHeight}px` }" />
+    <div class="content" :style="{ transform: `translateY(${offsetY}px)` }">
+      <div v-for="(item, index) in visibleItems" :key="index" class="item" :style="{ height: `${item.height}px` }">
+        {{ item.text }}
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .wrapper {

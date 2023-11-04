@@ -129,54 +129,55 @@ export default {
 - 使用
 
 ```vue
+<script>
+import imgLazy from '@/directives/imgLazy.js'
+
+export default {
+  // 组件内注册指令
+  directives: {
+    imgLazy,
+  },
+  data() {
+    return {
+      imgSrc: [
+        require('../../assets/img/000846-15763397267e73.jpg'),
+        require('../../assets/img/004348-1587314628f09b.jpg'),
+        require('../../assets/img/01.jpg'),
+        require('../../assets/img/1751409cw4v2lk7xlypbsn.jpg'),
+        require('../../assets/img/175141wpllyfapb7ni1t74.jpeg'),
+        require('../../assets/img/183634-1568716594f366.jpg'),
+        require('../../assets/img/20180302213716_PFimT.png'),
+        require('../../assets/img/204554-1560516354e91c.jpg'),
+        require('../../assets/img/205524-1566651324f88b.jpg'),
+        require('../../assets/img/213207-156665352785d3.jpg'),
+        require('../../assets/img/213246-1586525566c099.jpg'),
+        require('../../assets/img/223248-1587393168c0ea.jpg'),
+        require('../../assets/img/224324-15888626046f80.jpg'),
+        require('../../assets/img/230431-15854078717b4e.jpg'),
+        require('../../assets/img/230543-15651903432d35.jpg'),
+        require('../../assets/img/231118-1586704278f13e.jpg'),
+        require('../../assets/img/233900-1579621140c81d.jpg'),
+        require('../../assets/img/234703-1584114423c3de.jpg'),
+        require('../../assets/img/235000-1584114600db79.jpg'),
+        require('../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png'),
+        require('../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg'),
+        require('../../assets/img/5d68d603daf16.jpg'),
+        require('../../assets/img/5ddb867c4250c.jpg'),
+      ],
+    }
+  },
+}
+</script>
+
 <template>
   <div id="pic">
     <div class="container">
       <div v-for="(item, index) in imgSrc" :key="index">
-        <img v-imgLazy="item" />
+        <img v-imgLazy="item">
       </div>
     </div>
   </div>
 </template>
-
-<script>
-import imgLazy from "@/directives/imgLazy.js";
-export default {
-  data() {
-    return {
-      imgSrc: [
-        require("../../assets/img/000846-15763397267e73.jpg"),
-        require("../../assets/img/004348-1587314628f09b.jpg"),
-        require("../../assets/img/01.jpg"),
-        require("../../assets/img/1751409cw4v2lk7xlypbsn.jpg"),
-        require("../../assets/img/175141wpllyfapb7ni1t74.jpeg"),
-        require("../../assets/img/183634-1568716594f366.jpg"),
-        require("../../assets/img/20180302213716_PFimT.png"),
-        require("../../assets/img/204554-1560516354e91c.jpg"),
-        require("../../assets/img/205524-1566651324f88b.jpg"),
-        require("../../assets/img/213207-156665352785d3.jpg"),
-        require("../../assets/img/213246-1586525566c099.jpg"),
-        require("../../assets/img/223248-1587393168c0ea.jpg"),
-        require("../../assets/img/224324-15888626046f80.jpg"),
-        require("../../assets/img/230431-15854078717b4e.jpg"),
-        require("../../assets/img/230543-15651903432d35.jpg"),
-        require("../../assets/img/231118-1586704278f13e.jpg"),
-        require("../../assets/img/233900-1579621140c81d.jpg"),
-        require("../../assets/img/234703-1584114423c3de.jpg"),
-        require("../../assets/img/235000-1584114600db79.jpg"),
-        require("../../assets/img/376bd4d1abd8d88567bd3f8117d0bc9e.png"),
-        require("../../assets/img/3e498b158cd39730a471aa1c1fb96966d9175bf1.jpg"),
-        require("../../assets/img/5d68d603daf16.jpg"),
-        require("../../assets/img/5ddb867c4250c.jpg"),
-      ],
-    };
-  },
-  // 组件内注册指令
-  directives: {
-    imgLazy: imgLazy,
-  },
-};
-</script>
 
 <style></style>
 ```
@@ -369,29 +370,30 @@ Vue.prototype.$log = window.console.log;
 ## 动态组件
 
 ```vue
-<template>
-  <div>
-    <component :is="isToggle ? one : two"></component>
-  </div>
-</template>
-
 <script>
-import One from "../components/One.vue";
-import Two from "../components/Two.vue";
+import One from '../components/One.vue'
+import Two from '../components/Two.vue'
+
 export default {
-  data() {
-    return {
-      isToggle: false,
-      one: "One",
-      two: "Two",
-    };
-  },
   components: {
     One,
     Two,
   },
-};
+  data() {
+    return {
+      isToggle: false,
+      one: 'One',
+      two: 'Two',
+    }
+  },
+}
 </script>
+
+<template>
+  <div>
+    <component :is="isToggle ? one : two" />
+  </div>
+</template>
 ```
 
 ## vue 可拖拽改变大小组件
@@ -460,17 +462,17 @@ const store = new Vuex.Store({
   },
   mutations: {
     increment(state) {
-      state.count++;
+      state.count++
     },
   },
-});
+})
 
 // 使用vuex需要注入到vue实例
 new Vue({
   render: h => h(App),
   router,
   store,
-}).$mount("#app");
+}).$mount('#app')
 ```
 
 - 通过 `store.state` 来获取状态对象
@@ -486,68 +488,68 @@ new Vue({
 
 ```js
 // router.ts
-import Vue from "vue";
-import Router from "vue-router";
-import Home from "./views/admin/Home.vue";
+import Vue from 'vue'
+import Router from 'vue-router'
+import Home from './views/admin/Home.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const router = new Router({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
+      path: '/',
       component: Home,
       beforeEnter: (to, from, next) => {
-        next();
+        next()
       },
       children: [
         {
           // 当 /user/:id/profile 匹配成功，
           // UserProfile 会被渲染在 User 的 <router-view> 中
-          path: "",
-          name: "header",
-          component: () => import(/* webpackChunkName: "header" */ "./views/admin/subPage/Header.vue"),
+          path: '',
+          name: 'header',
+          component: () => import(/* webpackChunkName: "header" */ './views/admin/subPage/Header.vue'),
         },
 
         {
-          path: "/banner",
-          name: "banner",
-          component: () => import(/* webpackChunkName: "banner" */ "./views/admin/subPage/Banner.vue"),
+          path: '/banner',
+          name: 'banner',
+          component: () => import(/* webpackChunkName: "banner" */ './views/admin/subPage/Banner.vue'),
         },
         {
-          path: "/admin",
-          name: "admin",
-          component: () => import(/* webpackChunkName: "admin" */ "./views/admin/Admin.vue"),
+          path: '/admin',
+          name: 'admin',
+          component: () => import(/* webpackChunkName: "admin" */ './views/admin/Admin.vue'),
         },
       ],
     },
     {
-      path: "/login",
-      name: "login",
-      component: () => import(/* webpackChunkName: "login" */ "./views/Login.vue"),
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "login" */ './views/Login.vue'),
       meta: {
-        keepAlive: false, //不需要被缓存的组件
+        keepAlive: false, // 不需要被缓存的组件
       },
     },
     {
-      path: "*",
-      name: "404",
-      component: () => import(/* webpackChunkName: "404" */ "./views/404.vue"),
+      path: '*',
+      name: '404',
+      component: () => import(/* webpackChunkName: "404" */ './views/404.vue'),
     },
   ],
-});
+})
 
 // 路由导航钩子的用法
 router.beforeEach((to, from, next) => {
-  if (from.path.indexOf("/preview") < 0) {
-    sessionStorage.setItem("prevToPreviewPath", from.path);
-  }
-  next();
-});
+  if (!from.path.includes('/preview'))
+    sessionStorage.setItem('prevToPreviewPath', from.path)
 
-export default router;
+  next()
+})
+
+export default router
 ```
 
 vue-router 的跳转方式?
@@ -614,19 +616,20 @@ export default defineConfig({
 - defineProps 现在允许使用导入的类型或全局的类型(之前只能在当前的 vue 文件声明类型或者直接写在 `defineProps<T>` 上)
 - 使用 `<script setup>` 的组件现在可以通过 `generic` 属性接受通用类型参数：
 
-```vue
+```typescript
 <script setup lang="ts" generic="T">
 defineProps<{
-  items: T[];
-  selected: T;
-}>();
+  items: T[]
+  selected: T
+}>()
 </script>
 ```
 
 - defineEmits 语法变更
 
-  ```vue
-  <script setup>
+  ```typescript
+  // vue
+  <script setup lang="ts">
   // BEFORE
   const emit = defineEmits<{
   (e: 'foo', id: number): void

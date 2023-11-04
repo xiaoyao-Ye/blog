@@ -74,14 +74,14 @@ npm config set registry=https://packages.aliyun.com/605b1fb26cc98419b95d3b83/npm
 
 ## --save 和--save-dev
 
-```js
---save 会把你下载的第三方包信息保存到 `dependencies`
---save-dev 会把你下载的第三方包保存到 `devDependencies`
-// ---------------------------------------------
+```bash
+# --save 会把你下载的第三方包信息保存到 `dependencies`
+# --save-dev 会把你下载的第三方包保存到 `devDependencies`
+# ---------------------------------------------
 npm i 插件名 默认相当于  npm i --save 插件名
-// ---------------------------------------------
-yarn add          会在  `dependencies`      中安装一个包
-yarn add -D/-dev  会在  `devDependencies`   中安装一个包
+# ---------------------------------------------
+yarn add          # 会在  `dependencies`      中安装一个包
+yarn add -D/-dev  # 会在  `devDependencies`   中安装一个包
 ```
 
 ## dependencies 和 devDependencies 区别
@@ -220,8 +220,8 @@ pnpm 使用硬链接来链接同一个依赖的多个副本, 以节省存储空�
 
    ```yaml
    packages:
-     - "packages/**"
-     - "docs"
+     - 'packages/**'
+     - docs
    ```
 
 2. 安装依赖
