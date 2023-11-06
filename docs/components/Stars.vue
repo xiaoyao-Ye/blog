@@ -1,22 +1,22 @@
+<script setup lang="ts"></script>
+
 <template>
   <div>
     <div class="meteor">
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
-      <div class="star"></div>
+      <div class="star" />
+      <div class="star" />
+      <div class="star" />
+      <div class="star" />
+      <div class="star" />
+      <div class="star" />
     </div>
     <div class="bg">
-      <div></div>
-      <div></div>
-      <div></div>
+      <div />
+      <div />
+      <div />
     </div>
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .bg,

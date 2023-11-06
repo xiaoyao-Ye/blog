@@ -6,7 +6,7 @@
 
 UI 框架模板
 
-```yaml
+```bash
 ├─docs                              # 文档目录
 │  │  index.md                      # 文档首页
 │  │  vite.config.ts                # 文档配置文件

@@ -1,8 +1,8 @@
-<template>
-  <div class="wave-sine"></div>
-</template>
-
 <script setup lang="ts"></script>
+
+<template>
+  <div class="wave-sine" />
+</template>
 
 <style scoped>
 @keyframes star {

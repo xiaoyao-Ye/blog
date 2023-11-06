@@ -1,46 +1,47 @@
-<template>
-  <div class="stars" :style="`box-shadow: ${boxShadow}`"></div>
-</template>
-
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-const boxShadow = ref("");
-const RandomStars = num => {
-  let windowHeight = document.body.clientHeight;
-  let windowWidth = document.body.clientWidth;
-  let stars = "";
-  const colors = [
-    "--vp-c-brand",
-    "--vp-c-brand-light",
-    "--vp-c-brand-lighter",
-    "--vp-c-brand-dark",
-    "--vp-c-brand-darker",
-    "--vp-c-brand-next",
-  ];
-  for (let i = num; i >= 0; i--) {
-    /*X轴坐标*/
-    let x = Math.round(Math.random() * windowWidth);
-    /*Y轴坐标*/
-    let y = Math.round(Math.random() * windowHeight);
-    /*阴影大小*/
-    let size = Math.round(Math.random() * 0.52);
-    /*随机透明度*/
-    // let o = Math.random() * 0.5
-    /*添加阴影*/
-    const index = Math.floor(Math.random() * 6);
+import { onMounted, ref } from 'vue'
 
-    stars += `${x}px ${y}px 0 ${size}px var(${colors[index]}),`;
-    stars += `${x}px ${windowHeight + y}px 0 ${size}px var(${colors[index]}),`;
+const boxShadow = ref('')
+function RandomStars(num) {
+  const windowHeight = document.body.clientHeight
+  const windowWidth = document.body.clientWidth
+  let stars = ''
+  const colors = [
+    '--vp-c-brand',
+    '--vp-c-brand-light',
+    '--vp-c-brand-lighter',
+    '--vp-c-brand-dark',
+    '--vp-c-brand-darker',
+    '--vp-c-brand-next',
+  ]
+  for (let i = num; i >= 0; i--) {
+    /* X轴坐标 */
+    const x = Math.round(Math.random() * windowWidth)
+    /* Y轴坐标 */
+    const y = Math.round(Math.random() * windowHeight)
+    /* 阴影大小 */
+    const size = Math.round(Math.random() * 0.52)
+    /* 随机透明度 */
+    // let o = Math.random() * 0.5
+    /* 添加阴影 */
+    const index = Math.floor(Math.random() * 6)
+
+    stars += `${x}px ${y}px 0 ${size}px var(${colors[index]}),`
+    stars += `${x}px ${windowHeight + y}px 0 ${size}px var(${colors[index]}),`
   }
-  /*截掉最后多余的逗号*/
-  stars = stars.slice(0, stars.length - 1);
-  /*添加到页面*/
-  boxShadow.value = stars;
-};
+  /* 截掉最后多余的逗号 */
+  stars = stars.slice(0, stars.length - 1)
+  /* 添加到页面 */
+  boxShadow.value = stars
+}
 onMounted(() => {
-  RandomStars(240);
-});
+  RandomStars(240)
+})
 </script>
+
+<template>
+  <div class="stars" :style="`box-shadow: ${boxShadow}`" />
+</template>
 
 <style lang="scss" scoped>
 /*背景星星*/

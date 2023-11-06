@@ -1,5 +1,9 @@
 {
+  "type": "module",
   "description": "anything is possible.",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
   "main": "index.js",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
@@ -9,15 +13,14 @@
     "docs:preview": "vitepress preview docs",
     "commit": "git-cz",
     "commit:origin": "git pull && git add . && git-cz && git push",
-    "lint": "prettier --write \"**/*.{js,ts,json,vue,md}\""
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
+    "@antfu/eslint-config": "^1.1.0",
+    "eslint": "^8.53.0",
     "git-cz": "^4.9.0",
     "lint-staged": "^13.2.3",
-    "prettier": "^2.8.8",
     "sass": "^1.63.6",
     "simple-git-hooks": "^2.8.1",
     "vitepress": "1.0.0-beta.5",
@@ -27,8 +30,6 @@
     "pre-commit": "npx lint-staged"
   },
   "lint-staged": {
-    "*": [
-      "prettier --write --ignore-unknown"
-    ]
+    "*": "eslint --fix"
   }
 }

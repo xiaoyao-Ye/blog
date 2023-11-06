@@ -94,8 +94,10 @@
    配置: 可以打开 `settings.json`
 
    ```json
-   "debug.javascript.terminalOptions": {
-      // 这里的配置项等同于 launch.json 文件
+   {
+     "debug.javascript.terminalOptions": {
+       // 这里的配置项等同于 launch.json 文件
+     }
    }
    ```
 

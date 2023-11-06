@@ -1,8 +1,17 @@
+<script setup lang="ts">
+import { useData } from 'vitepress'
+
+// 获取当前配色方案
+const { isDark } = useData()
+
+const el = 'script'
+</script>
+
 <template>
   <div class="comment">
     <component
+      :is="el"
       v-if="isDark"
-      :is="'script'"
       src="https://giscus.app/client.js"
       data-repo="xiaoyao-Ye/blog"
       data-repo-id="R_kgDOHzY7HA"
@@ -20,8 +29,8 @@
       async
     />
     <component
+      :is="el"
       v-else
-      :is="'script'"
       src="https://giscus.app/client.js"
       data-repo="xiaoyao-Ye/blog"
       data-repo-id="R_kgDOHzY7HA"
@@ -40,12 +49,6 @@
     />
   </div>
 </template>
-
-<script setup lang="ts">
-import { useData } from 'vitepress'
-// 获取当前配色方案
-const { isDark } = useData()
-</script>
 
 <style lang="scss" scoped>
 .comment {

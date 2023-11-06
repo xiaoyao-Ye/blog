@@ -61,7 +61,7 @@
 ### 基础配置
 
 ```js
-const path = require('path')
+const path = require('node:path')
 
 module.exports = {
   // 入口文件配置
@@ -147,7 +147,7 @@ module.exports = {
   module: {
     rules: [
       // 官方更建议的做法是在项目根目录下新建一个`.babelrc`的babel配置文件
-      //{
+      // {
       //  test: /\.js$/,
       //  use: {
       //    loader: 'babel-loader',
@@ -157,19 +157,19 @@ module.exports = {
       //    }
       //  },
       //  exclude: /node_modules/
-      //}
+      // }
     ],
   },
 }
 ```
 
-```js
+```json
 // .babelrc
 {
   "presets": ["@babel/env"],
   "plugins": [
-      "@babel/plugin-proposal-class-properties"
-      "@babel/plugin-transform-runtime"  // 使用`generator`,需要
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime" // 使用`generator`,需要
   ]
 }
 ```
@@ -220,7 +220,7 @@ module.exports = {
 
 - 打包 vue 本质是跟打包 css 是一样的，都是要先下载一个 loader, 然后改配置文件
 
-```js
+```bash
 npm install -D vue-loader vue-template-compiler
 yarn add -D vue-loader vue-template-compiler
 ```
@@ -245,7 +245,7 @@ yarn add -D vue-loader vue-template-compiler
 
 安装:
 
-```js
+```bash
 npm install --save-dev webpack-dev-server
 yarn add -D webpack-dev-server
 ```
@@ -253,14 +253,16 @@ yarn add -D webpack-dev-server
 webpack.config.js
 
 ```js
-devServer: {
-   contentBase: './dist'
- },
+module.exports = {
+  devServer: {
+    contentBase: './dist'
+  },
+}
 ```
 
 运行
 
-```js
+```bash
 npx webpack-dev-server --open
 ```
 

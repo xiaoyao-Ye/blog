@@ -25,24 +25,9 @@ import VirtualScroll from '../components/VirtualScroll.vue'
 - watch: 监听 wrapper 变量的变化。当 wrapper 变量从 null 变为真实 DOM 元素时，初始化 viewportHeight 变量的值，调用 generateRandomItems 函数生成随机列表项数据。
 
 ```vue
-<template>
-  <!-- 整个组件的容器 -->
-  <div ref="wrapper" class="wrapper" @scroll="onScroll">
-    <!-- 占位元素，用于撑开高度 -->
-    <div class="placeholder" :style="{ height: totalHeight + 'px' }"></div>
-    <!-- 可见的元素列表，位于滚动容器内部 -->
-    <div class="content" :style="{ transform: 'translateY(' + offsetY + 'px)' }">
-      <!-- 遍历可见元素列表，渲染每个元素 -->
-      <div v-for="(item, index) in visibleItems" :key="index" class="item" :style="{ height: item.height + 'px' }">
-        {{ item.text }}
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="ts">
 // 导入 Vue 相关的 API
-import { defineComponent, ref, reactive, computed, watch } from 'vue'
+import { computed, defineComponent, reactive, ref, watch } from 'vue'
 
 // 声明列表项的数据类型
 interface ListItem {
@@ -64,7 +49,8 @@ export default defineComponent({
     // 可见区域的高度
     const viewportHeight = ref(0)
     // 列表中的所有项
-    const items = reactive<ListItem[]>([])
+    // const items = reactive<ListItem[]>([])
+    const items = reactive<any>([])
     // 可见的列表项
     const visibleItems = computed(() => {
       // 计算出可见的起始和结束位置
@@ -126,6 +112,21 @@ export default defineComponent({
   },
 })
 </script>
+
+<template>
+  <!-- 整个组件的容器 -->
+  <div ref="wrapper" class="wrapper" @scroll="onScroll">
+    <!-- 占位元素，用于撑开高度 -->
+    <div class="placeholder" :style="{ height: `${totalHeight}px` }" />
+    <!-- 可见的元素列表，位于滚动容器内部 -->
+    <div class="content" :style="{ transform: `translateY(${offsetY}px)` }">
+      <!-- 遍历可见元素列表，渲染每个元素 -->
+      <div v-for="(item, index) in visibleItems" :key="index" class="item" :style="{ height: `${item.height}px` }">
+        {{ item.text }}
+      </div>
+    </div>
+  </div>
+</template>
 
 <style>
 .wrapper {

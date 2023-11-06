@@ -6,21 +6,21 @@
 事件本身如果没有使用到可以不绑定函数
 
 ```vue
-<template>
-  <view>
-    <view class="mask" @touchmove.stop.prevent="moveHandle"></view>
-    <!-- or -->
-    <view class="mask" @touchmove.stop.prevent></view>
-  </view>
-</template>
-
 <script>
 export default {
   methods: {
     moveHandle() {},
   },
-};
+}
 </script>
+
+<template>
+  <view>
+    <view class="mask" @touchmove.stop.prevent="moveHandle" />
+    <!-- or -->
+    <view class="mask" @touchmove.stop.prevent />
+  </view>
+</template>
 ```
 
 ## input 光标颜色

@@ -21,16 +21,16 @@ Object.assign(global, { $ })
 
 > Sync 结尾是同步, 其余是异步
 
-- fs.exists 判断是否存在, 存在则返回 true，否则返回 false
-- fs.writeFile 将指定的数据写入文件。默认情况下，如果文件存在，将被替换。
-- fs.mkdir 创建目录
-- fs.readdir 读取文件目录,返回目录下文件名数组
-- fs.readFile('xx', 'utf-8') 读取文件并返回其内容
-- fs.stat 给定路径, 返回 stat 对象, 该对象具有多个属性和方法来获取有关文件或目录的详细信息
-  - stat.isDirectory() 该路径是否是目录
-  - stat.isFile() 该路径是否是文件
-- fs.copyFile 将文件从源路径异步复制到目标路径。默认情况下，如果文件存在，将被替换。
-- fs.rm 删除给定路径的目录。它也可以递归地用于删除嵌套目录
+- `fs.exists`：判断是否存在，存在则返回 `true`，否则返回 `false`。
+- `fs.writeFile`：将指定的数据写入文件。默认情况下，如果文件存在，将被替换。
+- `fs.mkdir`：创建目录。
+- `fs.readdir`：读取文件目录，返回目录下文件名数组。
+- `fs.readFile('xx', 'utf-8')`：读取文件并返回其内容。
+- `fs.stat`：给定路径，返回 `stat` 对象，该对象具有多个属性和方法来获取有关文件或目录的详细信息。
+  - `stat.isDirectory()`：该路径是否是目录。
+  - `stat.isFile()`：该路径是否是文件。
+- `fs.copyFile`：将文件从源路径异步复制到目标路径。默认情况下，如果文件存在，将被替换。
+- `fs.rm`：删除给定路径的目录。它也可以递归地用于删除嵌套目录。
 
 ### path
 
@@ -40,13 +40,13 @@ Object.assign(global, { $ })
   // 语法为 `path.resolve([...paths])`
   // `...paths` 是一个路径或多个路径片段, 如果传入路径为空, 则返回当前工作目录的绝对路径
 
-  path.resolve("/foo/bar", "./baz");
+  path.resolve('/foo/bar', './baz')
   // 返回: '/foo/bar/baz'
-
-  path.resolve("/foo/bar", "/tmp/file/");
+  
+  path.resolve('/foo/bar', '/tmp/file/')
   // 返回: '/tmp/file'
-
-  path.resolve("wwwroot", "static_files/png/", "../gif/image.gif");
+  
+  path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif')
   // 如果当前工作目录是 /home/myself/node，
   // 则返回 '/home/myself/node/wwwroot/static_files/gif/image.gif'
   ```
@@ -59,10 +59,10 @@ Object.assign(global, { $ })
   // 任何一个路径片段是绝对路径，则之前的路径片段都会被忽略
   // 如果拼接后的路径是空字符串，则返回当前工作目录的路径
 
-  path.join("/foo", "bar", "baz/asdf", "quux", "..");
+  path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
   // 返回: '/foo/bar/baz/asdf'
-
-  path.join("wwwroot", "static_files/png/", "../gif/image.gif");
+  
+  path.join('wwwroot', 'static_files/png/', '../gif/image.gif')
   // 如果当前工作目录是 /home/myself/node，
   // 则返回 'wwwroot/static_files/gif/image.gif'
   ```
@@ -73,10 +73,10 @@ Object.assign(global, { $ })
   // 它的语法为path.extname(path)。
   // 其中path是文件路径。如果文件没有扩展名，则返回空字符串
 
-  path.join("/foo", "bar", "baz/asdf", "quux", "..");
+  path.join('/foo', 'bar', 'baz/asdf', 'quux', '..')
   // 返回: '/foo/bar/baz/asdf'
-
-  path.join("wwwroot", "static_files/png/", "../gif/image.gif");
+  
+  path.join('wwwroot', 'static_files/png/', '../gif/image.gif')
   // 如果当前工作目录是 /home/myself/node，
   // 则返回 'wwwroot/static_files/gif/image.gif'
   ```
@@ -99,15 +99,15 @@ Shebang 的作用是指定脚本文件的解释器。
 {
   "name": "test",
   // 可执行文件, 从 npm 上安装这个包后, 使用 test 命令会执行这个index.js
-  "bin": "./index.js",
+  "bin": "./index.js"
   // or
   // 可配置为对象形式
-  "bin": {
-    // xx
-    "xx": "./xx.js",
-    // zz
-    "zz": "./zz.js"
-  }
+  // "bin": {
+  //   // xx
+  //   "xx": "./xx.js",
+  //   // zz
+  //   "zz": "./zz.js"
+  // }
 }
 ```
 

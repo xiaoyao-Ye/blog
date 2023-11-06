@@ -14,6 +14,7 @@
 
 ```ts
 import { $ } from 'zx'
+
 $`cat package.json`
 
 //  {

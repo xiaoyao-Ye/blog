@@ -5,37 +5,37 @@
 docker-compose.yml
 
 ```yml
-version: "3.6"
+version: '3.6'
 name: gitlab
 services:
   gitlab:
     # gitlab/gitlab-ee:latest 是企业版收费, gitlab/gitlab-ce:latest" 是社区版免费
-    image: "gitlab/gitlab-ce:latest"
+    image: 'gitlab/gitlab-ce:latest'
     container_name: gitlab
     restart: always
     privileged: true
     # 最好写服务器地址或域名(域名要设置解析)
-    hostname: "127.0.0.1"
+    hostname: 127.0.0.1
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: Asia/Shanghai
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://127.0.0.1'
         gitlab_rails['gitlab_shell_ssh_port'] = 2222
         gitlab_rails['time_zone'] = 'Asia/Shanghai'
         # Add any other gitlab.rb configuration here, each on its own line
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
       # 22端口好像被ssh占用了
-      - "2222:22"
+      - '2222:22'
     volumes:
-      - "./config:/etc/gitlab"
-      - "./logs:/var/log/gitlab"
-      - "./data:/var/opt/gitlab"
-    shm_size: "256m"
+      - './config:/etc/gitlab'
+      - './logs:/var/log/gitlab'
+      - './data:/var/opt/gitlab'
+    shm_size: 256m
 
   gitlab-runner:
-    image: "gitlab/gitlab-runner:latest"
+    image: 'gitlab/gitlab-runner:latest'
     container_name: gitlab-runner
     privileged: true
     restart: always
@@ -47,7 +47,7 @@ services:
       - ./gitlab-runner:/etc/gitlab-runner
     environment:
       # 也是指定docker
-      RUNNER_EXECUTOR: "docker"
+      RUNNER_EXECUTOR: docker
     depends_on:
       - gitlab
 
@@ -101,7 +101,7 @@ node:16-alpine
 #     - "node_modules/"
 
 stages:
-  - "deploy"
+  - deploy
 
 deploy:
   stage: deploy

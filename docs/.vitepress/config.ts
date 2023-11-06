@@ -1,23 +1,23 @@
-import { defineConfig } from "vitepress";
-import { navBar, sidebar } from "./router";
+import { defineConfig } from 'vitepress'
+import { navBar, sidebar } from './router'
 
 export default defineConfig({
   head: [
-    ["link", { rel: "icon", href: "/blog/favicon.ico" }],
-    ["meta", { name: "author", content: "_Ghosteye" }],
+    ['link', { rel: 'icon', href: '/blog/favicon.ico' }],
+    ['meta', { name: 'author', content: '_Ghosteye' }],
   ],
   // srcDir: './src',
-  base: "/blog/",
+  base: '/blog/',
   cleanUrls: true,
-  title: "_Ghosteye",
+  title: '_Ghosteye',
   titleTemplate: false,
-  srcDir: "../docs",
-  srcExclude: ["**/README.md"],
+  srcDir: '../docs',
+  srcExclude: ['**/README.md'],
   // titleTemplate: '不要让时代的悲哀成为你的悲哀!',
   // description: '当灾难来临时, 精神意志是人类的第一序列武器.',
-  description: "Do you have any output? Do it now!",
+  description: 'Do you have any output? Do it now!',
   // 暗黑模式
-  appearance: "dark",
+  appearance: 'dark',
   // 当设置为 时true，VitePress 不会因为死链接而导致构建失败。
   ignoreDeadLinks: true,
   // 使用 git commit 获取时间戳。此选项启用默认主题以显示页面的最后更新时间。
@@ -31,26 +31,26 @@ export default defineConfig({
     // lineNumbers: true
   },
   themeConfig: {
-    logo: "/img/book.png",
-    siteTitle: "_Ghosteye",
-    outlineTitle: "在本页面",
+    logo: '/img/book.png',
+    siteTitle: '_Ghosteye',
+    outlineTitle: '在本页面',
     outline: [2, 6],
-    lastUpdatedText: "最近更新时间",
+    lastUpdatedText: '最近更新时间',
     editLink: {
-      pattern: "https://github.com/xiaoyao-Ye/blog/edit/main/docs/:path",
-      text: "在 GitHub 上编辑此页面",
+      pattern: 'https://github.com/xiaoyao-Ye/blog/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页面',
     },
     nav: navBar,
     sidebar,
-    socialLinks: [{ icon: "github", link: "https://github.com/xiaoyao-Ye" }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/xiaoyao-Ye' }],
     footer: {
-      message: "Released under the MIT License.",
-      copyright: "Copyright © 2019-present _Ghosteye",
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2019-present _Ghosteye',
     },
     algolia: {
-      appId: "EJYW8N5YY2",
-      apiKey: "b2a060fd4e6b6b5b249c13b9056c89f0",
-      indexName: "xiaoyao-yeio",
+      appId: 'EJYW8N5YY2',
+      apiKey: 'b2a060fd4e6b6b5b249c13b9056c89f0',
+      indexName: 'xiaoyao-yeio',
       // locales: {
       //   zh: {
       //     placeholder: '搜索文档',
@@ -101,4 +101,4 @@ export default defineConfig({
     //   placement: 'your-carbon-placement',
     // },
   },
-});
+})
