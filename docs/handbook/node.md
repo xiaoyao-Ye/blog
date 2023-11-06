@@ -21,16 +21,16 @@ Object.assign(global, { $ })
 
 > Sync 结尾是同步, 其余是异步
 
-- fs.exists 判断是否存在, 存在则返回 true，否则返回 false
-- fs.writeFile 将指定的数据写入文件。默认情况下，如果文件存在，将被替换。
-- fs.mkdir 创建目录
-- fs.readdir 读取文件目录,返回目录下文件名数组
-- fs.readFile('xx', 'utf-8') 读取文件并返回其内容
-- fs.stat 给定路径, 返回 stat 对象, 该对象具有多个属性和方法来获取有关文件或目录的详细信息
-  - stat.isDirectory() 该路径是否是目录
-  - stat.isFile() 该路径是否是文件
-- fs.copyFile 将文件从源路径异步复制到目标路径。默认情况下，如果文件存在，将被替换。
-- fs.rm 删除给定路径的目录。它也可以递归地用于删除嵌套目录
+- `fs.exists`：判断是否存在，存在则返回 `true`，否则返回 `false`。
+- `fs.writeFile`：将指定的数据写入文件。默认情况下，如果文件存在，将被替换。
+- `fs.mkdir`：创建目录。
+- `fs.readdir`：读取文件目录，返回目录下文件名数组。
+- `fs.readFile('xx', 'utf-8')`：读取文件并返回其内容。
+- `fs.stat`：给定路径，返回 `stat` 对象，该对象具有多个属性和方法来获取有关文件或目录的详细信息。
+  - `stat.isDirectory()`：该路径是否是目录。
+  - `stat.isFile()`：该路径是否是文件。
+- `fs.copyFile`：将文件从源路径异步复制到目标路径。默认情况下，如果文件存在，将被替换。
+- `fs.rm`：删除给定路径的目录。它也可以递归地用于删除嵌套目录。
 
 ### path
 
