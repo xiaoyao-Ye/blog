@@ -140,3 +140,59 @@ sudo systemctl restart docker
 - `gitlab/gitlab-ce` gitlab-ce 是一个开源的社区版 GitLab
 - `node:16-alpine` node:16-alpine 是一个基于 Alpine 的 Node.js
 - `nginx:stable-alpine` nginx:stable-alpine 是一个基于 Alpine 的 Nginx
+
+## docker compose
+
+`docker compose` 和 `docker-compose` 本质上没有区别, 只是调用方式的不同, 官方推荐的好像是 `docker-compose`
+
+```yml
+# docker-compose.yml
+version: '3'
+
+services:
+  mysql:
+    # 环境变量
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    # 自定义的主机名和IP映射
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    ports:
+      - ${MYSQL_PORT}:3306
+    # 设置utf8字符集
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+
+  server:
+    # 从当前路径构建镜像, 并使用这个镜像启动容器
+    build: .
+    # 指定镜像启动容器
+    image: xxx-service
+    # 容器名称
+    container_name: xxx-server
+    # 重启
+    restart: always
+
+    # 环境文件
+    env_file:
+      - .env
+      - .env.production
+    # 端口映射
+    ports:
+      - '80:80'
+    # 当前服务启动之前先要把depends_on指定的服务启动起来才行
+    depends_on:
+      - mysql
+      - redis
+    # 网络
+    networks:
+      - custom_net
+
+netwroks:
+  custom_net:
+  name: custom_net
+```
+
+- 部署任何镜像到服务器的时候, 如果有容器一直重启而找不到原因的情况, 不要通过反复猜测 修改 走cicd去验证解决, 而应该直接 ssh 去服务器运行刚才出问题的容器查看具体的报错问题.
+- 如果mysql和后端代码都是使用容器运行, 那么后端代码中连接mysql要注意: 这是在容器内连接容器外的宿主机的mysql映射出来的某个端口.
+- 云服务记得配置防火墙允许哪些端口公网可访问
