@@ -253,7 +253,7 @@ git cherry-pick --abort
 - 遇到合并冲突过多无法解决, 想要放弃合并使用 `--abort` 命令
 
 - `git cherry-pick <target id>` 单独合并某个 commit id 到当前分支
-- `git rebase master` 先切换到需要合并的分支, 比如 dev, 再使用 git rebase master 合并到 master, 有冲突的话就解决冲突然后 git add . 再 git rebase --continue 即可
+- `git rebase dev` 先切换 master, 再使用 git rebase dev 将 dev 合并到 master, 有冲突的话就解决冲突然后 git add . 再 git rebase --continue 即可
 - `git rebase -i <startpoint> <endpoint>` 合并 [范围] 区间 commit 为一次 commit 记录
 - `git rebase <startpoint> <endpoint> --onto master` 复制 [范围] 部分的提交至 master
 
