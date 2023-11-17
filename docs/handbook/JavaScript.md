@@ -1,5 +1,26 @@
 # JavaScript
 
+## 网页截图
+
+```bash
+npm i html2canvas
+```
+
+```js
+import html2canvas from 'html2canvas'
+
+html2canvas(document.querySelector('#capture')).then((canvas) => {
+  // document.body.appendChild(canvas); // 将 capture 元素渲染成的 canvas 添加到 body 元素
+  // 通过 a 标签将 canvas 另存为图片
+  const el = document.createElement('a')
+  el.href = canvas.toDataURL()
+  el.download = '文件名称'
+  // 创建并触发点击事件
+  const event = new MouseEvent('click')
+  el.dispatchEvent(event)
+})
+```
+
 ## 找出哪些 JavaScript 变量泄露到全局范围
 
 [找出哪些 JavaScript 变量泄漏到全局范围内](https://mmazzarolo.com/blog/2022-02-14-find-what-javascript-variables-are-leaking-into-the-global-scope/)
