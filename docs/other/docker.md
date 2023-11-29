@@ -196,3 +196,14 @@ netwroks:
 - 部署任何镜像到服务器的时候, 如果有容器一直重启而找不到原因的情况, 不要通过反复猜测 修改 走cicd去验证解决, 而应该直接 ssh 去服务器运行刚才出问题的容器查看具体的报错问题.
 - 如果mysql和后端代码都是使用容器运行, 那么后端代码中连接mysql要注意: 这是在容器内连接容器外的宿主机的mysql映射出来的某个端口.
 - 云服务记得配置防火墙允许哪些端口公网可访问
+
+## FAQ
+
+当我在 ubuntu 上运行 `docker compose` 时遇到了一个报错:
+
+```bash
+http: invalid Host header
+# 经过一番排查发现应该是 Docker 最新稳定版本的问题
+# 通过安装最新的 Edge 版本解决了该问题: (2023/11/29)
+sudo snap refresh docker --channel=latest/edge
+```
