@@ -75,6 +75,7 @@ Get-Service ssh-agent
 - `COPY` 复制文件或目录到镜像中，例如 `COPY . /app`。
 - `ADD` 类似于 COPY，但可以处理远程 URL 和解压 tar 文件。
 - `ENV` 设置环境变量，例如 `ENV NAME=John`。
+- `ENV TZ=Asia/Shanghai` 设置时区
 - `EXPOSE` 暴露容器端口，例如 `EXPOSE 8080`。
 - `CMD` 指定容器启动时执行的命令，例如 `CMD ["python3", "app.py"]`。
 - `ENTRYPOINT` 指定容器启动时执行的命令，与 CMD 的区别是可以接受用户输入的参数，例如 `ENTRYPOINT ["python3", "app.py"]`。
@@ -153,6 +154,7 @@ services:
   mysql:
     # 环境变量
     environment:
+      TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
     # 自定义的主机名和IP映射
