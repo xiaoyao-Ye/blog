@@ -142,3 +142,9 @@ Shebang 的作用是指定脚本文件的解释器。
 [什么是 RESTful](https://easydoc.net/a/restful/)
 
 [如何设计一个好的 API 接口名](https://easydoc.net/a/api-design/)
+
+## FAQ
+
+1. require() of ES Module `E:/xx` from xxx not supported. Instead change the require of `E:/xx` in xxx to a dynamic import() which is available in all CommonJS modules.
+
+   一般是新版本的包不支持commonjs了, 降版本可能是最快的方案

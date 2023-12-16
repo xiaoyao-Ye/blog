@@ -245,3 +245,10 @@ export default {
 ## performance
 
 **performance.now()** 方法返回一个精确到毫秒的 [DOMHighResTimeStamp](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMHighResTimeStamp) 。
+
+## 如何在苹果将屏幕调到极暗
+
+1. Open `Settings`
+2. Navigate to `Accessibility`
+3. Navigate to `Accessibility shortcut`
+4. From the menu select `Reduce White Point`

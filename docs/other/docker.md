@@ -199,6 +199,17 @@ netwroks:
 - 如果mysql和后端代码都是使用容器运行, 那么后端代码中连接mysql要注意: 这是在容器内连接容器外的宿主机的mysql映射出来的某个端口.
 - 云服务记得配置防火墙允许哪些端口公网可访问
 
+## CICD
+
+在使用 ci/cd 部署的时候可能需要用到下面这段 shell
+
+```shell
+    - docker build . --tag clock
+    # 判断name=clock这个容器是否在运行，在运行的话就进行销毁
+    - if [ $(docker ps -aq --filter name=clock) ]; then docker rm -f clock;fi
+    - docker run -d -p 8080:80 --name clock clock
+```
+
 ## FAQ
 
 当我在 ubuntu 上运行 `docker compose` 时遇到了一个报错:
