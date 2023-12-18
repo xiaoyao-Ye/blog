@@ -126,3 +126,261 @@ HD 钱包(Hierarchical Deterministic wallet) 是一种特定的数字钱包类�
   总结来说,HD 钱包是数字钱包的一种更高级的实现方式,它利用确定性密钥生成和层级管理,使钱包管理更简单安全。所以它是数字钱包的一个重要发展方向。
 
 DAPP
+
+## viem
+
+```js ERC20
+// ERC20
+export const ERC20 = [
+  {
+    constant: true,
+    inputs: [],
+    name: 'name',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: '_spender', type: 'address' },
+      { name: '_value', type: 'uint256' }
+    ],
+    name: 'approve',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: '_from', type: 'address' },
+      { name: '_to', type: 'address' },
+      { name: '_value', type: 'uint256' }
+    ],
+    name: 'transferFrom',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ name: '', type: 'uint8' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [{ name: '_owner', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ name: 'balance', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ name: '', type: 'string' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: false,
+    inputs: [
+      { name: '_to', type: 'address' },
+      { name: '_value', type: 'uint256' }
+    ],
+    name: 'transfer',
+    outputs: [{ name: '', type: 'bool' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [
+      { name: '_owner', type: 'address' },
+      { name: '_spender', type: 'address' }
+    ],
+    name: 'allowance',
+    outputs: [{ name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  { payable: true, stateMutability: 'payable', type: 'fallback' },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'owner', type: 'address' },
+      { indexed: true, name: 'spender', type: 'address' },
+      { indexed: false, name: 'value', type: 'uint256' }
+    ],
+    name: 'Approval',
+    type: 'event'
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, name: 'from', type: 'address' },
+      { indexed: true, name: 'to', type: 'address' },
+      { indexed: false, name: 'value', type: 'uint256' }
+    ],
+    name: 'Transfer',
+    type: 'event'
+  }
+]
+```
+
+```js
+import { createPublicClient, createWalletClient, custom, getContract, http, isAddress } from 'viem'
+import { ERC20 } from './ERC20.js'
+
+function publicClient() {
+  return createPublicClient({
+    chain,
+    transport: http()
+  })
+}
+
+function walletClient(account) {
+  return createWalletClient({
+    account,
+    chain,
+    transport: custom(window.ethereum)
+  })
+}
+// publicClient 可以执行一些公共的 api 交易/读取 智能合约等
+// walletClient 是以太坊交易账户的接口, 提供账户搜索、执行交易、签署消息的功能等通过钱包操作。
+
+// 使用由 getContract 函数创建的特定 ABI 和地址执行合约相关操作。
+function createContract({ address, abi = ERC20, account }) {
+  if (!isAddress(address))
+    throw new Error(`Invalid 'address' ${address}`)
+
+  return getContract({
+    address, // 合约地址
+    abi, // 合约 abi
+    walletClient: walletClient(account),
+    publicClient: publicClient()
+  })
+}
+
+// interface Params {
+//   address: string
+//   abi: any
+//   functionName: string
+//   args: any[]
+//   account: string
+//   options: any
+// }
+
+async function useContract(options) { // 参数类型是 Params
+  try {
+    const { request } = await publicClient().simulateContract(options)
+    const hash = await walletClient(options.account).writeContract(request)
+    return {
+    // 交易 hash
+      hash,
+      // 等待交易结果的方法
+      wait: publicClient().waitForTransactionReceipt({ hash })
+    }
+  }
+  catch (error) {
+    // 这个方法调试的时候可能报错, 打印错误信息
+    console.log(`( error )===============>`, error)
+  }
+}
+
+// work
+
+const [account] = await walletClient().requestAddresses()
+
+const contract = getContract({
+  address,
+  abi: abis[address],
+  account
+})
+// 获取合约名称
+const name = await contract.read.symbol()
+// 获取合约精度位数(展示的时候需要除以 10 ** decimals, 操作的时候需要 * 10 ** decimals)
+const decimals = await contract.read.decimals()
+
+// 提现
+// 实际业务中一般调用后端接口获取 decryptedData (前端好像也能实现这部分逻辑)
+const decryptedData = await getRSV()
+const contractAddress = '0x...'
+const contractAbi = []
+const { v, r, s, txid, account, amount, deadline } = decryptedData
+const { wait } = await useContract({
+  address: contractAddress,
+  abi: contractAbi,
+  functionName: 'withdrawalWithPermit', // 调用合约的提现方法, 具体操作方法名称根据合约abi可以知道
+  args: [txid, account, amount, deadline, v, r, s], // 提现所需参数
+  account
+})
+await wait
+
+// 充值
+const DECIMALS = 10 ** 18 // 最好是从对应的合约去获取
+const contractAddress1 = '0x...'
+const contractAddress2 = '0x...'
+const address1Abi = []
+const address2Abi = []
+let amount = 1 // 当前充值的金额
+const contract = getContract({
+  address: contractAddress1,
+  abi: address1Abi,
+  account
+})
+const contractTrusteeship = getContract({
+  address: contractAddress2,
+  abi: address2Abi,
+  account
+})
+async function approve() {
+  // 最大授权额度(一般有两种授权额度, 一个是最大授权避免用户频繁允许授权额度, 第二个是每次充值多少就让用户授权多少, 一个相对安全一个相对没那么安全?)
+  const MAX_UINT256 = 57896044618658097711785492504343953926634992332820282019728792003956564819967n
+  // 查询授权额度还有多少(合约1授权给合约2指定额度)
+  const res = await contract.read.allowance([account, contractAddress2])
+  const num = Number(res) / DECIMALS
+  if (amount <= num)
+    return null // 授权额度足够不需要重新授权
+
+  // 如果当前授权额度小于充值金额, 需要重新授权
+  const { hash, wait } = await useContract({
+    address: contractAddress1,
+    abi: address1Abi,
+    functionName: 'approve',
+    args: [contractAddress2, MAX_UINT256],
+    account
+  })
+}
+
+try {
+  await approve()
+  amount = BigInt(amount * DECIMALS)
+  await contractTrusteeship.write.recharge([amount, 1]) // 第二个参数是充值类型, 不同的合约可能不需要这个参数
+}
+catch (error) {
+  console.log(`( error )===============>`, error)
+}
+```
