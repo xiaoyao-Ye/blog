@@ -422,3 +422,12 @@ git config --global --unset https.proxy
 - `mod` 不确定分类的修改
 - `wip` 开发中
 - `types` 类型修改
+
+## FAQ
+
+1. 某些操作系统(如Windows)上, 文件名是不区分大小写的, 假设现在使用 Git 保存了一个小写文件名的文件, 而后由于一些原因需要改成大写文件名, 此时 Git 可能不会捕捉到变更
+
+     ```bash
+     # git mv 添加到暂存区, 然后输入提交记录提交即可
+     git mv ./card.vue ./Card.vue
+     ```
