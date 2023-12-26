@@ -15,4 +15,7 @@
 
    2. 发现 postinstall 就是下载对应版本的 zip 文件解压放到 ./dist 中, 然后创建 `path.txt` `echo "electron.exe" ./path.txt`, 我们可以手动这样做
 
-2. 打包缓慢, 需要手动将打包时它提示的文件下载, 放到 xx 目录
+2. 打包缓慢或下载文件失败, 需要手动将打包时它提示的文件下载, 放到对应目录:(win)
+
+      - `C:\Users\Admin\AppData\Local\electron-builder\Cache` 目录下应该有 `winCodeSign` `nsis` 这两个目录
+      - `nsis-x.x.x.x` 和 `nsis-resources-x.x.x` 都是下载到 `C:\Users\Admin\AppData\Local\electron-builder\Cache\nsis` 文件夹下
