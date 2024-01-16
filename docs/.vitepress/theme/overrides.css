@@ -2,9 +2,9 @@
   background-color: transparent;
 }
 
-table {
-  width: 100% !important;
+.vp-doc table {
   display: table;
+  width: 100%;
 }
 
 .custom-block.tip .custom-block-title {
