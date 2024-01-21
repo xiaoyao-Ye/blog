@@ -71,7 +71,6 @@ const sidebarOther = [
       { text: 'devOps', link: '/other/DevOps' },
       { text: 'vscode', link: '/other/vscode' },
       { text: 'quotations', link: '/other/quotations' },
-      { text: 'test', link: '/other/test' },
       { text: 'mini', link: '/other/mini' },
       { text: 'install', link: '/other/install' },
       { text: 'js', link: '/other/js' },
@@ -87,6 +86,7 @@ const sidebarGhosteye = [
     items: [
       // { text: 'create-xm', link: '/Ghosteye/create-xm' },
       { text: 'initapi', link: '/Ghosteye/initapi' },
+      { text: 'Unit Testing', link: '/Ghosteye/test' },
       { text: 'Quick create log', link: '/Ghosteye/vs-quick-log' },
       { text: 'mini-react', link: '/Ghosteye/mini-react' },
     ],
