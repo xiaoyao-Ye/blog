@@ -88,6 +88,7 @@ const sidebarGhosteye = [
       // { text: 'create-xm', link: '/Ghosteye/create-xm' },
       { text: 'initapi', link: '/Ghosteye/initapi' },
       { text: 'Quick create log', link: '/Ghosteye/vs-quick-log' },
+      { text: 'mini-react', link: '/Ghosteye/mini-react' },
     ],
   },
 ]
