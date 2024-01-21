@@ -83,10 +83,11 @@ const sidebarOther = [
 
 const sidebarGhosteye = [
   {
-    text: '个人项目使用介绍',
+    text: 'blog',
     items: [
       // { text: 'create-xm', link: '/Ghosteye/create-xm' },
       { text: 'initapi', link: '/Ghosteye/initapi' },
+      { text: 'Quick create log', link: '/Ghosteye/vs-quick-log' },
     ],
   },
 ]
