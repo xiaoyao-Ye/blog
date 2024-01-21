@@ -33,7 +33,7 @@
 
 > 支持 `ts` `tsx` `js` `jsx` `vue` `html` 等文件内使用。🍺enjoying!
 
-<style>
+<style scoped>
   p > a {
     float: left;
     margin-right: 10px;
