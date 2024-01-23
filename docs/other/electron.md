@@ -19,3 +19,19 @@
 
       - `C:\Users\Admin\AppData\Local\electron-builder\Cache` 目录下应该有 `winCodeSign` `nsis` 这两个目录
       - `nsis-x.x.x.x` 和 `nsis-resources-x.x.x` 都是下载到 `C:\Users\Admin\AppData\Local\electron-builder\Cache\nsis` 文件夹下
+
+3. 在实现 electron 应用的 pin 功能时:
+
+      ```ts
+      ipcMain.on('window.unpin', (event) => {
+        win.setAlwaysOnTop(false)
+        win.setSize(768, 576)
+        // win.setMinimumSize(768, 576)
+        // 设置可拖拽变更大小后, 上面设置的最小大小会失效
+        // win.setResizable(true)
+        // 所以需要改成先设置可拖拽大小, 后设置最小大小
+        win.setResizable(true)
+        win.setMinimumSize(768, 576)
+        // event.reply('window.unpin')
+      })
+      ```
