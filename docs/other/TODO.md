@@ -118,3 +118,78 @@ async function refreshToken() {
   return res;
 }
 ```
+
+## Dockerfile corepack issue
+
+```Dockerfile
+FROM node:18-alpine as build-stage
+
+WORKDIR /app
+RUN corepack enable
+
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store \
+  pnpm install --frozen-lockfile
+
+COPY . .
+
+EXPOSE 1024
+
+RUN pnpm build
+
+CMD ["pnpm", "run", "start:prod"]
+```
+
+```shell
+------
+ > [todo-server build-stage 5/7] RUN --mount=type=cache,id=pnpm-store,target=/root/.pnpm-store   pnpm install --frozen-lockfile:
+138.0 Internal Error: Error when performing the request to https://registry.npmjs.org/pnpm; for troubleshooting help, see https://github.com/nodejs/corepack#troubleshooting
+138.0     at ClientRequest.<anonymous> (/usr/local/lib/node_modules/corepack/dist/lib/corepack.cjs:42195:14)
+138.0     at ClientRequest.emit (node:events:517:28)
+138.0     at TLSSocket.socketErrorListener (node:_http_client:501:9)
+138.0     at TLSSocket.emit (node:events:517:28)
+138.0     at emitErrorNT (node:internal/streams/destroy:151:8)
+138.0     at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+138.0     at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+------
+failed to solve: process "/bin/sh -c pnpm install --frozen-lockfile" did not complete successfully: exit code: 1
+```
+
+当出现上面报错时, 我尝试过重新运行 `docker compose --env-file .env.production up -d --build` 去解决问题, 但它大多时候不能解决问题.
+而后怀疑网络问题, 运行 `curl https://registry.npmjs.org/pnpm` 发现能够正常获取到.
+尝试设置环境变量 `COREPACK_NPM_REGISTRY=https://registry.npmmirror.com`, 仍然无法解决.
+去github查看issue 经过几次跳转, 我找到了解决方法:  
+
+```shell
+# mac 重新安装 CA 证书
+brew install ca-certificates
+# linux 重新安装 CA 证书
+apt install ca-certificates
+```
+
+再次运行 `docker compose --env-file .env.production up -d --build` 一切正常.
+
+## docker MySQL issue
+
+```shell
+024-03-01T02:53:27.279982Z 1 [ERROR] [MY-012574] [InnoDB] Unable to lock ./ibdata1 error: 11
+2024-03-01T02:53:27.421651Z 1 [ERROR] [MY-012592] [InnoDB] Operating system error number 11 in a file operation.
+2024-03-01T02:53:27.613610Z 1 [ERROR] [MY-012596] [InnoDB] Error number 11 means 'Resource temporarily unavailable'
+2024-03-01T02:53:27.642059Z 1 [ERROR] [MY-012215] [InnoDB] Cannot open datafile './ibdata1'
+2024-03-01T02:53:27.642104Z 1 [ERROR] [MY-012959] [InnoDB] Could not open or create the system tablespace. If you tried to add new data files to the system tablespace, and it failed here, you should now edit innodb_data_file_path in my.cnf back to what it was, and remove the new ibdata files InnoDB created in this failed attempt. InnoDB only wrote those files full of zeros, but did not yet use them in any way. But be careful: do not remove old data files which contain your precious data!
+2024-03-01T02:53:27.672650Z 1 [ERROR] [MY-012930] [InnoDB] Plugin initialization aborted with error Cannot open a file.
+2024-03-01T02:53:28.251407Z 1 [ERROR] [MY-010334] [Server] Failed to initialize DD Storage Engine
+2024-03-01T02:53:28.263494Z 0 [ERROR] [MY-010020] [Server] Data Dictionary initialization failed.
+2024-03-01T02:53:28.263521Z 0 [ERROR] [MY-010119] [Server] Aborting
+```
+
+MySQL 报错导致容器停止运行. 重启后依然如此，怀疑是服务器不堪重负，重启服务器后目前一切正常。。。
+
+## other
+
+```shell
+w # 将显示当前登录用户信息
+df -h # 将显示磁盘空间使用情况
+free -h # 将显示系统的内存使用情况
+uptime # 将显示系统的负载信息和运行时间
+```
