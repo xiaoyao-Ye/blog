@@ -85,6 +85,7 @@ const sidebarGhosteye = [
     text: 'blog',
     items: [
       // { text: 'create-xm', link: '/Ghosteye/create-xm' },
+      { text: '脱敏简历', link: '/Ghosteye/Ghosteye-前端5年-脱敏简历' },
       { text: 'initapi', link: '/Ghosteye/initapi' },
       { text: 'Unit Testing', link: '/Ghosteye/test' },
       { text: 'Quick create log', link: '/Ghosteye/vs-quick-log' },
