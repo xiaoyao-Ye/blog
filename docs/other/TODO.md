@@ -193,3 +193,79 @@ df -h # 将显示磁盘空间使用情况
 free -h # 将显示系统的内存使用情况
 uptime # 将显示系统的负载信息和运行时间
 ```
+
+## UTC
+
+现在有一个函数, 功能是传入一个 Date 返回这个 Date 的开始时间(00:00:00)和结束时间(23:59:59)
+
+```ts
+function dateRange(date: Date) {
+  const start = new Date(new Date(date).setHours(0, 0, 0, 0))
+  const end = new Date(new Date(date).setHours(23, 59, 59, 999))
+  return { start, end }
+}
+```
+
+现在我需要给这个函数添加单元测试如下:
+
+```ts
+it('should return the start and end of the date range', async () => {
+  const { start, end } = dateRange(new Date(2023, 0, 1))
+
+  expect(start.toISOString()).toBe('2023-01-01T00:00:00.000Z')
+  expect(end.toISOString()).toBe('2023-01-01T23:59:59.999Z')
+})
+```
+
+你会发现单元测试不通过!!!
+
+```txt
+期望得到 '2023-01-01T00:00:00.000Z'
+实际得到 '2022-01-31T16:00:00.000Z'
+```
+
+思考了一下, 应该是时区的问题, 本地的时间通过 toISOString api 转换得到的是这个时间对应的 UTC 时间
+
+```ts
+// 想了一下, 那直接使用 UTC 时间作为断言不就好了? 修改单元测试如下:
+it('should return the start and end of the date range', async () => {
+  const { start, end } = dateRange(new Date(2023, 0, 1))
+
+  expect(start.toISOString()).toBe('2022-01-31T16:00:00.000Z')
+  expect(end.toISOString()).toBe('2023-01-01T15:59:59.000Z')
+})
+```
+
+运行通过. 打完收工直接 `git push` 推送到 Github. 触发 actions, 我天真的以为 actions 执行完毕就好了.
+
+等了半天发现不对劲, 这 actions 怎么报错了...
+
+发现单元测试不通过, 提示:
+
+```txt
+期望得到 '2022-01-31T16:00:00.000Z'
+实际得到 '2023-01-01T00:00:00.000Z'
+```
+
+我\*\*你个大\*\* Github actions 是 UTC 时间, 所以单元测试断言16:00:00是一天的开始肯定是有问题的. 这只在东八区生效.
+
+通过下面方式将输出的时间减去偏移的时间, 转换为 utc 时间然后在使用 `toISOString()` 转换为字符串对比:
+
+```ts
+const date = new Date('2024-01-01')
+let { start, end } = dateRange(date)
+
+function convertToUTC(date: Date) {
+  const offset = date.getTimezoneOffset()
+  const utcDate = new Date(date.getTime() - offset * 60 * 1000)
+  return utcDate
+}
+
+start = convertToUTC(start)
+end = convertToUTC(end)
+
+expect(start.toISOString()).toBe('2024-01-01T00:00:00.000Z')
+expect(end.toISOString()).toBe('2024-01-01T23:59:59.999Z')
+```
+
+打完收工!!!
