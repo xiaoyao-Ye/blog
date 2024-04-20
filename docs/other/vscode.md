@@ -250,17 +250,93 @@ visual 模式:
 - `p` 粘贴寄存器的内容
 - `cw` 删除当前(光标往后的)单词并进入 insert 模式
 - `ea` 在当前单词结尾插入
+- `control + r + 0` 在 insert 模式粘贴寄存器的内容
 
 批量操作
 
 - 可视化模式选中多行使用 A 或者 I 去批量操作多行的行尾和行首
 - 可视化块模式选中 多行的中间 + operation 去批量处理
 
+### 搜索
+
+单行搜索
+
+- `f` 将光标移动至下一个符合的字符
+- `F` 将光标移动至上一个符合的字符
+- `t` 将光标移动至下一个符合字符的前一个字符(配合c,d这种操作会好用)
+- `T` 将光标移动至上一个符合字符的后一个字符(配合c,d这种操作会好用)
+- `;` 重复上一个搜索操作
+- `,` 反方向重复上一个搜索操作
+
+全局搜索
+
+- `/` 查找下一个符合的字符(回车跳转)
+- `?` 查找上一个符合的字符(回车跳转)
+- `n` 重复上一个搜索操作
+- `N` 重复上一个搜索操作(反方向)
+- `/ + up(down)` 查看搜索历史
+- `word + *` 查找下一个相同的 word
+- `word + #` 查找上一个相同的 word
+
+vim-easymotion
+
+> 通过组合键实现更多功能, vscode 的 vim 默认有这个插件, 需要通过配置开启
+
+::: tip
+
+\<leader> 键可以通过 `vim.leader` 修改为别的键
+
+:::
+
+- `<leader> + <leader> + w` 跳转到往下的单词的开头
+- `<leader> + <leader> + e` 跳转到往下的单词的结尾
+- `<leader> + <leader> + b` 跳转到往上的单词的开头
+- `<leader> + <leader> + ge` 跳转到往上的单词的结尾
+- `<leader> + <leader> + j(k)` 根据行去进行跳转
+- `<leader> + <leader> + h(l)` ...
+- `<leader> + <leader> + <leader> + j` all word
+
+```json
+{
+  "vim.easymotion": true,
+  "vim.leader": "<Space>"
+}
+```
+
+vim-sneak
+
+> f 搜索只能搜索一个字符, 局限性比较高, 通过这个插件可以使用 s 代替 f 的功能, 这个搜索可以搜索两个字符并且是全局的. vscode 的 vim 默认有这个插件, 需要通过配置开启. 同时存在一个问题就是插件的s会将默认的s功能替换掉. 需要通过键映射处理.
+
+```json
+{
+  "vim.sneak": true,
+  // 在非递归模式下的配置, 避免递归映射
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // 将 vim-sneak 的 s 搜索映射为 f 替代默认的单行搜索
+    { "before": ["f"], "after": ["s"] },
+    { "before": ["F"], "after": ["S"] },
+    // 模拟实现 s 和 S (被 vim-sneak 占用)
+    { "before": ["s"], "after": ["c", "l"] },
+    { "before": ["S"], "after": ["^", "C"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    // 将 vim-sneak 的 s 搜索映射为 f 替代默认的单行搜索. 在 visual 模式下 S 本身就不支持搜索, 所以不配置了.
+    { "before": ["f"], "after": ["s"] }
+  ],
+  "vim.operatorPendingModeKeyBindingsNonRecursive": [
+    { "before": ["f"], "after": ["z"] },
+    { "before": ["F"], "after": ["Z"] }
+  ]
+}
+```
+
 ### 寄存器
 
 使用 dd 或者 yy 这种都会将处理的内容放到寄存器里面, 然后使用 p 的时候会将寄存器里的内容取出粘贴. 也就意味着 p 之后寄存器就空了?
 
 ### 文本对象
+
+> vscode vim 好像默认启用了 vim-surround 插件
 
 语法: `operation(normal模式) + (内/外) + 文本` 操作内容
 语法: `v(visual模式) + (内/外) + 文本` 选中内容
@@ -279,6 +355,11 @@ visual 模式:
 - `d + a + a` (光标在arg2附近)删除下方示例的 arg2, 包括`,`符号
 - `d + i + e` 删除所有内容(不包括首尾的blank)
 - `d + a + e` 删除所有内容(包括首尾的blank)
+- `c + s + " + '` 将成对的 " 替换为 ' (``,"", '', [], {}, (), <> 等也是一样的)
+- `d + s + "` 删除成对的 "
+- `V + S + {` 在选中的内容外添加 {} 包裹(可以将{}换成其他符号)
+- `y + s + i(a) + w + (` 在当前文本外添加 () 包裹, 这个 w 应该就是一个文本跟单独的 w 一致.
+- `y + s + i + w + t + div`  在当前文本外添加 div 包裹
 
 ```js
 function fn(arg1, arg2) {
@@ -286,28 +367,66 @@ function fn(arg1, arg2) {
 }
 ```
 
+::: tip
+
+文本对象`v/y/c/d`操作只要在同一行即可不是一定要在文本范围内. 例如光标在func的位置键入 `cib` 可以删除下方 fn 的参数并进入插入模式, 光标在 { 的位置也可以!
+
+:::
+
 ### vim 插件相关设置
 
 ```json
 {
   // 切换为 normal 模式时会自动切换输入法为 EN
-  "vim.autoSwitchInputMethod.defaultIM": "1033",
   "vim.autoSwitchInputMethod.enable": true,
-  "vim.autoSwitchInputMethod.obtainIMCmd": "E:\\xiaoyao-Ye/im-select.exe",
-  "vim.autoSwitchInputMethod.switchIMCmd": "E:\\xiaoyao-Ye/im-select.exe {im}",
-  // normal 模式下的快捷键
+  "vim.autoSwitchInputMethod.defaultIM": "1033",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "D:\\GitHub\\im-select.exe",
+  "vim.autoSwitchInputMethod.switchIMCmd": "D:\\GitHub\\im-select.exe {im}",
+  // normal 模式下的映射
   "vim.normalModeKeyBindings": [
     { "before": ["H"], "after": ["^"] },
     { "before": ["L"], "after": ["g", "_"] },
     { "before": ["J"], "after": ["5", "j"] },
     { "before": ["K"], "after": ["5", "k"] }
   ],
-  // visual 模式下的快捷键
+  // visual 模式下的映射
   "vim.visualModeKeyBindings": [
     { "before": ["H"], "after": ["^"] },
     { "before": ["L"], "after": ["g", "_"] },
     { "before": ["J"], "after": ["5", "j"] },
     { "before": ["K"], "after": ["5", "k"] }
+  ],
+  // operatorPending 模式下的映射
+  "vim.operatorPendingModeKeyBindings": [
+    { "before": ["H"], "after": ["^"] },
+    { "before": ["L"], "after": ["g", "_"] }
+  ],
+
+  "vim.handleKeys": {
+    "<C-c>": false // 让 control + c 不会退出 insert 模式
+    // "<C-v>": false, // 让 control + v 能正常粘贴, 会导致无法使用 visual 的块模式
+  },
+
+  "vim.easymotion": true, // 开启 vim-easymotion 插件
+  "vim.leader": "<Space>",
+
+  "vim.sneak": true,
+  // 在非递归模式下的配置, 避免递归映射
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // 将 vim-sneak 的 s 搜索映射为 f 替代默认的单行搜索
+    { "before": ["f"], "after": ["s"] },
+    { "before": ["F"], "after": ["S"] },
+    // 模拟实现 s 和 S (被 vim-sneak 占用)
+    { "before": ["s"], "after": ["c", "l"] },
+    { "before": ["S"], "after": ["^", "C"] }
+  ],
+  "vim.visualModeKeyBindingsNonRecursive": [
+    // 将 vim-sneak 的 s 搜索映射为 f 替代默认的单行搜索. 在 visual 模式下 S 本身就不支持搜索, 所以不配置了.
+    { "before": ["f"], "after": ["s"] }
+  ],
+  "vim.operatorPendingModeKeyBindingsNonRecursive": [
+    { "before": ["f"], "after": ["z"] },
+    { "before": ["F"], "after": ["Z"] }
   ]
 }
 ```
