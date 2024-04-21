@@ -185,16 +185,16 @@ copilot chat 还支持通过 ctrl + I 调出行内对话模式，生成的代码
 模式:
 
 - normal
-  - 语法: operation + range
+  - 语法: `operation + num(可选) + range`
 - insert
 - visual
-  - 语法: select + operation
+  - 语法: `select + num(可选) + operation`
   - v 基于字符
   - V 行
   - control + v 块
 
-- esc 回到 normal 模式
-- control + [ 回到 normal 模式
+- `esc` 回到 normal 模式
+- `control + [` 回到 normal 模式
 
 ### 命令
 
@@ -251,6 +251,8 @@ visual 模式:
 - `cw` 删除当前(光标往后的)单词并进入 insert 模式
 - `ea` 在当前单词结尾插入
 - `control + r + 0` 在 insert 模式粘贴寄存器的内容
+- `u` 撤销操作
+- `.` 重复上一次的修改, 需要注意移动操作是不算的(适合进行一些需要重复的操作, 可以将很多操作简化)
 
 批量操作
 
