@@ -269,3 +269,57 @@ expect(end.toISOString()).toBe('2024-01-01T23:59:59.999Z')
 ```
 
 打完收工!!!
+
+### 2024.04.22
+
+> 看大圣分享的 remote 工作视频记录一下部分内容
+
+哪怕是远程工作也分不同的模式:
+
+- 同步就是必须在指定的时间工作, 工作时间内有任何消息都需要及时回复.
+- 异步就是允许在不同时间段工作, 工作时间基本上不会有什么交流, 一般通过文档和任务看板去进行沟通, 然后一个月这种时间进行一次会议
+
+优点:
+
+- 避免通勤
+- 肉身自由, 可以一边旅游等
+- 避免工作地点, 可以去消费低的地方等.
+- 工作时间避免打断
+- 如果是异步工作的话可以自由安排工作时间
+
+缺点:
+
+- 没有人给你限制和规划, 对个体要求较高需要自律(可以想到不自律会有多糟糕)
+- 没有社交, 会觉得跟社会脱节. 可以自己多找朋友聚聚
+- 需要家里人的支持, 如果家人理解不了你在做什么, 那么你每天不是在远程工作而是在上坟.
+- 沟通方面需要英语, 哪怕可以借助很多工具.
+- 工资发放可能会比较麻烦
+- 需要考虑稳定性, 这里大圣建议可以找两份远程工作, 因为远程工作一般5小时可以搞定(除非特别卷), 两份也就10小时, 如果一份工作没了另一份工作也可以让你很好的生活.
+
+#### 技术栈
+
+- Next
+- Typescript
+- Tailwind
+- Shadcn/ui mui NextUI...
+- Nestjs
+- typeorm/prisma
+- ...
+- Go ruby java C#
+
+#### web3
+
+> web3 相关的远程岗位较其他前端岗位相对多
+
+- Hardhat + etherjs + React + wagmi
+- Solidity / Move / Rust / Cairo
+
+#### 好用的工具
+
+- https://eleduck.com/
+- https://www.linkedin.com/feed/
+- https://relingo.net/zh/
+- https://www.trancy.org/
+- https://github.com/yetone/openai-translator
+- Google meet & zoom
+- Slack signal github vercel linear.app
