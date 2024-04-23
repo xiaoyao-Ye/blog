@@ -70,6 +70,8 @@ const sidebarOther = [
       { text: 'docker', link: '/other/docker' },
       { text: 'devOps', link: '/other/DevOps' },
       { text: 'vscode', link: '/other/vscode' },
+      { text: 'terminal', link: '/other/terminal' },
+      { text: 'electron', link: '/other/electron' },
       { text: 'quotations', link: '/other/quotations' },
       { text: 'mini', link: '/other/mini' },
       { text: 'install', link: '/other/install' },
