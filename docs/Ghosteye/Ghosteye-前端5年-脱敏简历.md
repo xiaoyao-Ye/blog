@@ -1,4 +1,4 @@
-_Ghosteye / <yqcyecong@163.com>
+_Ghosteye / <Ghosteye@yeah.net>
 
 Github：[https://github.com/xiaoyao-Ye](https://github.com/xiaoyao-Ye)
 
@@ -14,7 +14,7 @@ TypeScript | Vue3 | uniapp | Node.js | nestjs | React | Git | Docker
 
 ### 技术成果
 
-- **Quick Create log**：vscode 插件 **1.6k** installs
+- **Quick Create log**：vscode 插件 **1.9k** installs
   - 精准识别打印变量，调试效率增加 **50%**
 
 - **zl-cli**：一个生成接口函数的工具，支持团队内5大项目自动生成 api 函数，对接接口效率增加 **100%**
