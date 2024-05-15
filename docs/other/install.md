@@ -13,6 +13,7 @@
 - [Git](https://git-scm.com/)
   - `*` [Sourcetree](https://www.sourcetreeapp.com/)
   - `*` [GitHub Desktop](https://desktop.github.com/)
+  - `*` [zsh](https://github.com/ohmyzsh)
 - [VSCode](https://code.visualstudio.com/)
   - GitHub Copilot
   - Material Icon Theme
