@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`40-snapshot > component 1`] = `
+"<div>
+  <h1 id="hi"> Hi </h1>
+</div>"
+`;
+
+exports[`40-snapshot > snapshot 1`] = `
+{
+  "age": 24,
+  "name": "Ghosteye",
+}
+`;
