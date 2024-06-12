@@ -2052,6 +2052,24 @@ export default defineConfig({
 
 ## 快照测试
 
+> 第一次执行快照测试会自动生成快照文件, 再次执行会判断是否与当前快照文件相等
+
+::: code-group
+
+<<< @/../src/test/40-snapshot/index.spec.ts [snapshot.spec.ts]
+
+<<< @/../src/test/40-snapshot/__snapshots__/index.spec.ts.snap [__snapshots__/index.spec.ts.snap]
+
+<<< @/../src/test/40-snapshot/__snapshots__/Hi.html [__snapshots__/Hi.html]
+
+:::
+
+通过 `-u`(--update) 更新快照
+
+```bash
+vitest snapshot -u 
+```
+
 ## 分析如何写出更好的测试
 
 - 不要完美主义, 试图找出所有边界, 小步走逐步完善
