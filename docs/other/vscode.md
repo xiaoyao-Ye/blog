@@ -254,6 +254,7 @@ visual 模式:
 - `u` 撤销操作
 - `.` 重复上一次的修改, 需要注意移动操作是不算的(适合进行一些需要重复的操作, 可以将很多操作简化)
 - `gh` 悬浮提示(跟鼠标悬浮是一样的)
+- `gd` 跳转定义
 - `gu(gU) + range(iw这种)` normal 模式下将当前选中内容切换大小写
 - `u(U)` visual 模式下将当前选中内容切换大小写
 - `~` 当前字符切换大小写
@@ -395,14 +396,18 @@ function fn(arg1, arg2) {
     { "before": ["H"], "after": ["^"] },
     { "before": ["L"], "after": ["g", "_"] },
     { "before": ["J"], "after": ["5", "j"] },
-    { "before": ["K"], "after": ["5", "k"] }
+    { "before": ["K"], "after": ["5", "k"] },
+    { "before": ["<C-j>"], "after": ["<C-f>"] },
+    { "before": ["<C-k>"], "after": ["<C-b>"] }
   ],
   // visual 模式下的映射
   "vim.visualModeKeyBindings": [
     { "before": ["H"], "after": ["^"] },
     { "before": ["L"], "after": ["g", "_"] },
     { "before": ["J"], "after": ["5", "j"] },
-    { "before": ["K"], "after": ["5", "k"] }
+    { "before": ["K"], "after": ["5", "k"] },
+    { "before": ["<C-j>"], "after": ["<C-f>"] },
+    { "before": ["<C-k>"], "after": ["<C-b>"] }
   ],
   // operatorPending 模式下的映射
   "vim.operatorPendingModeKeyBindings": [
@@ -411,6 +416,8 @@ function fn(arg1, arg2) {
   ],
 
   "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false,
     "<C-c>": false // 让 control + c 不会退出 insert 模式
     // "<C-v>": false, // 让 control + v 能正常粘贴, 会导致无法使用 visual 的块模式
   },
