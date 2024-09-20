@@ -9,8 +9,8 @@
 # git config  user.email 你的目标邮箱名
 
 # 使用--global参数，配置全局的用户名和邮箱，只需要配置一次即可。推荐配置github的用户名和邮箱
-git config  --global user.name autumnFish
-git config  --global user.email 517729329@qq.com
+git config  --global user.name _Ghosteye
+git config  --global user.email Ghosteye@yeah.net
 
 # 查看配置信息
 git config --list
@@ -253,11 +253,17 @@ git cherry-pick --abort
 - 遇到合并冲突过多无法解决, 想要放弃合并使用 `--abort` 命令
 
 - `git cherry-pick <target id>` 单独合并某个 commit id 到当前分支
-- `git rebase dev` 先切换 master, 再使用 git rebase dev 将 dev 合并到 master, 有冲突的话就解决冲突然后 git add . 再 git rebase --continue 即可
+- `git rebase main` 先切换到 feature 分支，通过 git rebase main 将当前 feature 分支的 commit 应用到 main 分支的最新提交之后。
 - `git rebase -i <startpoint> <endpoint>` 合并 [范围] 区间 commit 为一次 commit 记录
-- `git rebase <startpoint> <endpoint> --onto master` 复制 [范围] 部分的提交至 master
+  - pick：保留提交。
+  - reword：修改提交信息。
+  - edit：修改提交内容。
+  - squash：将多个提交合并为一个。
+  - drop：删除提交。
+- `git rebase <startpoint> <endpoint> --onto main` 复制 [范围] 部分的提交至 main
 
-> 范围 = 开始(不包含)-结束(包含)(没有则默认至最后一次 commit)
+> 遇到冲突，解决冲突后通过 `git rebase --continue` 继续。如果想放弃可以使用 `git rebase --abort`。
+> 范围 = 开始(不包含)-结束(包含)(没有则默认至最后一次 commit)。
 
 ## git 远程仓库
 
