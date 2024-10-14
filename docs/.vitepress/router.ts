@@ -107,7 +107,7 @@ const navBar = [
   { text: 'Handbook', activeMatch: '/handbook/', link: sidebarHandbook[0].items[0].link },
   { text: 'Interview', activeMatch: '/interview/', link: sidebarInterview[0].items[0].link },
   { text: 'Other', activeMatch: '/other/', link: sidebarOther[0].items[0].link },
-  // { text: "Demo", activeMatch: "/demo/", link: "/demo/" },
+  // { text: 'Demo', activeMatch: '/demo/', link: '/demo/' },
   { text: 'Ghosteye', activeMatch: '/Ghosteye/', link: sidebarGhosteye[0].items[0].link },
 ]
 
