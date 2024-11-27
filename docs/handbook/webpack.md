@@ -4,39 +4,57 @@
 
 - **全局安装 webpack**
 
-`npm i webpack webpack-cli -g`
+```bash
+npm i webpack webpack-cli -g
+```
 
 - **项目中安装 webpack (推荐)**
 
-`npm i webpack webpack-cli -D`
+```bash
+npm i webpack webpack-cli -D
+```
 
 - **自动编译**: webpack-dev-server 依赖 webpack
 
-`npm i webpack-dev-server -D`
+```bash
+npm i webpack-dev-server -D
+```
 
 - **自动编译**的另一种(这种编译依赖较多,用的较少,具体配置官网查询)
 
-`npm i express webpack-dev-middleware -D`
+```bash
+npm i express webpack-dev-middleware -D
+```
 
 - **处理 css**(css-loader: 解析 css 文件,style-loader: 将解析出来的结果 放到 html 中, 使其生效)
 
-`npm i css-loader style-loader -D`
+```bash
+npm i css-loader style-loader -D
+```
 
 - **处理图片和字体**(url-loader 封装了 file-loader, 所以使用 url-loader 时需要安装 file-loader)
 
-`npm i file-loader url-loader -D`
+```bash
+npm i file-loader url-loader -D
+```
 
 - **babel**
 
-`npm i babel-loader @babel/core @babel/preset-env -D`
+```bash
+npm i babel-loader @babel/core @babel/preset-env -D
+```
 
 - 如果需要支持更高级的 ES6 语法, 可以继续安装插件: (也可以根据需要在 babel 官网找插件进行安装)
 
-`npm i @babel/plugin-proposal-class-properties -D`
+```bash
+npm i @babel/plugin-proposal-class-properties -D
+```
 
 - **build 前清除 dist**的插件
 
-`npm i clean-webpack-plugin -D`
+```bash
+npm i clean-webpack-plugin -D
+```
 
 ## 运行
 
@@ -45,9 +63,13 @@
 - npx： node 高版本新出的命令,原理是找到 node_modules->.bin 目录里的 webpack 命令运行后会找到 webpack 文件夹去执行相应的命令
 - npm run : 需要在 package.json 里的 scripts 对象中配置对应的命令
 
-- `npx webpack`
-- `npx webpack-dev-server`
-- `npx webpack-dev-server --hot --open --port 8888`
+```bash
+npx webpack
+# or
+npx webpack-dev-server
+# or
+npx webpack-dev-server --hot --open --port 8888
+```
 
 ## webpack 配置
 
@@ -176,20 +198,26 @@ module.exports = {
 
 - 如果需要使用`generator`,需要安装插件:
 
-`npm i @babel/plugin-transform-runtime -D`
+```bash
+npm i @babel/plugin-transform-runtime -D
+```
 
 - 同时还需安装运行时依赖:
 
-`npm i @babel/runtime -D`
+```bash
+npm i @babel/runtime -D
+```
 
 - 如果需要使用 ES6/7 中对象原型提供的新方法，babel 默认情况无法转换，即使用了`transform-runtime`的插件也不支持转换原型上的方法
 - 需要使用另一个模块:
 
-​ `npm i @babel/polyfill -S`
+```bash
+ npm i @babel/polyfill -S
+```
 
 - 该模块需要在使用新方法的地方直接引入:
 
-​ `import '@babel/polyfill'`
+`​import '@babel/polyfill'`
 
 ### 自动编译配置项
 
